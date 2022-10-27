@@ -21,7 +21,11 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: url(../Img/mouse-hover-icon-22.jpg) 96% / 30px no-repeat #EEE;
+    background: url(../Img/search.png) 96% / 30px no-repeat #EEE;
+}
+
+.sort {
+    background: url(../Img/sort.png) 96% / 30px no-repeat #EEE;
 }
 
 a {
@@ -89,13 +93,13 @@ ul#ul-class-navigation li {
 #FilterFrame {
     position: fixed;
     width: 19%;
-    background-color: rgba(35, 40, 47, 0.8);
+    background-color: rgba(49, 59, 73, 0.8);
     float: left;
     top:216px;
-    border: 1px solid #fff;
     margin-left: 5px;
     margin-top: 10px;
     padding: 20px;
+    border-radius: 3px;
 }
 #ResultsArea.Browse  {
     width: 78%;

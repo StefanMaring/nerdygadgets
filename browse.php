@@ -225,7 +225,7 @@ if (isset($amount)) {
                 </option>
             </select>
             <h4 class="FilterTopMargin"><i class="fas fa-sort"></i> Sorteren</h4>
-            <select name="sort" id="sort" onchange="this.form.submit()">>
+            <select name="sort" id="sort" class="sort" onchange="this.form.submit()">>
                 <option value="price_low_high" <?php if ($_SESSION['sort'] == "price_low_high") {
                     print "selected";
                 } ?>>Prijs oplopend
