@@ -8,7 +8,7 @@ html {
 body {
     overflow-x:hidden;
     color: #FFF !important;
-    background-color: --main-color !important;
+    background-color: var(--main-color) !important;
 }
 @font-face {
     font-family: MmrText;
@@ -502,4 +502,24 @@ ul#ul-class-price li {
     background: rgb(36, 41, 143);
     border: 1px rgb(98, 158, 255) solid;
     color: #fff;
+}
+
+footer {
+    display: grid !important;
+    place-content: center;
+    height: 60px;
+    background-color: var(--main-color);
+    width: 100%;
+    border-top: 1px solid rgb(36, 41, 143);
+}
+
+.footer {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer p {
+    margin: 0 !important;
 }
