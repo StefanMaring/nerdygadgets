@@ -504,6 +504,19 @@ ul#ul-class-price li {
     color: #fff;
 }
 
+/* Section cart styling */
+
+.s-cart {
+    padding: 2.5rem;
+}
+
+.s-heading {
+    display: block;
+    margin-bottom: 25px;
+}
+
+/* Footer styling */
+
 footer {
     display: grid !important;
     place-content: center;
