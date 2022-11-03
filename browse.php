@@ -200,7 +200,7 @@ if (isset($amount)) {
 <!-- de zoekbalk links op de pagina  -->
 
 <div id="FilterFrame"><h2 class="FilterText"><i class="fas fa-filter"></i> Filteren </h2>
-    <form>
+    <form autocomplete="off">
         <div id="FilterOptions">
             <h4 class="FilterTopMargin"><i class="fas fa-search"></i> Zoeken</h4>
             <input type="text" name="search_string" id="search_string"
