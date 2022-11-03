@@ -1,3 +1,6 @@
+@import "variables.css";
+
+
 html {
     background-color: rgb(35, 35, 47) !important;
 }
@@ -5,7 +8,7 @@ html {
 body {
     overflow-x:hidden;
     color: #FFF !important;
-    background-color: rgb(35, 35, 47) !important;
+    background-color: --main-color !important;
 }
 @font-face {
     font-family: MmrText;
@@ -67,7 +70,7 @@ table tr td {
 }
 ul#ul-class-navigation {
     right: 10px;
-    line-height: 200px;
+    line-height: 95px;
     position: absolute;
 }
 ul#ul-class-navigation li {
@@ -77,13 +80,29 @@ ul#ul-class-navigation li {
     font-size: 20px;
     text-decoration: none;
     text-decoration-color: currentcolor;
+    margin-left: 50px;
 }
+
+.search-bar {
+    background-color: rgba(49, 59, 73, 0.8);
+    padding: 0.5rem;
+    border-radius: 25px;
+}
+
+.cart-btn {
+    background-color: rgba(49, 59, 73, 0.8);
+    padding: 1rem;
+    border-radius: 50%;
+    font-size: 16px !important;
+    height: 41.6px !important;
+}
+
 #Header {
     position: fixed;
     top:0;
     background-color: rgb(35, 35, 47);
     width: 100%;
-    height: 200px;
+    height: 95px;
     z-index: 1;
     border-bottom: 1px solid rgb(36, 41, 143);
 }
@@ -242,8 +261,8 @@ ul#ul-class-navigation li {
 #LogoImage {
     background-image: url("../ProductIMGHighRes/NerdyGadgetsLogo.png");
     width: 250px;
-    height: 90px;
-    margin: 55px 55px 55px 10%;
+    height: 94px;
+    /* margin: 55px 55px 55px 10%; */
 }
 ul#ul-class li {
     display: inline;
@@ -251,7 +270,7 @@ ul#ul-class li {
     margin-right: 1em;
     font-size: 18px;
     text-decoration: none;
-    line-height: 200px;
+    line-height: 95px;
 }
 ul#ul-class-price li {
     display: inline;

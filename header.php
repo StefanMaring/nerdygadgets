@@ -20,6 +20,8 @@ $databaseConnection = connectToDatabase();
     <link rel="stylesheet" href="Public/CSS/style.css" type="text/css">
     <link rel="stylesheet" href="Public/CSS/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="Public/CSS/typekit.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 <div class="Background">
@@ -49,8 +51,11 @@ $databaseConnection = connectToDatabase();
 <!-- code voor US3: zoeken -->
 
         <ul id="ul-class-navigation">
-            <li>
+            <li class="search-bar">
                 <a href="browse.php" class="HrefDecoration"><i class="fas fa-search search"></i> Zoeken</a>
+            </li>
+            <li class="cart-btn">
+                <a href="cart.php" class="HrefDecoration"><i class="fa-solid fa-cart-shopping"></i></a>
             </li>
         </ul>
 
