@@ -10,6 +10,7 @@ include "header.php";
     getCart();
     //TEST: Handmatig product geforceerd in cart array
     $cart[1] = 1;
+    $cart[12] = 1;
 
 
     foreach($cart as $productID => $productAmount) {
@@ -25,6 +26,8 @@ include "header.php";
         print("ProductID: " . $StockItem['StockItemID']) . "<br>";
         print("Naam: " . $StockItem['StockItemName'] . "<br>");
         print ("Prijs: " . sprintf("€ %.2f", $StockItem['SellPrice']));
+
+        print("<br><br>");
     }
         ?>
 
