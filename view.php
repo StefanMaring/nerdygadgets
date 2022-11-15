@@ -89,7 +89,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         </div>
         <div class="Add-button">
             <form action="" method="POST">
-                <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen in winkelmand">
+                <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
             </form>
         </div>
 
