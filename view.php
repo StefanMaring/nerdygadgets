@@ -81,7 +81,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
-                        <p class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b></p>
+                        <p class="StockItemPriceText"><b><?php print sprintf("€%.2f", $StockItem['SellPrice']); ?></b></p>
                         <h6> Inclusief BTW </h6>
                     </div>
                 </div>
@@ -103,10 +103,6 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             $CustomFields = json_decode($StockItem['CustomFields'], true);
             if (is_array($CustomFields)) { ?>
                 <table>
-                <thead>
-                <th>Naam</th>
-                <th>Data</th>
-                </thead>
                 <?php
                 foreach ($CustomFields as $SpecName => $SpecText) { ?>
                     <tr>
