@@ -7,17 +7,17 @@ include "header.php";
         <h1 class="s-heading">Winkelmandje</h1>
     </div>
     <?php
-    getCart();
+    $cart = getCart();
     //TEST: Handmatig product geforceerd in cart array
 //    $cart[1] = 1;
 //    $cart[12] = 1;
 
-if(isset($cart)) {
-    foreach ($cart as $productID => $productAmount) {
+if(isset($cart)){
+    foreach($cart as $productID => $productAmount) {
         $StockItem = getStockItem($productID, $databaseConnection);
         $StockItemImage = getStockItemImage($productID, $databaseConnection);
 
-        foreach ($StockItem as $test1 => $test2) {
+        foreach($StockItem as $test1 => $test2){
             print("$test1 => $test2 <br>");
         }
 
@@ -29,7 +29,7 @@ if(isset($cart)) {
 
         print("<br><br>");
     }
-}
+    }
         ?>
 
 
