@@ -226,6 +226,7 @@ ul#ul-class-navigation li {
 #StockItemDescription {
     background-color: var(--sub-color);
     width: 49%;
+    height: 100%;
     float: left;
     padding: 10px;
     margin-top: 60px;
