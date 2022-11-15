@@ -9,14 +9,15 @@ include "header.php";
     <?php
     getCart();
     //TEST: Handmatig product geforceerd in cart array
-    $cart[1] = 1;
+//    $cart[1] = 1;
+//    $cart[12] = 1;
 
-
-    foreach($cart as $productID => $productAmount) {
+if(isset($cart)) {
+    foreach ($cart as $productID => $productAmount) {
         $StockItem = getStockItem($productID, $databaseConnection);
         $StockItemImage = getStockItemImage($productID, $databaseConnection);
 
-        foreach($StockItem as $test1 => $test2){
+        foreach ($StockItem as $test1 => $test2) {
             print("$test1 => $test2 <br>");
         }
 
@@ -25,7 +26,10 @@ include "header.php";
         print("ProductID: " . $StockItem['StockItemID']) . "<br>";
         print("Naam: " . $StockItem['StockItemName'] . "<br>");
         print ("Prijs: " . sprintf("€ %.2f", $StockItem['SellPrice']));
+
+        print("<br><br>");
     }
+}
         ?>
 
 
