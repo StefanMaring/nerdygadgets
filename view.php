@@ -88,7 +88,9 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             </div>
         </div>
         <div class="Add-button">
-            <button type="button" class="btn-style"><a href="cart.php">Toevoegen in winkelmand</a></button>
+            <form action="" method="POST">
+                <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
+            </form>
         </div>
 
         <div id="StockItemDescription">
@@ -137,3 +139,13 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
 </div>
+
+<?php
+
+if(isset($_POST["addToCartBTN"])) {
+    addProductToCart($stockItemID);
+    header('location: cart.php');
+    exit();
+}
+
+?>
