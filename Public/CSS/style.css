@@ -1,6 +1,5 @@
 @import "variables.css";
 
-
 html {
     background-color: rgb(35, 35, 47) !important;
 }
@@ -553,3 +552,5 @@ footer {
     border-radius: 5px;
     color: white;
 }
+
+@import "cart.css";

@@ -46,7 +46,8 @@ if(isset($cart)) {
                 <img src="Public/StockItemIMG/<?php print $productImage; ?>">
                 <p><?php print($StockItem['StockItemID'])?></p>
                 <h2><?php print($StockItem['StockItemName'])?></h2>
-                <h3><?php print(sprintf("€ %.2f", $StockItem['SellPrice']))?></h3>
+                <h3><?php print(sprintf("€%.2f", $StockItem['SellPrice']))?></h3>
+                <p>Prijs inclusief BTW</p>
             </div>
         </div>
 
