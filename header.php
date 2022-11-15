@@ -3,6 +3,7 @@
 session_start();
 include "database.php";
 include "CartFuncties.php";
+include "config.php";
 $databaseConnection = connectToDatabase();
 ?>
 <!DOCTYPE html>

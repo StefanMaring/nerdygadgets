@@ -87,6 +87,9 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                 </div>
             </div>
         </div>
+        <div class="Add-button">
+            <button type="button">Click Me!</button>
+        </div>
 
         <div id="StockItemDescription">
             <h3>Artikel beschrijving</h3>
