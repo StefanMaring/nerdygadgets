@@ -2,6 +2,7 @@
 <?php
 include __DIR__ . "/header.php";
 
+$stockItemID = $_GET['id']; // ProductID van de huidige pagina
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 ?>
