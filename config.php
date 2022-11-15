@@ -2,7 +2,6 @@
 
 session_start();
 include "database.php";
-
-$_SESSION["winkelmand"] = $winkelwand;
+include "CartFuncties.php";
 
 ?>
