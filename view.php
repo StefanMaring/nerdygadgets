@@ -139,10 +139,8 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 <?php
 
 if(isset($_POST["addToCartBTN"])) {
-
     addProductToCart($stockItemID);
-   // header('location: cart.php');
-    exit();
+    echo "<script> location.href='cart.php'; </script>";
 }
 
 include "footer.php";
