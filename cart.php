@@ -6,6 +6,10 @@ include "header.php";
     <div class="cart-wrapper">
         <h1 class="s-heading">Winkelmandje</h1>
     </div>
+
+    <form method="post">
+        <input type="submit" name="clearCartBTN" class="btn-style" value="Winkelmandje leegmaken">
+    </form>
     <?php
     $cart = getCart();
     //TEST: Handmatig product geforceerd in cart array
@@ -36,6 +40,7 @@ if(isset($cart)) {
         print("<br><br>");*/
         ?>
             <br>
+
         <div class="Cart">
             <div class="CartItem">
                 <img src="Public/StockItemIMG/<?php print $productImage; ?>">
@@ -47,6 +52,11 @@ if(isset($cart)) {
 
             <?php
     }
+}
+if(isset($_POST['clearCartBTN'])){
+    $cart = array();
+    saveCart($cart);
+    echo "<script> location.href='cart.php'; </script>";
 }
         ?>
 
