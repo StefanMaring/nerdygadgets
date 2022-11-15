@@ -536,3 +536,7 @@ footer {
 .footer p {
     margin: 0 !important;
 }
+
+.Add-button {
+    float: right;
+}
