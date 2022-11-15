@@ -2,14 +2,11 @@
 include "header.php";
 ?>
 
-<section class="s-cart">
+<section class="s-cart" id="CenteredContent">
     <div class="cart-wrapper">
         <h1 class="s-heading">Winkelmandje</h1>
     </div>
-
-    <form method="post">
-        <input type="submit" name="clearCartBTN" class="btn-style" value="Winkelmandje leegmaken">
-    </form>
+    <div class="Cart">
     <?php
     $cart = getCart();
     //TEST: Handmatig product geforceerd in cart array
@@ -21,9 +18,9 @@ if(isset($cart)) {
         $StockItem = getStockItem($productID, $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
         $StockItemImage = getStockItemImage($productID, $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
         /*Foto's zijn opgeslagen in een 3D array, elke foto heeft een key beginnend bij 0, als value een array met key ImagePath en als value het pad naar de foto*/
-        foreach ($StockItem as $test1 => $test2) { //DEBUG, laat alle gegevens van een product zien
-            print("$test1 => $test2 <br>");
-        }
+        // foreach ($StockItem as $test1 => $test2) { //DEBUG, laat alle gegevens van een product zien
+        //     print("$test1 => $test2 <br>");
+        // }
         // print_r($StockItemImage);
 
         if(isset($StockItemImage[0])){ //Check of een product foto's heeft
@@ -41,29 +38,38 @@ if(isset($cart)) {
         ?>
             <br>
 
-        <div class="Cart">
             <div class="CartItem">
-                <img src="Public/StockItemIMG/<?php print $productImage; ?>">
-                <p><?php print($StockItem['StockItemID'])?></p>
-                <h2><?php print($StockItem['StockItemName'])?></h2>
-                <h3><?php print(sprintf("€%.2f", $StockItem['SellPrice']))?></h3>
-                <p>Prijs inclusief BTW</p>
+                <div class="image-wrapper">
+                    <img src="Public/StockItemIMG/<?php print $productImage; ?>" class="product-image">
+                </div>
+                <div class="meta-text">
+                    <p>Artikelnummer: <?php print($StockItem['StockItemID'])?></p>
+                    <h2><?php print($StockItem['StockItemName'])?></h2>
+                </div>
+                <div class="price-text">
+                    <h3><?php print(sprintf("€%.2f", $StockItem['SellPrice']))?></h3>
+                    <p>Prijs inclusief BTW</p>
+                </div>
             </div>
-        </div>
 
             <?php
     }
 }
+?>
+</div>
+
+<form method="post">
+    <input type="submit" name="clearCartBTN" class="btn-style add-margin" value="Winkelmandje leegmaken">
+</form>
+
+</section>
+
+<?php
 if(isset($_POST['clearCartBTN'])){
     $cart = array();
     saveCart($cart);
     echo "<script> location.href='cart.php'; </script>";
 }
-        ?>
 
-
-</section>
-
-<?php
 include "footer.php";
 ?>

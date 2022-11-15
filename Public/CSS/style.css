@@ -507,10 +507,6 @@ ul#ul-class-price li {
 
 /* Section cart styling */
 
-.s-cart {
-    padding: 2.5rem;
-}
-
 .s-heading {
     display: block;
     margin-bottom: 25px;
@@ -553,4 +549,33 @@ footer {
     color: white;
 }
 
-@import "cart.css";
+.CartItem {
+    padding: 1.5rem;
+    border-radius: 5px;
+    background-color: var(--sub-color);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: left;
+    align-items: center;
+    gap: 100px;
+}
+
+.image-wrapper {
+    width: 150px;
+    height: 150px;
+}
+
+.product-image {
+    width: inherit;
+    height: inherit;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.price-text {
+    margin-left: auto;
+}
+
+.add-margin {
+    margin: 22px 0 22px 0;
+}
