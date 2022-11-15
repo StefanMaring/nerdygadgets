@@ -148,4 +148,6 @@ if(isset($_POST["addToCartBTN"])) {
     exit();
 }
 
+include "footer.php";
+
 ?>

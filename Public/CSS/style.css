@@ -222,26 +222,28 @@ ul#ul-class-navigation li {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+
 #StockItemDescription {
-    background-color: rgba(35, 40, 47, 0.8);
+    background-color: var(--sub-color);
     width: 49%;
     float: left;
     padding: 10px;
-    margin-top:39px;
-    border: 1px solid;
+    margin-top: 60px;
     font-family: pt-sans, sans-serif;
     font-size: 20px;
+    border-radius: 5px;
 }
 #StockItemSpecifications {
-    background-color: rgba(35, 40, 47, 0.8);
+    background-color: var(--sub-color);
     width: 50%;
     float: left;
     padding: 10px;
     margin-left: 1%;
     margin-top:10px;
-    border: 1px solid;
     font-family: pt-sans, sans-serif;
     font-size: 20px;
+    margin-bottom: 75px;
+    border-radius: 5px;
 }
 .Labels {
     margin-bottom: 0;
