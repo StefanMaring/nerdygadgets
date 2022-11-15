@@ -539,7 +539,6 @@ footer {
 }
 
 .btn-style {
-    text-transform: uppercase;
     font-size: 16px;
     text-decoration: none;
     background-color: var(--button-color);
