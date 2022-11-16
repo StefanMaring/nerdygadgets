@@ -54,8 +54,9 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                     <p class="art-tekst">Artikelnummer: <?php print($StockItem['StockItemID'])?></p>
                     <h2 class="art-type-tekst"><?php print($StockItem['StockItemName'])?></h2>
 
-                    <p class="aantal-text">Aantal: <?php print($productAmount)?></p>
+
                     <form id="aantal-form" method="POST">
+                        <label class="aantal-text">Aantal: </label>
                         <input onchange="submit()" class="aantal-btn" type="number" id="aantal" name="artikelCounter" min="1" max="100" value="<?php print($productAmount); ?>">
                     </form>
 
@@ -64,7 +65,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
                 </div>
                 <div class="price-text">
-                    <h3 class="art-geld"><?php print(sprintf("€%.2f", $StockItem['SellPrice']));
+                    <h3 class="art-geld"><?php print(sprintf("€%.2f", round($StockItem['SellPrice'], 2) * $productAmount));
                         $totaalPrijs += round($StockItem['SellPrice'], 2)*$productAmount;?></h3> <!--tel huidige afgeronde prijs op bij totaalprijs-->
                     <p class="art-tekst">Prijs inclusief BTW</p>
                     <form method="post">
