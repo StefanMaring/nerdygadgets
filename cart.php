@@ -46,6 +46,15 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                     <p class="art-tekst">Aantal: <?php print($productAmount)?></p>
                     <p class="art-tekst">Artikelnummer: <?php print($StockItem['StockItemID'])?></p>
                     <h2 class="art-type-tekst"><?php print($StockItem['StockItemName'])?></h2>
+
+                    <p class="aantal-text">aantal:</p>
+                    <form id="aantal-form">
+                    <input onchange="submit()" class="aantal-btn" type="number" id="aantal" name="artikelCounter" min="1" max="100" value=<?php print($productAmount); ?>>
+                    </form>
+
+
+
+
                 </div>
                 <div class="price-text">
                     <h3 class="art-geld"><?php print(sprintf("€%.2f", $StockItem['SellPrice']));
@@ -76,8 +85,21 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 </form>
 
 </section>
+    <script>
+        function submit() {
+            let form = document.getElementById("aantal-form");
+            form.submit();
+        }
+    </script>
 
 <?php
+
+if($_POST["artikelCounter"] < $productAmount) {
+    $productAmount = $productAmount - 1;
+} else {
+    $productAmount = $productAmount + 1;
+}
+
 if(isset($_POST['clearCartBTN'])){
     $cart = array();
     saveCart($cart);
