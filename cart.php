@@ -46,12 +46,12 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                     <img src="Public/StockItemIMG/<?php print $productImage; ?>" class="product-image">
                 </div>
                 <div class="meta-text">
-                    <p>Artikelnummer: <?php print($StockItem['StockItemID'])?></p>
-                    <h2><?php print($StockItem['StockItemName'])?></h2>
+                    <p class="art-tekst">Artikelnummer: <?php print($StockItem['StockItemID'])?></p>
+                    <h2 class="art-type-tekst"><?php print($StockItem['StockItemName'])?></h2>
                 </div>
                 <div class="price-text">
-                    <h3><?php print(sprintf("€%.2f", $StockItem['SellPrice']))?></h3>
-                    <p>Prijs inclusief BTW</p>
+                    <h3 class="art-geld"><?php print(sprintf("€%.2f", $StockItem['SellPrice']))?></h3>
+                    <p class="art-tekst">Prijs inclusief BTW</p>
                 </div>
             </div>
 

@@ -594,3 +594,15 @@ footer {
 .btn-small {
     width: 50%;
 }
+
+.art-tekst {
+    font-size: 14px;
+}
+
+.art-type-tekst {
+    font-size: 28px;
+}
+
+.art-geld {
+    font-size: 26px;
+}
