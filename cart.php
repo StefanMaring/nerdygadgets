@@ -1,19 +1,22 @@
 <?php
 include "header.php";
 ?>
-
+<?php
+$cart = getCart(); //Haal het winkelmandje op
+if(!empty($cart)){ //Check of het winkelmandje leeg is
+    ?>
 <section class="s-cart" id="CenteredContent">
+
     <div class="cart-wrapper">
         <h1 class="s-heading">Winkelmandje</h1>
     </div>
     <div class="Cart">
     <?php
-    $cart = getCart();
+
     //TEST: Handmatig product geforceerd in cart array
 //    $cart[1] = 1;
 //    $cart[12] = 1;
 
-if(isset($cart)) {
     foreach ($cart as $productID => $productAmount) {
         $StockItem = getStockItem($productID, $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
         $StockItemImage = getStockItemImage($productID, $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
@@ -54,7 +57,6 @@ if(isset($cart)) {
 
             <?php
     }
-}
 ?>
 </div>
 
@@ -73,6 +75,8 @@ if(isset($_POST['clearCartBTN'])){
     saveCart($cart);
     echo "<script> location.href='cart.php'; </script>";
 }
-
+} else{
+    print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
+}
 include "footer.php";
 ?>
