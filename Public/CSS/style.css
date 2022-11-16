@@ -636,3 +636,8 @@ p {
 .totalPrice > h1 {
     font-size: 22px;
 }
+
+.aantal-btn {
+    width: 10%;
+    height: 20%;
+}
