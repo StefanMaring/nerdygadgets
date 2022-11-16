@@ -49,7 +49,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                 </div>
                 <div class="price-text">
                     <h3 class="art-geld"><?php print(sprintf("€%.2f", $StockItem['SellPrice']));
-                        $totaalPrijs += ($StockItem['SellPrice']*$productAmount);?></h3>
+                        $totaalPrijs += round($StockItem['SellPrice'], 2)*$productAmount;?></h3> //tel huidige afgeronde prijs op bij totaalprijs
                     <p class="art-tekst">Prijs inclusief BTW</p>
                 </div>
             </div>
@@ -61,8 +61,6 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         <div class="totalPrice">
             <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
         </div>
-
-
 </div>
 
 
