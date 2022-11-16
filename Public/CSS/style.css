@@ -9,6 +9,7 @@ body {
     color: #FFF !important;
     background-color: var(--main-color) !important;
 }
+
 @font-face {
     font-family: MmrText;
     src: url(/Public/fonts/mmrtext.ttf);
@@ -569,6 +570,7 @@ footer {
     height: inherit;
     object-fit: contain;
     border-radius: 5px;
+    background-color: var(--sub-color);
 }
 
 .price-text {
@@ -577,4 +579,18 @@ footer {
 
 .add-margin {
     margin: 22px 0 22px 0;
+}
+
+.btn-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 25px;
+}
+
+.lighter {
+    background-color: var(--button-color-sub);
+}
+
+.btn-small {
+    width: 50%;
 }

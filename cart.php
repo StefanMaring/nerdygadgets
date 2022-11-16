@@ -59,7 +59,10 @@ if(isset($cart)) {
 </div>
 
 <form method="post">
-    <input type="submit" name="clearCartBTN" class="btn-style add-margin" value="Winkelmandje leegmaken">
+    <div class="btn-wrapper">
+        <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter" value="Winkelmandje leegmaken">
+        <input type="submit" name="PayCartBTN" class="btn-style add-margin" value="Afrekenen">
+    </div>
 </form>
 
 </section>

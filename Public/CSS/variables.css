@@ -1,6 +1,7 @@
 :root {
     --main-color: rgb(35,35,47);
     --sub-color: rgb(46,54,67);
-    --button-color: rgb(103, 110, 255);
+    --button-color: rgb(39, 48, 219);
+    --button-color-sub: rgb(103, 110, 255);
   }
   
