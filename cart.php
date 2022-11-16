@@ -58,8 +58,9 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         <?php
     }
 ?>
-
-            <h1> <?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
+        <div class="totalPrice">
+            <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
+        </div>
 
 
 </div>

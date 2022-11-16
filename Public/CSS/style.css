@@ -606,7 +606,7 @@ footer {
 .art-type-tekst {
     font-size: 28px;
     display: inline-block;
-    height: 70px;
+    height: 45px;
     width: 520px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -615,4 +615,19 @@ footer {
 
 .art-geld {
     font-size: 26px;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+.totalPrice {
+    display: flex;
+    justify-content: right;
+    padding: 40px 0 10px 0;
+}
+
+.totalPrice > h1 {
+    font-size: 22px;
 }
