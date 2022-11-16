@@ -3,6 +3,7 @@ include "header.php";
 ?>
 <?php
 $cart = getCart(); //Haal het winkelmandje op
+$totaalPrijs = 0;
 if(!empty($cart)){ //Check of het winkelmandje leeg is
     ?>
 
@@ -47,16 +48,22 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                     <h2 class="art-type-tekst"><?php print($StockItem['StockItemName'])?></h2>
                 </div>
                 <div class="price-text">
-                    <h3 class="art-geld"><?php print(sprintf("€%.2f", $StockItem['SellPrice']))?></h3>
+                    <h3 class="art-geld"><?php print(sprintf("€%.2f", $StockItem['SellPrice']));
+                        $totaalPrijs += ($StockItem['SellPrice']*$productAmount);?></h3>
                     <p class="art-tekst">Prijs inclusief BTW</p>
                 </div>
             </div>
 
-            <?php
+
+        <?php
     }
-    print("<br><div class='CartItem'>Hier kan de totaalprijs staan</div>")
 ?>
+
+            <h1> <?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
+
+
 </div>
+
 
 <form method="post">
     <div class="btn-wrapper">
