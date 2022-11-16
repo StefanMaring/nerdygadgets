@@ -560,6 +560,10 @@ footer {
     gap: 100px;
 }
 
+.meta-text {
+    max-height: 198px;
+}
+
 .image-wrapper {
     width: 150px;
     height: 150px;
@@ -601,6 +605,12 @@ footer {
 
 .art-type-tekst {
     font-size: 28px;
+    display: inline-block;
+    height: 70px;
+    width: 520px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .art-geld {
