@@ -49,8 +49,12 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                 </div>
                 <div class="price-text">
                     <h3 class="art-geld"><?php print(sprintf("€%.2f", $StockItem['SellPrice']));
-                        $totaalPrijs += round($StockItem['SellPrice'], 2)*$productAmount;?></h3> //tel huidige afgeronde prijs op bij totaalprijs
+                        $totaalPrijs += round($StockItem['SellPrice'], 2)*$productAmount;?></h3> <!--tel huidige afgeronde prijs op bij totaalprijs-->
                     <p class="art-tekst">Prijs inclusief BTW</p>
+                    <form method="post">
+                        <input type="hidden" name="removeProductID" value="<?php echo $productID?>">
+                        <input type="submit" name="removeProductBTN" class="btn-style add-margin btn-delete lighter" value="Verwijder">
+                    </form>
                 </div>
             </div>
 
@@ -79,6 +83,14 @@ if(isset($_POST['clearCartBTN'])){
     saveCart($cart);
     echo "<script> location.href='cart.php'; </script>";
 }
+
+if (isset($_POST['removeProductBTN'])) {
+    //print('<h1>' . $_POST["removeProductID"] . '</h1>');
+    unset($cart[$_POST['removeProductID']]);
+    saveCart($cart);
+    echo "<script> location.href='cart.php'; </script>";
+}
+
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
 }

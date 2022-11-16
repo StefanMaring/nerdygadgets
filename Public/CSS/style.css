@@ -599,6 +599,11 @@ footer {
     width: 50%;
 }
 
+.btn-delete {
+    background-color: var(--button-color-delete);
+    height: 100%;
+}
+
 .art-tekst {
     font-size: 14px;
 }
