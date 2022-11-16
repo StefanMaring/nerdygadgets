@@ -59,10 +59,6 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                         <label class="aantal-text">Aantal: </label>
                         <input onchange="submit()" class="aantal-btn" type="number" id="aantal" name="artikelCounter" min="1" max="100" value="<?php print($productAmount); ?>">
                     </form>
-
-
-
-
                 </div>
                 <div class="price-text">
                     <h3 class="art-geld"><?php print(sprintf("€%.2f", round($StockItem['SellPrice'], 2) * $productAmount));
