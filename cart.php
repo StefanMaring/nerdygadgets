@@ -5,6 +5,7 @@ include "header.php";
 $cart = getCart(); //Haal het winkelmandje op
 if(!empty($cart)){ //Check of het winkelmandje leeg is
     ?>
+
 <section class="s-cart" id="CenteredContent">
 
     <div class="cart-wrapper">
@@ -12,18 +13,13 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
     </div>
     <div class="Cart">
     <?php
-
-    //TEST: Handmatig product geforceerd in cart array
-//    $cart[1] = 1;
-//    $cart[12] = 1;
-
     foreach ($cart as $productID => $productAmount) {
         $StockItem = getStockItem($productID, $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
         $StockItemImage = getStockItemImage($productID, $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
         /*Foto's zijn opgeslagen in een 3D array, elke foto heeft een key beginnend bij 0, als value een array met key ImagePath en als value het pad naar de foto*/
-        // foreach ($StockItem as $test1 => $test2) { //DEBUG, laat alle gegevens van een product zien
-        //     print("$test1 => $test2 <br>");
-        // }
+        /* foreach ($StockItem as $test1 => $test2) { //DEBUG, laat alle gegevens van een product zien
+             print("$test1 => $test2 <br>");
+         }*/
         // print_r($StockItemImage);
 
         if(isset($StockItemImage[0])){ //Check of een product foto's heeft
@@ -46,6 +42,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                     <img src="Public/StockItemIMG/<?php print $productImage; ?>" class="product-image">
                 </div>
                 <div class="meta-text">
+                    <p class="art-tekst">Aantal: <?php print($productAmount)?></p>
                     <p class="art-tekst">Artikelnummer: <?php print($StockItem['StockItemID'])?></p>
                     <h2 class="art-type-tekst"><?php print($StockItem['StockItemName'])?></h2>
                 </div>
@@ -57,6 +54,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
             <?php
     }
+    print("<br><div class='CartItem'>Hier kan de totaalprijs staan</div>")
 ?>
 </div>
 
