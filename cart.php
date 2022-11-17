@@ -57,7 +57,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
                     <form id="aantal-form" method="POST">
                         <label class="aantal-text">Aantal: </label>
-                        <input onchange="submit()" class="aantal-btn" type="number" id="aantal" name="artikelCounter" min="1" max="100" value="<?php print($productAmount); ?>">
+                        <input onchange="submit()" class="aantal-btn" type="number" id="aantal" name="artikelCounter-<?php echo $productID?>" min="1" max="100" value="<?php print($productAmount); ?>">
                     </form>
                 </div>
                 <div class="price-text">
@@ -73,14 +73,16 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
 
         <?php
-        if(isset($_POST['artikelCounter'])) {
-            if ($_POST["artikelCounter"] < $productAmount) {
+        if(isset($_POST['artikelCounter-' . $productID])) {
+            if ($_POST["artikelCounter-" . $productID]  < $productAmount) {
                 $cart[$productID] -= 1;
                 saveCart($cart);
+                unset($_POST['artikelCounter']);
                 echo "<script> location.href='cart.php'; </script>";
-            } else {
+            } elseif($_POST["artikelCounter-" . $productID] > $productAmount) {
                 $cart[$productID] += 1;
                 saveCart($cart);
+                unset($_POST['artikelCounter']);
                 echo "<script> location.href='cart.php'; </script>";
             }
         }
