@@ -16,7 +16,6 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
 
 <section class="s-cart" id="CenteredContent">
-
     <div class="cart-wrapper">
         <h1 class="s-heading">Winkelmandje</h1>
     </div>
@@ -25,6 +24,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
     foreach ($cart as $productID => $productAmount) {
         $StockItem = getStockItem($productID, $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
         $StockItemImage = getStockItemImage($productID, $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
+        //print_r($StockItem);
         /*Foto's zijn opgeslagen in een 3D array, elke foto heeft een key beginnend bij 0, als value een array met key ImagePath en als value het pad naar de foto*/
         /* foreach ($StockItem as $test1 => $test2) { //DEBUG, laat alle gegevens van een product zien
              print("$test1 => $test2 <br>");
@@ -32,9 +32,9 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         // print_r($StockItemImage);
 
         if(isset($StockItemImage[0])){ //Check of een product foto's heeft
-            $productImage = $StockItemImage[0]['ImagePath']; //Sla de 1ste foto van een product op in productImage
+            $productImage = "Public/StockItemIMG/" . $StockItemImage[0]['ImagePath']; //Sla de 1ste foto van een product op in productImage
         } else{
-            $productImage = "yoda.png"; //Gebruik een andere foto als placeholder
+            $productImage = "Public/StockGroupIMG/" . $StockItem['BackupImagePath']; //Gebruik een andere foto als placeholder
         }
         /*print("<br><br>");
 
@@ -48,7 +48,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
             <div class="CartItem">
                 <div class="image-wrapper">
-                    <img src="Public/StockItemIMG/<?php print $productImage; ?>" class="product-image">
+                    <img src="<?php print $productImage; ?>" class="product-image">
                 </div>
                 <div class="meta-text">
                     <p class="art-tekst">Artikelnummer: <?php print($StockItem['StockItemID'])?></p>
