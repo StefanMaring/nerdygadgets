@@ -57,7 +57,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
                     <form id="aantal-form" method="POST">
                         <label class="aantal-text">Aantal: </label>
-                        <input onchange="submit()" class="aantal-btn" type="number" id="aantal" name="artikelCounter-<?php echo $productID?>" min="1" max="100" value="<?php print($productAmount); ?>">
+                        <input onchange="submit()" class="aantal-btn" type="number"  id="aantal" name="artikelCounter-<?php echo $productID?>" min="1" max="100" value="<?php print($productAmount); ?>">
                     </form>
                 </div>
                 <div class="price-text">
@@ -73,16 +73,16 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
 
         <?php
-        if(isset($_POST['artikelCounter-' . $productID])) {
-            if ($_POST["artikelCounter-" . $productID]  < $productAmount) {
-                $cart[$productID] -= 1;
+        if(isset($_POST['artikelCounter-' . $productID])) { //Check of aantalknop horend bij huidige productID is aangepast
+            if($_POST["artikelCounter-" . $productID] <= 0){ //Check of "aantal" invoer 0 of lager is
+                unset($cart[$productID]); //Verwijder product uit winkelmandje
+                saveCart($cart); //Sla winkelmandje op
+                unset($_POST['artikelCounter-' . $productID]); //"Aantal"knop loslaten
+                echo "<script> location.href='cart.php'; </script>"; //Reload de pagina
+            } elseif ($_POST["artikelCounter-" . $productID] != $productAmount) { //Check anders of de waarde verschilt van het huidige aantal in winkelmandje (voorkomt onnodige reload)
+                $cart[$productID] = $_POST["artikelCounter-" . $productID];
                 saveCart($cart);
-                unset($_POST['artikelCounter']);
-                echo "<script> location.href='cart.php'; </script>";
-            } elseif($_POST["artikelCounter-" . $productID] > $productAmount) {
-                $cart[$productID] += 1;
-                saveCart($cart);
-                unset($_POST['artikelCounter']);
+                unset($_POST['artikelCounter-' . $productID]);
                 echo "<script> location.href='cart.php'; </script>";
             }
         }
