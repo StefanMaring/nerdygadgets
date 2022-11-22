@@ -2,6 +2,7 @@
 <?php
 include __DIR__ . "/header.php";
 
+$stockItemID = $_GET['id']; // ProductID van de huidige pagina
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 ?>
@@ -80,11 +81,16 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
-                        <p class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b></p>
+                        <p class="StockItemPriceText"><b><?php print sprintf("€%.2f", $StockItem['SellPrice']); ?></b></p>
                         <h6> Inclusief BTW </h6>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="Add-button">
+            <form action="" method="POST">
+                <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
+            </form>
         </div>
 
         <div id="StockItemDescription">
@@ -97,10 +103,6 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             $CustomFields = json_decode($StockItem['CustomFields'], true);
             if (is_array($CustomFields)) { ?>
                 <table>
-                <thead>
-                <th>Naam</th>
-                <th>Data</th>
-                </thead>
                 <?php
                 foreach ($CustomFields as $SpecName => $SpecText) { ?>
                     <tr>
@@ -133,3 +135,14 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
 </div>
+
+<?php
+
+if(isset($_POST["addToCartBTN"])) {
+    addProductToCart($stockItemID);
+    echo "<script> location.href='cart.php'; </script>";
+}
+
+include "footer.php";
+
+?>

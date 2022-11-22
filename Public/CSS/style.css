@@ -1,6 +1,5 @@
 @import "variables.css";
 
-
 html {
     background-color: rgb(35, 35, 47) !important;
 }
@@ -10,6 +9,7 @@ body {
     color: #FFF !important;
     background-color: var(--main-color) !important;
 }
+
 @font-face {
     font-family: MmrText;
     src: url(/Public/fonts/mmrtext.ttf);
@@ -222,26 +222,29 @@ ul#ul-class-navigation li {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+
 #StockItemDescription {
-    background-color: rgba(35, 40, 47, 0.8);
+    background-color: var(--sub-color);
     width: 49%;
+    height: 100%;
     float: left;
     padding: 10px;
-    margin-top:10px;
-    border: 1px solid;
+    margin-top: 60px;
     font-family: pt-sans, sans-serif;
     font-size: 20px;
+    border-radius: 5px;
 }
 #StockItemSpecifications {
-    background-color: rgba(35, 40, 47, 0.8);
-    width: 49%;
+    background-color: var(--sub-color);
+    width: 50%;
     float: left;
     padding: 10px;
     margin-left: 1%;
     margin-top:10px;
-    border: 1px solid;
     font-family: pt-sans, sans-serif;
     font-size: 20px;
+    margin-bottom: 75px;
+    border-radius: 5px;
 }
 .Labels {
     margin-bottom: 0;
@@ -256,7 +259,6 @@ ul#ul-class-navigation li {
     position: absolute;
 }
 #LogoA {
-    height: 200px;
     width: 100%;
     position: absolute;
 }
@@ -506,10 +508,6 @@ ul#ul-class-price li {
 
 /* Section cart styling */
 
-.s-cart {
-    padding: 2.5rem;
-}
-
 .s-heading {
     display: block;
     margin-bottom: 25px;
@@ -535,4 +533,112 @@ footer {
 
 .footer p {
     margin: 0 !important;
+}
+
+.Add-button {
+    float: right;
+}
+
+.btn-style {
+    font-size: 16px;
+    text-decoration: none;
+    background-color: var(--button-color);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.CartItem {
+    padding: 1.5rem;
+    border-radius: 5px;
+    background-color: var(--sub-color);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: left;
+    align-items: center;
+    gap: 100px;
+}
+
+.meta-text {
+    max-height: 198px;
+}
+
+.image-wrapper {
+    width: 150px;
+    height: 150px;
+}
+
+.product-image {
+    width: inherit;
+    height: inherit;
+    object-fit: contain;
+    border-radius: 5px;
+    background-color: var(--sub-color);
+}
+
+.price-text {
+    margin-left: auto;
+}
+
+.add-margin {
+    margin: 22px 0 22px 0;
+}
+
+.btn-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 25px;
+}
+
+.lighter {
+    background-color: var(--button-color-sub);
+}
+
+.btn-small {
+    width: 50%;
+}
+
+.btn-delete {
+    background-color: var(--button-color-delete);
+    height: 100%;
+}
+
+.art-tekst {
+    font-size: 14px;
+}
+
+.art-type-tekst {
+    font-size: 28px;
+    display: inline-block;
+    height: 45px;
+    width: 520px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.art-geld {
+    font-size: 26px;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+.totalPrice {
+    display: flex;
+    justify-content: right;
+    padding: 40px 0 10px 0;
+}
+
+.totalPrice > h1 {
+    font-size: 22px;
+}
+
+.aantal-btn {
+    width: 12%;
+    height: 20%;
+    border-radius: 5px;
 }
