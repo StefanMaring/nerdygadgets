@@ -120,8 +120,6 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
 <?php
 
-
-
 if(isset($_POST['clearCartBTN'])){
     $cart = array();
     saveCart($cart);
