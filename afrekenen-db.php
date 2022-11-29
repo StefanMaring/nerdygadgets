@@ -15,13 +15,8 @@ $woonplaats = cleanInput($_POST["woonplaats"]);
 //Get cart
 $cart = getCart();
 
-if(!preg_match("/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/", $tel)) {
-    print("ERROR: Phonenumber must only exist out of - and numbers!");
-    exit();
-}
-
 //Check if all required fields are set
-if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
+if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
     //Get data from cart
     foreach($cart as $productID => $productAmount) {
         //Get single stockitem
