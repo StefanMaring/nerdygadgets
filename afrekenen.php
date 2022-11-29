@@ -9,14 +9,14 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
     <div class="achtergrond bezorgadres-breedte">
         <h1 class="default-margin">Bezorgadres</h1>
         <form action="afrekenen-db.php" method="post" class="default-margin">
-            <input class="stand-input" type="text" id="voornaam" name="voornaam" placeholder="voornaam">
-            <input class="small-input" type="text" id="tussenvoegsel" name="tussenvoegsel" placeholder="tussenvoegsel"><br><br>
-            <input class="stand-input" type="text" id="achternaam" name="achternaam" placeholder="achternaam"><br><br>
-            <input class="stand-input" type="text" id="email" name="email" placeholder="email"><br><br>
-            <input class="stand-input" type="tel" id="tel" name="tel" placeholder="telefoonnummer"><br><br>
-            <input class="stand-input" type="text" id="adres" name="adres" placeholder="straat + huisnummer">
-            <input class="small-input" type="text" id="postcode" name="postcode" placeholder="postcode"><br><br>
-            <input class="stand-input" type="text" id="woonplaats" name="woonplaats" placeholder="woonplaats"><br><br>
+            <input class="stand-input" type="text" required id="voornaam" name="voornaam" placeholder="*voornaam">
+            <input class="small-input" type="text"  id="tussenvoegsel" name="tussenvoegsel" placeholder="tussenvoegsel"><br><br>
+            <input class="stand-input" type="text" required id="achternaam" name="achternaam" placeholder="*achternaam"><br><br>
+            <input class="stand-input" type="text" required id="email" name="email" placeholder="*email"><br><br>
+            <input class="stand-input" type="tel" required id="tel" name="tel" placeholder="*telefoonnummer"><br><br>
+            <input class="stand-input" type="text" required id="adres" name="adres" placeholder="*straat + huisnummer">
+            <input class="small-input" type="text" required id="postcode" name="postcode" placeholder="*postcode"><br><br>
+            <input class="stand-input" type="text" required id="woonplaats" name="woonplaats" placeholder="*woonplaats"><br><br>
     </div>
 
     <div class="achtergrond-wrapper">
