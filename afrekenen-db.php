@@ -33,7 +33,7 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) 
             $nieuweVoorraad = $voorraad - $productAmount;
             //Save the cart after changing the quantity
             saveCart($cart);
-
+            //Doorlinken naar IDeal
             header("location: https://www.ideal.nl/demo/qr/?app=ideal");
             exit();
         } else {
