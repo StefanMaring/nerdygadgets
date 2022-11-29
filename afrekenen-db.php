@@ -19,7 +19,6 @@ $cart = getCart();
 if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
     //Get data from cart
     foreach($cart as $productID => $productAmount) {
-
         //Get single stockitem
         $stockItem = getStockItem($productID, $databaseConnection);
         //Get the quantity
@@ -31,6 +30,9 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) 
             $voorraad = (int)$stockQuantity["QuantityOnHand"];
             //Calculate the new product amount
             $nieuweVoorraad = $voorraad - $productAmount;
+
+            // HIER MOET DE QUERY VOOR HET OPSLAAN VAN DE GEGEVENS
+
             //Save the cart after changing the quantity
             saveCart($cart);
             //Doorlinken naar IDeal
