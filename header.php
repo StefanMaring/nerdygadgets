@@ -2,7 +2,6 @@
 <?php
 
 include "config.php";
-$databaseConnection = connectToDatabase();
 ?>
 <!DOCTYPE html>
 <html lang="en">
