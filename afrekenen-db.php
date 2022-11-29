@@ -31,6 +31,8 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) 
             $voorraad = (int)$stockQuantity["QuantityOnHand"];
             //Calculate the new product amount
             $nieuweVoorraad = $voorraad - $productAmount;
+            //Save the cart after changing the quantity
+            saveCart($cart);
         } else {
             print("ERROR: Stockitem variable not set!");
         }
