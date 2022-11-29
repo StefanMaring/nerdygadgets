@@ -11,8 +11,6 @@ include "header.php";
     <input type="text" id="adres" name="adres" placeholder="straat + huisnummer"><br>
     <input type="text" id="postcode" name="postcode" placeholder="postcode"><br>
     <input type="text" id="woonplaats" name="woonplaats" placeholder="woonplaats"><br>
-    <input type="checkbox" id="factuur" name="facuur">
-    <label for="factuur">Factuur adres hetzelfde als bezorg adres</label> <br>
 </form>
 <form>
     <input type="button" id="bestellen" name="bestellen" value="Bestelling plaatsen"><br>
