@@ -135,6 +135,7 @@ if (isset($_POST['removeProductBTN'])) {
 
 if(isset($_POST['PayCartBTN'])){
         saveCart($cart);
+        $_SESSION['totaalPrijs'] = $totaalPrijs;
         echo "<script> location.href='afrekenen.php'; </script>";
 } //afreken knop
 

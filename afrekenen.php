@@ -1,5 +1,7 @@
 <?php
 include "header.php";
+$cart = getCart();
+$totaalPrijs = $_SESSION['totaalPrijs'];
 ?>
 
 
@@ -20,7 +22,7 @@ include "header.php";
         <div class="overzicht" id="CenteredContent">
             <h1 class="default-margin">Overzicht</h1>
             <?php
-            print("<p>Prijs: </p>" . "<p>Verzendkosten: </p>" . "<p>Totaalprijs: </p>")
+            print("<p>Prijs: €$totaalPrijs </p>" . "<p>Verzendkosten: </p>" . "<p>Totaalprijs: </p>")
             ?>
         </div>
 
