@@ -72,6 +72,7 @@ switch ($SortOnPage) {
         $SortName = "price_low_high";
     }
 }
+$SearchString = str_replace("'", "", $SearchString); //Voorkoming SQL-injectie: Haalt single aanhalingstekens weg
 $searchValues = explode(" ", $SearchString);
 
 $queryBuildResult = "";
@@ -125,7 +126,6 @@ if ($CategoryID == "") {
                 GROUP BY StockItemID
                 ORDER BY " . $Sort . "
                 LIMIT ?  OFFSET ?";
-
 
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_bind_param($Statement, "ii",  $ProductsOnPage, $Offset);
