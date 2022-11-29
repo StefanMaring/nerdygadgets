@@ -643,28 +643,44 @@ p {
     /*filter: invert(100%);*/
 }
 
-.bezorgadres{
-    background-color: var(--sub-color);
-    border-radius: 5px;
-}
-
 .stand-input {
-    width: 35%;
+    width: 50%;
+    outline: none;
 }
 
 .small-input {
-    width: 13%;
+    width: 25%;
+    outline: none;
 }
 
-.overzicht {
+.achtergrond {
     background-color: var(--sub-color);
     border-radius: 5px;
+    margin: 10px;
 }
 
 .default-margin {
     margin: 10px;
 }
 
-.overzicht>p {
+.achtergrond>p {
     margin: 10px;
+}
+
+.flexBox {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.achtergrond-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.bestellen-hoogte {
+    height: 100%;
+}
+
+.bezorgadres-breedte {
+    width: 100%;
 }
