@@ -41,7 +41,7 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
 
         <div class="achtergrond bestellen-hoogte">
             <h1 class="default-margin">Betaalmethode</h1>
-                <input type="submit" id="bestellen" name="bestellen" value="Bestelling plaatsen"><br>
+                <input type="submit" class="bestellen-btn btn-style" id="bestellen" name="bestellen" value="Bestelling plaatsen"><br>
             </form>
         </div>
     </div>

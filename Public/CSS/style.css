@@ -684,3 +684,7 @@ p {
 .bezorgadres-breedte {
     width: 100%;
 }
+
+.bestellen-btn {
+    background-color: var(--button-color);
+}
