@@ -7,7 +7,7 @@ $voornaam = cleanInput($_POST["voornaam"]);
 $tussenvoegsel = cleanInput($_POST["tussenvoegsel"]); //Niet verplicht veld
 $achternaam = cleanInput($_POST["achternaam"]);
 $email = cleanInput($_POST["email"]);
-$tel = cleanInput($_POST["tel"]); //Niet verplicht veld
+$tel = cleanInput($_POST["tel"]);
 $adres = cleanInput($_POST["adres"]);
 $postcode = cleanInput($_POST["postcode"]);
 $woonplaats = cleanInput($_POST["woonplaats"]);
@@ -16,7 +16,19 @@ $woonplaats = cleanInput($_POST["woonplaats"]);
 $cart = getCart();
 
 //Check if all required fields are set
-if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
+
+if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
+    //Sla persoonsgegevens op in een array
+    $persoonsGegevens = array(
+        //Check of een tussenvoegsel is ingevoegd, sla dan volledige naam op onder "naam"
+        "naam" => "$voornaam $tussenvoegsel $achternaam" ? !empty($tussenvoegsel) : "$voornaam $achternaam",
+        "email" => $email,
+        "tel" => $tel,
+        "adres" => $adres,
+        "postcode" => $postcode,
+        "woonplaats" => $woonplaats
+    );
+
     //Get data from cart
     foreach($cart as $productID => $productAmount) {
         //Get single stockitem
