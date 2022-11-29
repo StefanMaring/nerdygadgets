@@ -17,19 +17,23 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
             <input class="stand-input" type="text" required id="adres" name="adres" placeholder="*straat + huisnummer">
             <input class="small-input" type="text" required id="postcode" name="postcode" placeholder="*postcode"><br><br>
             <input class="stand-input" type="text" required id="woonplaats" name="woonplaats" placeholder="*woonplaats"><br><br>
+            <p class="notice">* is een vereist veld.</p>
     </div>
 
     <div class="achtergrond-wrapper">
         <div class="achtergrond">
             <h1 class="default-margin">Overzicht</h1>
             <?php
+            //Verzendkosten worden niet opgeteld boven de 50 euro
             $verzendkosten = 0;
             if($totaalPrijs < 50) {
                 $verzendkosten += 6.95;
             }
 
+            //Bereken de eindprijs
             $eindPrijs = $verzendkosten + $totaalPrijs;
 
+            //Print de losse prijzen
             print("<p>Prijs: €$totaalPrijs </p>" . "<p>Verzendkosten: €$verzendkosten</p>" . "<p>Totaalprijs: €$eindPrijs</p>")
             ?>
         </div>
