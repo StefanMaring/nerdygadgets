@@ -43,7 +43,13 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) 
             //Calculate the new product amount
             $nieuweVoorraad = $voorraad - $productAmount;
 
-            // HIER MOET DE QUERY VOOR HET OPSLAAN VAN DE GEGEVENS
+            //Update query that updates the quantity on hand
+            $Query = "UPDATE stockitemholdings
+                      SET QuantityOnHand = ?
+                      WHERE StockItemID = ?";
+            $stmt = $databaseConnection->prepare($Query);
+            $stmt->bind_param("ii", $nieuweVoorraad, $productID);
+            $stmt->execute();
 
             //Save the cart after changing the quantity
             saveCart($cart);
