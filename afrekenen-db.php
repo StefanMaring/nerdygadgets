@@ -53,13 +53,13 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) 
 
             //Save the cart after changing the quantity
             saveCart($cart);
-            //Doorlinken naar IDeal
-            header("location: https://www.ideal.nl/demo/qr/?app=ideal");
-            exit();
         } else {
             print("ERROR: Stockitem variable not set!");
         }
     }
+    //Doorlinken naar IDeal
+    header("location: https://www.ideal.nl/demo/qr/?app=ideal");
+    exit();
 } else {
     print("ERROR: Not all values set!");
 }
