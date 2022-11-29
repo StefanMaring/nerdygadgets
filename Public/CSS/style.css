@@ -642,3 +642,29 @@ p {
 .carousel-control-prev-icon /*, .carousel-indicators */ {
     /*filter: invert(100%);*/
 }
+
+.bezorgadres{
+    background-color: var(--sub-color);
+    border-radius: 5px;
+}
+
+.stand-input {
+    width: 35%;
+}
+
+.small-input {
+    width: 13%;
+}
+
+.overzicht {
+    background-color: var(--sub-color);
+    border-radius: 5px;
+}
+
+.default-margin {
+    margin: 10px;
+}
+
+.overzicht>p {
+    margin: 10px;
+}
