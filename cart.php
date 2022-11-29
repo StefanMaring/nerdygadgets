@@ -133,6 +133,11 @@ if (isset($_POST['removeProductBTN'])) {
     echo "<script> location.href='cart.php'; </script>";
 }
 
+if(isset($_POST['PayCartBTN'])){
+        saveCart($cart);
+        echo "<script> location.href='afrekenen.php'; </script>";
+} //afreken knop
+
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
 }
