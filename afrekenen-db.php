@@ -14,6 +14,7 @@ $woonplaats = cleanInput($_POST["woonplaats"]);
 
 //Get cart
 $cart = getCart();
+$OrderisSuccesfull = FALSE;
 
 //Check if all required fields are set
 
@@ -51,8 +52,16 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) 
             $stmt->bind_param("ii", $nieuweVoorraad, $productID);
             $stmt->execute();
 
-            //Save the cart after changing the quantity
-            saveCart($cart);
+            //If the statement is executed succesfully set orderispayed to true
+            if($stmt->execute()) {
+                $OrderisSuccesfull = TRUE;
+
+                //If OrderisSuccesfull is TRUE empty the cart and save the cart
+                if($OrderisSuccesfull == TRUE) {
+                    $cart = array();
+                    saveCart($cart);
+                }
+            }
         } else {
             print("ERROR: Stockitem variable not set!");
         }
