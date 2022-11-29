@@ -14,12 +14,7 @@ include "header.php";
 </form>
 <form>
     <input type="button" id="bestellen" name="bestellen" value="Bestelling plaatsen"><br>
-    <form method="POST" action="" class="afreken-form" id="afreken-form">
-        <label for="voornaam">Voornaam:</label><br>
-        <input type="text" id="voornaam" name="voornaam"><br>
-        <label for="achternaam">Achternaam:</label><br>
-        <input type="text" id="achternaam" name="achternaam">
-    </form>
+</form>
 
 <?php
 include "footer.php";
