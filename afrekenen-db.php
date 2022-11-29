@@ -33,6 +33,9 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) 
             $nieuweVoorraad = $voorraad - $productAmount;
             //Save the cart after changing the quantity
             saveCart($cart);
+
+            header("location: https://www.ideal.nl/demo/qr/?app=ideal");
+            exit();
         } else {
             print("ERROR: Stockitem variable not set!");
         }
