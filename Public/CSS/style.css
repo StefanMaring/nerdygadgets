@@ -750,3 +750,9 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 .iDeal-image {
     margin: 50px;
 }
+
+.credcard {
+    font-size: 20px;
+    padding: 0px 10px 0 10px;
+
+}
