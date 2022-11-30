@@ -31,8 +31,7 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
 
     //Saves customer into database, returns assigned ID
     $customerID = saveCustomer($persoonsGegevens, $databaseConnection);
-    //saveOrder($customerID, $databaseConnection);
-
+    saveOrder($cart, $customerID, $databaseConnection);
 
     //Get data from cart
     foreach($cart as $productID => $productAmount) {

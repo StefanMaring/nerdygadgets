@@ -226,8 +226,7 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
 
 }
 
-function saveOrder($customerID, $databaseConnection)
-{
+function saveOrder($cart, $customerID, $databaseConnection){
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
     mysqli_begin_transaction($databaseConnection);
 
@@ -268,34 +267,88 @@ function saveOrder($customerID, $databaseConnection)
             )
             VALUES
             (
-            @OrderId, --OrderID
-            @CstId, --CustomerID
-            1, --SalespersonPersonID
-            0, --PickedByPersonID
-            1, --ContactPersonID
-            0, --BackorderOrderID
-            CURRENT_DATE, --OrderDate
-            DATE_ADD(CURRENT_DATE, INTERVAL 1 DAY), --ExpectedDeliveryDate
-            1, --IsUndersupplyBackordered
-            1, --LastEditedBy
-            CURRENT_TIMESTAMP --LastEditedWhen
+            @OrderId,
+            @CstId,
+            1,
+            1,
+            1,
+            @OrderId,
+            CURRENT_DATE,
+            DATE_ADD(CURRENT_DATE, INTERVAL 1 DAY),
+            1,
+            1,
+            CURRENT_TIMESTAMP
             )
         ");
 
+        //CREATE ORDERLINES
+        foreach($cart as $productID => $productAmount){
+            //define orderLineID
+            $statement = mysqli_prepare($databaseConnection, "
+                        SELECT MAX(OrderLineID) + 1 AS OrderLineId -- Fetch highest known ID and increase by 1, save as OrderId
+                        FROM orderlines;");
+            mysqli_stmt_execute($statement);
+            $Result = mysqli_stmt_get_result($statement);
+            $orderLineID = mysqli_fetch_all($Result, MYSQLI_ASSOC); //Fetch result from SQL query
+            $orderLineID = $orderLineID[0]["OrderLineId"]; //Retrieve orderLineID from fetched array
+
+            //orderLineID
+            $statement = mysqli_prepare($databaseConnection, "SET @OrderLineId = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $orderLineID);
+            mysqli_stmt_execute($statement);
+
+            //orderID
+            $statement = mysqli_prepare($databaseConnection, "SET @OrderId = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $orderID);
+            mysqli_stmt_execute($statement);
+
+            //productID
+            $statement = mysqli_prepare($databaseConnection, "SET @ProductId = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $productID);
+            mysqli_stmt_execute($statement);
+
+            //productAmount
+            $statement = mysqli_prepare($databaseConnection, "SET @ProductQuantity = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $productAmount);
+            mysqli_stmt_execute($statement);
+
+            mysqli_query($databaseConnection, "
+                INSERT INTO orderlines
+                (
+                OrderLineID,
+                OrderID,
+                StockItemID,
+                Description,
+                PackageTypeID,
+                Quantity,
+                UnitPrice,
+                TaxRate,
+                PickedQuantity,
+                LastEditedBy,
+                LastEditedWhen
+                )
+                VALUES
+                (
+                @OrderLineId,
+                @OrderId,
+                (SELECT StockItemID FROM stockitems WHERE StockItemID = @ProductId),
+                (SELECT StockItemName FROM stockitems WHERE StockItemID = @ProductId),
+                (SELECT UnitPackageID FROM stockitems WHERE StockItemID = @ProductId),
+                @ProductQuantity,
+                (SELECT UnitPrice FROM stockitems WHERE StockItemID = @ProductId),
+                (SELECT TaxRate FROM stockitems WHERE StockItemID = @ProductId),
+                @ProductQuantity,
+                1,
+                CURRENT_TIMESTAMP
+                )
+            ");
+        }
+
         mysqli_commit($databaseConnection);
 
-    } catch (mysqli_sql_exception $exception) {
+    } catch(mysqli_sql_exception $exception){
         mysqli_rollback($databaseConnection);
         throw $exception;
     }
-
-    /*    try {}
-
-
-        } catch(mysqli_sql_exception $exception){
-            mysqli_rollback($databaseConnection);
-            throw $exception;
-
-    }*/
 
 }
