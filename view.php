@@ -80,17 +80,24 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
-                        <p class="StockItemPriceText"><b><?php print sprintf("€%.2f", $StockItem['SellPrice']); ?></b></p>
+                        <p class="StockItemPriceText"><b><?php if($StockItem['QuantityOnHand'] == "Voorraad: 0") {
+                                    print("niet beschikbaar"); }
+                                else {print sprintf("€%.2f", $StockItem['SellPrice']);} //prijs laten zien ?></b></p>
                         <h6> Inclusief BTW </h6>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="Add-button">
+        <?php
+        if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
+            print('<div class="Add-button">
             <form action="" method="POST">
                 <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
             </form>
         </div>
+        ');
+        }
+            ?>
 
         <div id="StockItemDescription">
             <h3>Artikel beschrijving</h3>
