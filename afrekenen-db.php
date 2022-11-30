@@ -21,14 +21,14 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
     //Sla persoonsgegevens op in een array
     $persoonsGegevens = array(
         //Check of een tussenvoegsel is ingevoegd, sla dan volledige naam op onder "naam"
-        "naam" => "$voornaam $tussenvoegsel $achternaam" ? !empty($tussenvoegsel) : "$voornaam $achternaam",
+        "naam" => !empty($tussenvoegsel) ? "$voornaam $tussenvoegsel $achternaam" : "$voornaam $achternaam",
         "email" => $email,
         "tel" => $tel,
         "adres" => $adres,
         "postcode" => $postcode,
         "woonplaats" => $woonplaats
     );
-
+    saveCustomer($persoonsGegevens, $databaseConnection);
     //Get data from cart
     foreach($cart as $productID => $productAmount) {
         //Get single stockitem
