@@ -86,11 +86,11 @@ ul#ul-class-navigation li {
     margin-left: 50px;
 }
 
-.search-bar {
+/* .search-bar {
     background-color: rgba(49, 59, 73, 0.8);
     padding: 0.5rem;
     border-radius: 25px;
-}
+} */
 
 .cart-btn {
     background-color: rgba(49, 59, 73, 0.8);
@@ -747,12 +747,40 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     transition: color .3s;
 }
 
+
+.search-input {
+    width: 200px;
+    background-color: var(--sub-color);
+    border: none;
+    outline: none;
+    border-radius: 150px;
+    color: white;
+    border-radius: 150px 0 0 150px;
+}
+
+.search-icon {
+    position: absolute;
+    top: 23px;
+    right: 80px;
+    background-color: var(--sub-color);
+    height: 50px;
+    width: 30px;
+    border-radius: 0 150px 150px 0;
+    padding: 13px 15px 0 0;
+}
+
 .iDeal-image {
     margin: 50px;
 }
 
 .credcard {
     font-size: 20px;
-    padding: 0px 10px 0 10px;
+    float: right;
+    margin-right: 10px;
+    margin-top: 12px;
+}
 
+.titel-gif {
+    display: flex;
+    flow-from: row;
 }
