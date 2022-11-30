@@ -726,3 +726,13 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     border: none;
     border-radius: 5px;
 }
+
+.cart-link {
+    color: white;
+    transition: color .3s;
+}
+
+.cart-link:hover {
+    color: rgb(200, 200, 200);
+    transition: color .3s;
+}
