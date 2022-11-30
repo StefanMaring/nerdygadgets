@@ -217,6 +217,8 @@ try {
             );");
 
     mysqli_commit($databaseConnection);
+
+    return $customerID;
 } catch(mysqli_sql_exception $exception){
     mysqli_rollback($databaseConnection);
     throw $exception;
