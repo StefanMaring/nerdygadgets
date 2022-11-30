@@ -648,11 +648,16 @@ p {
 .stand-input {
     width: 50%;
     outline: none;
+    border-radius: 10px;
+    height: 45px;
 }
 
 .small-input {
     width: 25%;
     outline: none;
+    border-radius: 10px;
+    margin-left: 10px;
+    height: 45px;
 }
 
 .achtergrond {
@@ -689,6 +694,7 @@ p {
 
 .bezorgadres-breedte {
     width: 100%;
+    padding-left: 10px;
 }
 
 .bestellen-btn {
