@@ -50,7 +50,9 @@ $cart = getCart();
 
         <ul id="ul-class-navigation">
             <li class="search-bar">
-                <a href="browse.php" class="HrefDecoration"><i class="fas fa-search search"></i> Zoeken</a>
+                <!-- <a href="browse.php" class="HrefDecoration"><i class="fas fa-search search"></i> Zoeken</a> -->
+                <input type="search" class="icon search-input" id="searchVal" name="searchVal" placeholder="Zoeken...">
+                <div class="fas fa-magnifying-glass search-icon"></div>
             </li>
             <li class="cart-btn">
                 <a href="cart.php" class="HrefDecoration"><i class="fa-solid fa-cart-shopping"></i></a>

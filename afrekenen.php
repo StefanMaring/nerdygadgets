@@ -41,6 +41,8 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
 
         <div class="achtergrond bestellen-hoogte">
             <h2 class="default-margin">Betaalmethode</h2>
+            <div class="p methods"><i class="fa-solid fa-money-check-dollar fa-flip credcard" style="--fa-animation-duration: 2s;" ></i>
+            </div>
                 <div class="btn-padding-wrp">
                     <input type="submit" class="bestellen-btn btn-style" id="bestellen" name="bestellen" value="Bestelling plaatsen"><br>
                     <img class="iDeal-image" src="https://www.ideal.nl/cms/files/iDEAL-Logo-QR_RGB_v1_1024x1024-740x740.png" alt="iDeal image" height="175px" width="175px">
