@@ -28,7 +28,10 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
         "postcode" => $postcode,
         "woonplaats" => $woonplaats
     );
-    saveCustomer($persoonsGegevens, $databaseConnection);
+
+    //Saves customer into database, returns assigned ID
+    $customerID = saveCustomer($persoonsGegevens, $databaseConnection);
+
     //Get data from cart
     foreach($cart as $productID => $productAmount) {
         //Get single stockitem
