@@ -139,7 +139,7 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
         mysqli_stmt_bind_param($statement, 's', $naam);
         mysqli_stmt_execute($statement);
         //email
-        $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
+        $statement = mysqli_prepare($databaseConnection, "SET @email = ?;");
         mysqli_stmt_bind_param($statement, 's', $email);
         mysqli_stmt_execute($statement);
         //tel
@@ -205,7 +205,7 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
                 7,
                 @tel,
                 @tel,
-                'www.windesheim.nl',
+                @email,
                 @adres,
                 @postcode,
                 @plaats,
