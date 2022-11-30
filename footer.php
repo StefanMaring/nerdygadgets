@@ -1,4 +1,3 @@
-<!-- de inhoud van dit bestand wordt onderaan elke pagina geplaatst -->
 <footer>
     <div class="footer">
         <p>&copy; NerdyGadgets - 

@@ -56,7 +56,6 @@ $cart = getCart();
                 <a href="cart.php" class="HrefDecoration"><i class="fa-solid fa-cart-shopping"></i></a>
             </li>
         </ul>
-        <!--Counter that checks the amount of items in the cart--->
         <span class="productCounter"><?php print(count($cart)); ?></span>
 
     </div>
