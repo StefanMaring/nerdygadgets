@@ -43,29 +43,34 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
             //Calculate the new product amount
             $nieuweVoorraad = $voorraad - $productAmount;
 
-            //Update query that updates the quantity on hand
-            $Query = "UPDATE stockitemholdings
-                      SET QuantityOnHand = ?
-                      WHERE StockItemID = ?";
-            $stmt = $databaseConnection->prepare($Query);
-            $stmt->bind_param("ii", $nieuweVoorraad, $productID);
-            $stmt->execute();
+            //Check if the stock is bigger than 0, otherwise don't start transactions
+            if($nieuweVoorraad >= 0) {
+                //Update query that updates the quantity on hand
+                $Query = "UPDATE stockitemholdings
+                SET QuantityOnHand = ?
+                WHERE StockItemID = ?";
+                $stmt = $databaseConnection->prepare($Query);
+                $stmt->bind_param("ii", $nieuweVoorraad, $productID);
+                $stmt->execute();
 
-            //If the statement is executed succesfully set orderispayed to true
-            if($stmt->execute()) {
-                $OrderisSuccesfull = TRUE;
+                //If the statement is executed succesfully set orderispayed to true
+                if($stmt->execute()) {
+                    $OrderisSuccesfull = TRUE;
 
-                //If OrderisSuccesfull is TRUE empty the cart and save the cart
-                if($OrderisSuccesfull == TRUE) {
-                    $cart = array();
-                    saveCart($cart);
+                    //If OrderisSuccesfull is TRUE empty the cart and save the cart
+                    if($OrderisSuccesfull == TRUE) {
+                        $cart = array();
+                        saveCart($cart);
+                    }
                 }
+            } else {
+                print("Voorraad is niet voldoende!");
             }
         } else {
             print("ERROR: Stockitem variable not set!");
         }
     }
-    //Doorlinken naar IDeal
+    //Link through to IDeal
     header("location: https://www.ideal.nl/demo/qr/?app=ideal");
     exit();
 } else {
