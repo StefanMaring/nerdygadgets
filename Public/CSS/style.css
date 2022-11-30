@@ -35,10 +35,14 @@ a {
     text-decoration: none;
     position: relative;
     color:#000000;
+    border: none;
+    outline: none;
 }
+
 a:hover {
      text-decoration: none !important;
- }
+}
+
 a span {
     display: none;
     position: absolute;

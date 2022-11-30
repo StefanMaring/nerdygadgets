@@ -115,113 +115,240 @@ function getStockQuantity($productID, $databaseConnection){
 }
 
 function saveCustomer($persoonsGegevens, $databaseConnection){
-    extract($persoonsGegevens, EXTR_OVERWRITE); //Splits inhoud array op in aparte variabelen
-    /*Bestaande variabelen:
-    $naam $email $tel $adres $postcode $woonplaats*/
+        extract($persoonsGegevens, EXTR_OVERWRITE); //Splits inhoud array op in aparte variabelen
+        /*Bestaande variabelen:
+        $naam $email $tel $adres $postcode $woonplaats*/
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
+        mysqli_begin_transaction($databaseConnection);
+
+    try {
+        //define customerID
+        $statement = mysqli_prepare($databaseConnection, "
+                SELECT MAX(CustomerID) + 1 AS CstId -- Fetch highest known ID and increase by 1, save as CstId
+                FROM customers;");
+        mysqli_stmt_execute($statement);
+        $Result = mysqli_stmt_get_result($statement);
+        $customerID = mysqli_fetch_all($Result, MYSQLI_ASSOC); //Fetch result from SQL query
+        $customerID = $customerID[0]["CstId"]; //Retrieve customerID from fetched array
+        //customerID
+        $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
+        mysqli_stmt_bind_param($statement, 'i', $customerID);
+        mysqli_stmt_execute($statement);
+        //naam
+        $statement = mysqli_prepare($databaseConnection, "SET @name = ?;");
+        mysqli_stmt_bind_param($statement, 's', $naam);
+        mysqli_stmt_execute($statement);
+        //email
+        $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
+        mysqli_stmt_bind_param($statement, 's', $email);
+        mysqli_stmt_execute($statement);
+        //tel
+        $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
+        mysqli_stmt_bind_param($statement, 's', $tel);
+        mysqli_stmt_execute($statement);
+        //adres
+        $statement = mysqli_prepare($databaseConnection, "SET @adres = ?;");
+        mysqli_stmt_bind_param($statement, 's', $adres);
+        mysqli_stmt_execute($statement);
+        //postcode
+        $statement = mysqli_prepare($databaseConnection, "SET @postcode = ?;");
+        mysqli_stmt_bind_param($statement, 's', $postcode);
+        mysqli_stmt_execute($statement);
+        //woonplaats
+        $statement = mysqli_prepare($databaseConnection, "SET @plaats = ?;");
+        mysqli_stmt_bind_param($statement, 's', $woonplaats);
+        mysqli_stmt_execute($statement);
+
+        mysqli_query($databaseConnection, "
+        INSERT INTO customers
+                (
+                CustomerID,
+                CustomerName,
+                BillToCustomerID,
+                CustomerCategoryID,
+                PrimaryContactPersonID,
+                DeliveryMethodID,
+                DeliveryCityID,
+                PostalCityID,
+                AccountOpenedDate,
+                StandardDiscountPercentage,
+                IsStatementSent,
+                IsOnCreditHold,
+                PaymentDays,
+                PhoneNumber,
+                FaxNumber,
+                WebsiteURL,
+                DeliveryAddressLine1,
+                DeliveryPostalCode,
+                DeliveryLocation,
+                PostalAddressLine1,
+                PostalPostalCode,
+                LastEditedBy,
+                ValidFrom,
+                ValidTo
+                )
+                
+                VALUES
+                (
+                @CstId,
+                @name,
+                @CstId,
+                0,
+                1,
+                1,
+                1,
+                1,
+                CURRENT_TIMESTAMP,
+                0.000, 
+                0,
+                0,
+                7,
+                @tel,
+                @tel,
+                'www.windesheim.nl',
+                @adres,
+                @postcode,
+                @plaats,
+                @postcode,
+                @plaats,
+                1,
+                CURRENT_TIMESTAMP,
+                '9999-12-31 23:59:59'
+                );");
+
+        mysqli_commit($databaseConnection);
+
+        return $customerID;
+    } catch(mysqli_sql_exception $exception){
+        mysqli_rollback($databaseConnection);
+        throw $exception;
+    }
+
+}
+
+function saveOrder($cart, $customerID, $databaseConnection){
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
     mysqli_begin_transaction($databaseConnection);
 
-try {
-    //define customerID
-    $statement = mysqli_prepare($databaseConnection, "
-            SELECT MAX(CustomerID) + 1 AS CstId -- Fetch highest known ID and increase by 1, save as CstId
-            FROM customers;");
-    mysqli_stmt_execute($statement);
-    $Result = mysqli_stmt_get_result($statement);
-    $customerID = mysqli_fetch_all($Result, MYSQLI_ASSOC); //Fetch result from SQL query
-    $customerID = $customerID[0]["CstId"]; //Retrieve customerID from fetched array
-    //customerID
-    $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
-    mysqli_stmt_bind_param($statement, 'i', $customerID);
-    mysqli_stmt_execute($statement);
-    //naam
-    $statement = mysqli_prepare($databaseConnection, "SET @name = ?;");
-    mysqli_stmt_bind_param($statement, 's', $naam);
-    mysqli_stmt_execute($statement);
-    //email
-    $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
-    mysqli_stmt_bind_param($statement, 's', $email);
-    mysqli_stmt_execute($statement);
-    //tel
-    $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
-    mysqli_stmt_bind_param($statement, 's', $tel);
-    mysqli_stmt_execute($statement);
-    //adres
-    $statement = mysqli_prepare($databaseConnection, "SET @adres = ?;");
-    mysqli_stmt_bind_param($statement, 's', $adres);
-    mysqli_stmt_execute($statement);
-    //postcode
-    $statement = mysqli_prepare($databaseConnection, "SET @postcode = ?;");
-    mysqli_stmt_bind_param($statement, 's', $postcode);
-    mysqli_stmt_execute($statement);
-    //woonplaats
-    $statement = mysqli_prepare($databaseConnection, "SET @plaats = ?;");
-    mysqli_stmt_bind_param($statement, 's', $woonplaats);
-    mysqli_stmt_execute($statement);
+    //CREATE ORDER
+    try {
+        //define orderID
+        $statement = mysqli_prepare($databaseConnection, "
+                    SELECT MAX(OrderID) + 1 AS OrderId -- Fetch highest known ID and increase by 1, save as OrderId
+                    FROM orders;");
+        mysqli_stmt_execute($statement);
+        $Result = mysqli_stmt_get_result($statement);
+        $orderID = mysqli_fetch_all($Result, MYSQLI_ASSOC); //Fetch result from SQL query
+        $orderID = $orderID[0]["OrderId"]; //Retrieve orderID from fetched array
 
-    mysqli_query($databaseConnection, "
-    INSERT INTO customers
+        //orderID
+        $statement = mysqli_prepare($databaseConnection, "SET @OrderId = ?;");
+        mysqli_stmt_bind_param($statement, 'i', $orderID);
+        mysqli_stmt_execute($statement);
+        //customerID
+        $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
+        mysqli_stmt_bind_param($statement, 'i', $customerID);
+        mysqli_stmt_execute($statement);
+
+        mysqli_query($databaseConnection, "
+            INSERT INTO orders
             (
+            OrderID,
             CustomerID,
-            CustomerName,
-            BillToCustomerID,
-            CustomerCategoryID,
-            PrimaryContactPersonID,
-            DeliveryMethodID,
-            DeliveryCityID,
-            PostalCityID,
-            AccountOpenedDate,
-            StandardDiscountPercentage,
-            IsStatementSent,
-            IsOnCreditHold,
-            PaymentDays,
-            PhoneNumber,
-            FaxNumber,
-            WebsiteURL,
-            DeliveryAddressLine1,
-            DeliveryPostalCode,
-            DeliveryLocation,
-            PostalAddressLine1,
-            PostalPostalCode,
+            SalespersonPersonID,
+            PickedByPersonID,
+            ContactPersonID,
+            BackorderOrderID,
+            OrderDate,
+            ExpectedDeliveryDate,
+            IsUndersupplyBackordered,
             LastEditedBy,
-            ValidFrom,
-            ValidTo
+            LastEditedWhen
             )
-            
             VALUES
             (
+            @OrderId,
             @CstId,
-            @name,
-            @CstId,
-            0,
             1,
             1,
             1,
+            @OrderId,
+            CURRENT_DATE,
+            DATE_ADD(CURRENT_DATE, INTERVAL 1 DAY),
             1,
-            CURRENT_TIMESTAMP,
-            0.000, 
-            0,
-            0,
-            7,
-            @tel,
-            @tel,
-            'www.windesheim.nl',
-            @adres,
-            @postcode,
-            @plaats,
-            @postcode,
-            @plaats,
             1,
-            CURRENT_TIMESTAMP,
-            '9999-12-31 23:59:59'
-            );");
+            CURRENT_TIMESTAMP
+            )
+        ");
 
-    mysqli_commit($databaseConnection);
+        //CREATE ORDERLINES
+        foreach($cart as $productID => $productAmount){
+            //define orderLineID
+            $statement = mysqli_prepare($databaseConnection, "
+                        SELECT MAX(OrderLineID) + 1 AS OrderLineId -- Fetch highest known ID and increase by 1, save as OrderId
+                        FROM orderlines;");
+            mysqli_stmt_execute($statement);
+            $Result = mysqli_stmt_get_result($statement);
+            $orderLineID = mysqli_fetch_all($Result, MYSQLI_ASSOC); //Fetch result from SQL query
+            $orderLineID = $orderLineID[0]["OrderLineId"]; //Retrieve orderLineID from fetched array
 
-    return $customerID;
-} catch(mysqli_sql_exception $exception){
-    mysqli_rollback($databaseConnection);
-    throw $exception;
-}
+            //orderLineID
+            $statement = mysqli_prepare($databaseConnection, "SET @OrderLineId = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $orderLineID);
+            mysqli_stmt_execute($statement);
+
+            //orderID
+            $statement = mysqli_prepare($databaseConnection, "SET @OrderId = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $orderID);
+            mysqli_stmt_execute($statement);
+
+            //productID
+            $statement = mysqli_prepare($databaseConnection, "SET @ProductId = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $productID);
+            mysqli_stmt_execute($statement);
+
+            //productAmount
+            $statement = mysqli_prepare($databaseConnection, "SET @ProductQuantity = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $productAmount);
+            mysqli_stmt_execute($statement);
+
+            mysqli_query($databaseConnection, "
+                INSERT INTO orderlines
+                (
+                OrderLineID,
+                OrderID,
+                StockItemID,
+                Description,
+                PackageTypeID,
+                Quantity,
+                UnitPrice,
+                TaxRate,
+                PickedQuantity,
+                LastEditedBy,
+                LastEditedWhen
+                )
+                VALUES
+                (
+                @OrderLineId,
+                @OrderId,
+                (SELECT StockItemID FROM stockitems WHERE StockItemID = @ProductId),
+                (SELECT StockItemName FROM stockitems WHERE StockItemID = @ProductId),
+                (SELECT UnitPackageID FROM stockitems WHERE StockItemID = @ProductId),
+                @ProductQuantity,
+                (SELECT UnitPrice FROM stockitems WHERE StockItemID = @ProductId),
+                (SELECT TaxRate FROM stockitems WHERE StockItemID = @ProductId),
+                @ProductQuantity,
+                1,
+                CURRENT_TIMESTAMP
+                )
+            ");
+        }
+
+        mysqli_commit($databaseConnection);
+
+    } catch(mysqli_sql_exception $exception){
+        mysqli_rollback($databaseConnection);
+        throw $exception;
+    }
 
 }
