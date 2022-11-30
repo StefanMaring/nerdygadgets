@@ -648,11 +648,16 @@ p {
 .stand-input {
     width: 50%;
     outline: none;
+    border-radius: 10px;
+    height: 45px;
 }
 
 .small-input {
     width: 25%;
     outline: none;
+    border-radius: 10px;
+    margin-left: 10px;
+    height: 45px;
 }
 
 .achtergrond {
@@ -689,6 +694,7 @@ p {
 
 .bezorgadres-breedte {
     width: 100%;
+    padding-left: 10px;
 }
 
 .bestellen-btn {
@@ -741,6 +747,7 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     transition: color .3s;
 }
 
+
 .search-input {
     width: 200px;
     background-color: var(--sub-color);
@@ -760,4 +767,13 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     width: 30px;
     border-radius: 0 150px 150px 0;
     padding: 13px 15px 0 0;
+}
+
+.iDeal-image {
+    margin: 50px;
+}
+
+.credcard {
+    font-size: 20px;
+    padding: 0px 10px 0 10px;
 }

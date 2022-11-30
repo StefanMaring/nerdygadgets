@@ -15,7 +15,7 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
             <input class="stand-input" type="email" required id="email" name="email" placeholder="*Email"><br><br>
             <input class="stand-input" type="tel" required id="tel" name="tel" pattern="[0-9]+-" placeholder="*Telefoonnummer"><br><br>
             <input class="stand-input" type="text" required id="adres" name="adres" placeholder="*Straat + huisnummer">
-            <input class="small-input" type="text" required id="postcode" name="postcode" placeholder="*Postcode"><br><br>
+            <input class="small-input" type="text" required id="postcode" name="postcode" pattern=".{6,7}" placeholder="*Postcode"><br><br>
             <input class="stand-input" type="text" required id="woonplaats" name="woonplaats" placeholder="*Woonplaats"><br><br>
             <p class="notice">* is een vereist veld.</p>
     </div>
@@ -41,8 +41,11 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
 
         <div class="achtergrond bestellen-hoogte">
             <h2 class="default-margin">Betaalmethode</h2>
+            <div class="p methods"><i class="fa-solid fa-money-check-dollar fa-flip credcard" style="--fa-animation-duration: 2s;" ></i>
+            </div>
                 <div class="btn-padding-wrp">
                     <input type="submit" class="bestellen-btn btn-style" id="bestellen" name="bestellen" value="Bestelling plaatsen"><br>
+                    <img class="iDeal-image" src="https://www.ideal.nl/cms/files/iDEAL-Logo-QR_RGB_v1_1024x1024-740x740.png" alt="iDeal image" height="175px" width="175px">
                 </div>
             </form>
         </div>
