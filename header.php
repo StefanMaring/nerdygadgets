@@ -2,6 +2,7 @@
 <?php
 
 include "config.php";
+$cart = getCart();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +58,7 @@ include "config.php";
                 <a href="cart.php" class="HrefDecoration"><i class="fa-solid fa-cart-shopping"></i></a>
             </li>
         </ul>
+        <span class="productCounter"><?php print(count($cart)); ?></span>
 
 <!-- einde code voor US3 zoeken -->
     </div>

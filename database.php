@@ -114,3 +114,113 @@ function getStockQuantity($productID, $databaseConnection){
 
     return $Result;
 }
+
+function saveCustomer($persoonsGegevens, $databaseConnection){
+    extract($persoonsGegevens, EXTR_OVERWRITE); //Splits inhoud array op in aparte variabelen
+    /*Bestaande variabelen:
+    $naam $email $tel $adres $postcode $woonplaats*/
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
+    mysqli_begin_transaction($databaseConnection);
+
+try {
+    //define customerID
+    $statement = mysqli_prepare($databaseConnection, "
+            SELECT MAX(CustomerID) + 1 AS CstId -- Fetch highest known ID and increase by 1, save as CstId
+            FROM customers;");
+    mysqli_stmt_execute($statement);
+    $Result = mysqli_stmt_get_result($statement);
+    $customerID = mysqli_fetch_all($Result, MYSQLI_ASSOC); //Fetch result from SQL query
+    $customerID = $customerID[0]["CstId"]; //Retrieve customerID from fetched array
+    //customerID
+    $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
+    mysqli_stmt_bind_param($statement, 'i', $customerID);
+    mysqli_stmt_execute($statement);
+    //naam
+    $statement = mysqli_prepare($databaseConnection, "SET @name = ?;");
+    mysqli_stmt_bind_param($statement, 's', $naam);
+    mysqli_stmt_execute($statement);
+    //email
+    $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
+    mysqli_stmt_bind_param($statement, 's', $email);
+    mysqli_stmt_execute($statement);
+    //tel
+    $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
+    mysqli_stmt_bind_param($statement, 's', $tel);
+    mysqli_stmt_execute($statement);
+    //adres
+    $statement = mysqli_prepare($databaseConnection, "SET @adres = ?;");
+    mysqli_stmt_bind_param($statement, 's', $adres);
+    mysqli_stmt_execute($statement);
+    //postcode
+    $statement = mysqli_prepare($databaseConnection, "SET @postcode = ?;");
+    mysqli_stmt_bind_param($statement, 's', $postcode);
+    mysqli_stmt_execute($statement);
+    //woonplaats
+    $statement = mysqli_prepare($databaseConnection, "SET @plaats = ?;");
+    mysqli_stmt_bind_param($statement, 's', $woonplaats);
+    mysqli_stmt_execute($statement);
+
+    mysqli_query($databaseConnection, "
+    INSERT INTO customers
+            (
+            CustomerID,
+            CustomerName,
+            BillToCustomerID,
+            CustomerCategoryID,
+            PrimaryContactPersonID,
+            DeliveryMethodID,
+            DeliveryCityID,
+            PostalCityID,
+            AccountOpenedDate,
+            StandardDiscountPercentage,
+            IsStatementSent,
+            IsOnCreditHold,
+            PaymentDays,
+            PhoneNumber,
+            FaxNumber,
+            WebsiteURL,
+            DeliveryAddressLine1,
+            DeliveryPostalCode,
+            DeliveryLocation,
+            PostalAddressLine1,
+            PostalPostalCode,
+            LastEditedBy,
+            ValidFrom,
+            ValidTo
+            )
+            
+            VALUES
+            (
+            @CstId,
+            @name,
+            @CstId,
+            0,
+            1,
+            1,
+            1,
+            1,
+            CURRENT_TIMESTAMP,
+            0.000, 
+            0,
+            0,
+            7,
+            @tel,
+            @tel,
+            'www.windesheim.nl',
+            @adres,
+            @postcode,
+            @plaats,
+            @postcode,
+            @plaats,
+            1,
+            CURRENT_TIMESTAMP,
+            '9999-12-31 23:59:59'
+            );");
+
+    mysqli_commit($databaseConnection);
+} catch(mysqli_sql_exception $exception){
+    mysqli_rollback($databaseConnection);
+    throw $exception;
+}
+
+}
