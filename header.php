@@ -1,4 +1,3 @@
-<!-- de inhoud van dit bestand wordt bovenaan elke pagina geplaatst -->
 <?php
 
 include "config.php";
@@ -48,7 +47,6 @@ $cart = getCart();
                 </li>
             </ul>
         </div>
-<!-- code voor US3: zoeken -->
 
         <ul id="ul-class-navigation">
             <li class="search-bar">
@@ -58,9 +56,9 @@ $cart = getCart();
                 <a href="cart.php" class="HrefDecoration"><i class="fa-solid fa-cart-shopping"></i></a>
             </li>
         </ul>
+        <!--Counter that checks the amount of items in the cart--->
         <span class="productCounter"><?php print(count($cart)); ?></span>
 
-<!-- einde code voor US3 zoeken -->
     </div>
     <div class="row" id="Content">
         <div class="col-12">
