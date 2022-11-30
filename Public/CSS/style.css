@@ -775,5 +775,12 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 
 .credcard {
     font-size: 20px;
-    padding: 0px 10px 0 10px;
+    float: right;
+    margin-right: 10px;
+    margin-top: 12px;
+}
+
+.titel-gif {
+    display: flex;
+    flow-from: row;
 }
