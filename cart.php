@@ -53,7 +53,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                 </div>
                 <div class="meta-text">
                     <p class="art-tekst">Artikelnummer: <?php print($StockItem['StockItemID'])?></p>
-                    <h2 class="art-type-tekst"><a class="cart-link" href="view.php?<?php echo $productID?>"><?php print($StockItem['StockItemName'])?></a></h2>
+                    <h2 class="art-type-tekst"><a class="cart-link" href="view.php?id=<?php echo $productID?>"><?php print($StockItem['StockItemName'])?></a></h2>
 
 
                     <form id="aantal-form" method="POST">
