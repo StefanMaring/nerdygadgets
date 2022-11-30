@@ -17,8 +17,7 @@ $cart = getCart();
 $OrderisSuccesfull = FALSE;
 
 //Check if all required fields are set
-
-if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
+if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
     //Sla persoonsgegevens op in een array
     $persoonsGegevens = array(
         //Check of een tussenvoegsel is ingevoegd, sla dan volledige naam op onder "naam"
