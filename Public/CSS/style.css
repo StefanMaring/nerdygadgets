@@ -142,11 +142,13 @@ ul#ul-class-navigation li {
     float: left;
     margin-left: 10px;
     margin-top: 10px;
-    margin-right: 10px
+    margin-right: 10px;
+    border-radius: 5px;
 }
 .ImgFrame img {
     width: 230px;
     height: 230px;
+    border-radius: 5px;
 }
 #StockItemFrameRight {
     float: right;
@@ -191,6 +193,7 @@ ul#ul-class-navigation li {
     background-color: rgb(36, 41, 143);
     float: left;
     margin-right: 10px;
+    border-radius: 5px;
 }
 .QuantityText {
     position: absolute;
@@ -638,11 +641,6 @@ p {
     border-radius: 5px;
 }
 
-.carousel-control-next-icon,
-.carousel-control-prev-icon /*, .carousel-indicators */ {
-    /*filter: invert(100%);*/
-}
-
 .stand-input {
     width: 50%;
     outline: none;
@@ -681,6 +679,10 @@ p {
     height: 100%;
 }
 
+.btn-padding-wrp {
+    padding: 0px 10px 0 10px;
+}
+
 .bezorgadres-breedte {
     width: 100%;
 }
@@ -700,4 +702,27 @@ p {
     top: 15px;
     justify-content: center;
     align-content: center;
+}
+
+button, input[type=submit] {
+    transition: background-color .3s;
+}
+
+button, input[type=submit]:hover {
+    background-color: var(--button-color-hover);
+    transition: background-color .3s;
+}
+
+.lighter:hover {
+    background-color: var(--button-color-hover-lighter) !important;
+}
+
+.btn-delete:hover {
+    background-color: var(--button-color-hover-delete) !important;
+}
+
+input[type=number], input[type=text], input[type=password], input[type=tel], input[type=email], select {
+    outline: none;
+    border: none;
+    border-radius: 5px;
 }
