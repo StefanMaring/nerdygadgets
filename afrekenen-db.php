@@ -67,7 +67,7 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
                     }
                 }
             } else {
-                print("Stock is too low");
+                print("ERROR: Stock is too low!");
             }
         } else {
             print("ERROR: Stockitem variable not set!");
