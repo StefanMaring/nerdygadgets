@@ -335,6 +335,7 @@ if (isset($amount)) {
     }
     ?>
 </div>
+<script>document.title = "Nerdygadgets - Producten doorzoeken";</script>
 
 <?php
 include __DIR__ . "/footer.php";
