@@ -48,6 +48,7 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
         </div>
     </div>
 </div>
+<script>document.title = "Nerdygadgets - Afrekenen";</script>
 
 <?php
 include "footer.php";

@@ -25,3 +25,4 @@ $StockGroups = getStockGroups($databaseConnection);
         }
     } ?>
 </div>
+<script>document.title = "Nerdygadgets - Categoriën";</script>

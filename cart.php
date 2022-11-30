@@ -115,7 +115,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         <input type="submit" name="PayCartBTN" class="btn-style add-margin" value="Afrekenen">
     </div>
 </form>
-
+<script>document.title = "Nerdygadgets - Winkelmand";</script>
 
 
 <?php
