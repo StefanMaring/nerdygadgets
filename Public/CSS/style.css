@@ -777,5 +777,5 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 
 .titel-gif {
     display: flex;
-    flow-from: row;
+    flex-flow: row;
 }
