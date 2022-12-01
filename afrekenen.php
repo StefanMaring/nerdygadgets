@@ -42,7 +42,7 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
         <div class="achtergrond bestellen-hoogte">
             <div class="titel-gif">
                 <h2 class="default-margin">Betaalmethode</h2>
-                <div class="credcard    " class="p methods"><i class="fa-solid fa-money-check-dollar fa-flip credcard" style="--fa-animation-duration: 2s;" ></i>
+                <div class="credcard    " class="p methods"><i class="fa-brands fa-ideal fa-flip credcard" style="--fa-animation-duration: 2s;" ></i>
                 </div>
             </div>
             <div class="btn-padding-wrp">
