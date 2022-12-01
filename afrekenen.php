@@ -13,7 +13,7 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
             <input class="small-input" type="text"  id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel"><br><br>
             <input class="stand-input" type="text" required id="achternaam" name="achternaam" placeholder="*Achternaam"><br><br>
             <input class="stand-input" type="email" required id="email" name="email" placeholder="*Email"><br><br>
-            <input class="stand-input" type="tel" required id="tel" name="tel" pattern="[0-9]{1-12}" placeholder="*Telefoonnummer"><br><br>
+            <input class="stand-input" type="tel" required id="tel" name="tel" pattern="[0-9]" placeholder="*Telefoonnummer"><br><br>
             <input class="stand-input" type="text" required id="adres" name="adres" placeholder="*Straat + huisnummer">
             <input class="small-input" type="text" required id="postcode" name="postcode" pattern=".{6,7}" placeholder="*Postcode"><br><br>
             <input class="stand-input" type="text" required id="woonplaats" name="woonplaats" placeholder="*Woonplaats"><br><br>
