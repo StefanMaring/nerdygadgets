@@ -128,8 +128,9 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
                 FROM customers;");
         mysqli_stmt_execute($statement);
         $Result = mysqli_stmt_get_result($statement);
-        $customerID = mysqli_fetch_all($Result, MYSQLI_ASSOC); //Fetch result from SQL query
-        $customerID = $customerID[0]["CstId"]; //Retrieve customerID from fetched array
+        $customerID = mysqli_fetch_array($Result, MYSQLI_ASSOC); //Fetch result from SQL query
+        $customerID = $customerID["CstId"]; //Retrieve customerID from fetched array
+
         //customerID
         $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
         mysqli_stmt_bind_param($statement, 'i', $customerID);
@@ -217,6 +218,7 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
                 );");
 
         mysqli_commit($databaseConnection);
+        mysqli_free_result($Result);
 
         return $customerID;
     } catch(mysqli_sql_exception $exception){
@@ -345,6 +347,7 @@ function saveOrder($cart, $customerID, $databaseConnection){
         }
 
         mysqli_commit($databaseConnection);
+        mysqli_free_result($Result);
 
     } catch(mysqli_sql_exception $exception){
         mysqli_rollback($databaseConnection);
