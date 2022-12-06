@@ -35,10 +35,14 @@ a {
     text-decoration: none;
     position: relative;
     color:#000000;
+    border: none;
+    outline: none;
 }
+
 a:hover {
      text-decoration: none !important;
- }
+}
+
 a span {
     display: none;
     position: absolute;
@@ -48,9 +52,8 @@ a span {
 }
 a:hover span {
     display: inline-block; text-align: center;
-    width: 250px;
+    width: 30px;
     min-height: 30px;
-    margin-top: 25px;
     font-family: pt-sans, sans-serif;
     color: #000;
     font-size: 18px;
@@ -81,12 +84,6 @@ ul#ul-class-navigation li {
     text-decoration: none;
     text-decoration-color: currentcolor;
     margin-left: 50px;
-}
-
-.search-bar {
-    background-color: rgba(49, 59, 73, 0.8);
-    padding: 0.5rem;
-    border-radius: 25px;
 }
 
 .cart-btn {
@@ -143,11 +140,13 @@ ul#ul-class-navigation li {
     float: left;
     margin-left: 10px;
     margin-top: 10px;
-    margin-right: 10px
+    margin-right: 10px;
+    border-radius: 5px;
 }
 .ImgFrame img {
     width: 230px;
     height: 230px;
+    border-radius: 5px;
 }
 #StockItemFrameRight {
     float: right;
@@ -192,6 +191,7 @@ ul#ul-class-navigation li {
     background-color: rgb(36, 41, 143);
     float: left;
     margin-right: 10px;
+    border-radius: 5px;
 }
 .QuantityText {
     position: absolute;
@@ -453,11 +453,7 @@ ul#ul-class-price li {
     width: 300px;
     height: 300px;
 }
-.carousel-control-next-icon:hover,
-.carousel-control-prev-icon:hover {
-    width: 20px;
-    height: 20px;
-}
+
 .ListItem:hover {
     text-decoration: none;
 }
@@ -641,4 +637,145 @@ p {
     width: 12%;
     height: 20%;
     border-radius: 5px;
+}
+
+.stand-input {
+    width: 50%;
+    outline: none;
+    border-radius: 10px;
+    height: 45px;
+}
+
+.small-input {
+    width: 25%;
+    outline: none;
+    border-radius: 10px;
+    margin-left: 10px;
+    height: 45px;
+}
+
+.achtergrond {
+    background-color: var(--sub-color);
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.default-margin {
+    margin: 10px;
+}
+
+.achtergrond>p {
+    margin: 10px;
+}
+
+.flexBox {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.achtergrond-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.bestellen-hoogte {
+    height: 100%;
+}
+
+.btn-padding-wrp {
+    padding: 0px 10px 0 10px;
+}
+
+.bezorgadres-breedte {
+    width: 100%;
+    padding-left: 10px;
+}
+
+.bestellen-btn {
+    background-color: var(--button-color);
+}
+
+.productCounter {
+    display: flex;
+    background-color: var(--button-color);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    position: absolute;
+    right: 7px;
+    top: 15px;
+    justify-content: center;
+    align-content: center;
+}
+
+button, input[type=submit] {
+    transition: background-color .3s;
+}
+
+button, input[type=submit]:hover {
+    background-color: var(--button-color-hover);
+    transition: background-color .3s;
+}
+
+.lighter:hover {
+    background-color: var(--button-color-hover-lighter) !important;
+}
+
+.btn-delete:hover {
+    background-color: var(--button-color-hover-delete) !important;
+}
+
+input[type=number], input[type=text], input[type=password], input[type=tel], input[type=email], select {
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+
+.cart-link {
+    color: white;
+    transition: color .3s;
+}
+
+.cart-link:hover {
+    color: rgb(200, 200, 200);
+    transition: color .3s;
+}
+
+
+.search-input {
+    width: 200px;
+    background-color: var(--sub-color);
+    border: none;
+    outline: none;
+    border-radius: 150px;
+    color: white;
+    border-radius: 150px 0 0 150px;
+}
+
+.search-icon {
+    position: absolute;
+    top: 23px;
+    right: 80px;
+    background-color: var(--sub-color);
+    height: 50px;
+    width: 30px;
+    border-radius: 0 150px 150px 0;
+    padding: 13px 15px 0 0;
+}
+
+.iDeal-image {
+    margin: 50px;
+    border-radius: 5px;
+}
+
+.credcard {
+    font-size: 20px;
+    float: right;
+    margin-right: 10px;
+    margin-top: 12px;
+}
+
+.titel-gif {
+    display: flex;
+    flex-flow: row;
 }

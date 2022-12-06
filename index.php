@@ -1,4 +1,3 @@
-<!-- dit is het bestand dat wordt geladen zodra je naar de website gaat -->
 <?php
 include __DIR__ . "/header.php";
 ?>
@@ -17,6 +16,7 @@ include __DIR__ . "/header.php";
         <div class="HomePageStockItemPicture"></div>
     </div>
 </div>
+<script>document.title = "Nerdygadgets - Home";</script>
 <?php
 include __DIR__ . "/footer.php";
 ?>

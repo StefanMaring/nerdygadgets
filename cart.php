@@ -43,6 +43,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         print ("Prijs: " . sprintf("€ %.2f", $StockItem['SellPrice']));
 
         print("<br><br>");*/
+        $maxInWinkelmand = preg_replace("/[^0-9]/", "", $StockItem["QuantityOnHand"] ); //maximale voorraad
         ?>
             <br>
 
@@ -52,12 +53,12 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
                 </div>
                 <div class="meta-text">
                     <p class="art-tekst">Artikelnummer: <?php print($StockItem['StockItemID'])?></p>
-                    <h2 class="art-type-tekst"><?php print($StockItem['StockItemName'])?></h2>
+                    <h2 class="art-type-tekst"><a class="cart-link" href="view.php?id=<?php echo $productID?>"><?php print($StockItem['StockItemName'])?></a></h2>
 
 
                     <form id="aantal-form" method="POST">
                         <label class="aantal-text">Aantal: </label>
-                        <input onchange="submit()" class="aantal-btn" type="number"  id="aantal" name="artikelCounter-<?php echo $productID?>" min="1" max="100" value="<?php print($productAmount); ?>">
+                        <input onchange="submit()" oninput="this.style.width = (this.value.length + 5) + 'ch';" class="aantal-btn" type="number" id="aantal" name="artikelCounter-<?php echo $productID?>" min="1" max="<?php print($maxInWinkelmand);?>" value="<?php print($productAmount); ?>">
                     </form>
                 </div>
                 <div class="price-text">
@@ -74,12 +75,26 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
         <?php
         if(isset($_POST['artikelCounter-' . $productID])) { //Check of aantalknop horend bij huidige productID is aangepast
-            if($_POST["artikelCounter-" . $productID] <= 0){ //Check of "aantal" invoer 0 of lager is
-                unset($cart[$productID]); //Verwijder product uit winkelmandje
+            /*Onderstaande lijn convert de invoer naar een integer voordat het getal verder wordt behandeld
+            Dit doet 2 dingen:
+            -Haalt nullen aan het begin weg: b.v. "0025" wordt "25"
+            -Rond decimalen af naar hele getallen: b.v. "25.5" wordt "26"
+            Dit voorkomt ook dat een getal tussen de 0 en 1 de "0-check" omzeilt, het wordt dan automatisch omgezet naar 1*/
+            $_POST["artikelCounter-" . $productID] = (int)$_POST["artikelCounter-" . $productID];
+
+            if ($_POST["artikelCounter-" . $productID] > $maxInWinkelmand) { //Check of ingevoerd aantal hoger is dan de voorraad
+                $cart[$productID] = $maxInWinkelmand; //Stel het aantal in op het aantal in voorraad
                 saveCart($cart); //Sla winkelmandje op
                 unset($_POST['artikelCounter-' . $productID]); //"Aantal"knop loslaten
                 echo "<script> location.href='cart.php'; </script>"; //Reload de pagina
-            } elseif ($_POST["artikelCounter-" . $productID] != $productAmount) { //Check anders of de waarde verschilt van het huidige aantal in winkelmandje (voorkomt onnodige reload)
+            }
+            elseif($_POST["artikelCounter-" . $productID] <= 0){ //Check of "aantal" invoer 0 of lager is
+                $cart[$productID] = 1;
+                saveCart($cart); //Sla winkelmandje op
+                unset($_POST['artikelCounter-' . $productID]); //"Aantal"knop loslaten
+                echo "<script> location.href='cart.php'; </script>"; //Reload de pagina
+            } 
+            elseif ($_POST["artikelCounter-" . $productID] != $productAmount) { //Check anders of de waarde verschilt van het huidige aantal in winkelmandje (voorkomt onnodige reload)
                 $cart[$productID] = $_POST["artikelCounter-" . $productID];
                 saveCart($cart);
                 unset($_POST['artikelCounter-' . $productID]);
@@ -100,12 +115,10 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         <input type="submit" name="PayCartBTN" class="btn-style add-margin" value="Afrekenen">
     </div>
 </form>
-
+<script>document.title = "Nerdygadgets - Winkelmand";</script>
 
 
 <?php
-
-
 
 if(isset($_POST['clearCartBTN'])){
     $cart = array();
@@ -119,6 +132,12 @@ if (isset($_POST['removeProductBTN'])) {
     saveCart($cart);
     echo "<script> location.href='cart.php'; </script>";
 }
+
+if(isset($_POST['PayCartBTN'])){
+        saveCart($cart);
+        $_SESSION['totaalPrijs'] = $totaalPrijs;
+        echo "<script> location.href='afrekenen.php'; </script>";
+} //afreken knop
 
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');

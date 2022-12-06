@@ -1,4 +1,3 @@
-<!-- dit bestand bevat alle code voor het productoverzicht -->
 <?php
 include __DIR__ . "/header.php";
 
@@ -72,6 +71,7 @@ switch ($SortOnPage) {
         $SortName = "price_low_high";
     }
 }
+$SearchString = str_replace("'", "", $SearchString); //Voorkoming SQL-injectie: Haalt single aanhalingstekens weg
 $searchValues = explode(" ", $SearchString);
 
 $queryBuildResult = "";
@@ -125,7 +125,6 @@ if ($CategoryID == "") {
                 GROUP BY StockItemID
                 ORDER BY " . $Sort . "
                 LIMIT ?  OFFSET ?";
-
 
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_bind_param($Statement, "ii",  $ProductsOnPage, $Offset);
@@ -335,6 +334,7 @@ if (isset($amount)) {
     }
     ?>
 </div>
+<script>document.title = "Nerdygadgets - Producten doorzoeken";</script>
 
 <?php
 include __DIR__ . "/footer.php";

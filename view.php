@@ -1,4 +1,3 @@
-<!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
 include __DIR__ . "/header.php";
 
@@ -22,7 +21,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
         <div id="ArticleHeader">
             <?php
-            if (isset($StockItemImage)) {
+            if (isset($StockItemImage) && !empty($StockItemImage)) {
                 // één plaatje laten zien
                 if (count($StockItemImage) == 1) {
                     ?>
@@ -48,7 +47,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                                 <?php for ($i = 0; $i < count($StockItemImage); $i++) {
                                     ?>
                                     <div class="carousel-item <?php print ($i == 0) ? 'active' : ''; ?>">
-                                        <img src="Public/StockItemIMG/<?php print $StockItemImage[$i]['ImagePath'] ?>">
+                                        <img src="Public/StockItemIMG/<?php print $StockItemImage[$i]['ImagePath'] ?>" class="product-image">
                                     </div>
                                 <?php } ?>
                             </div>
@@ -81,17 +80,24 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
-                        <p class="StockItemPriceText"><b><?php print sprintf("€%.2f", $StockItem['SellPrice']); ?></b></p>
+                        <p class="StockItemPriceText"><b><?php if($StockItem['QuantityOnHand'] == "Voorraad: 0") {
+                                    print("niet beschikbaar"); }
+                                else {print sprintf("€%.2f", $StockItem['SellPrice']);} //prijs laten zien ?></b></p>
                         <h6> Inclusief BTW </h6>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="Add-button">
+        <?php
+        if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
+            print('<div class="Add-button">
             <form action="" method="POST">
                 <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
             </form>
         </div>
+        ');
+        }
+            ?>
 
         <div id="StockItemDescription">
             <h3>Artikel beschrijving</h3>
@@ -135,6 +141,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
 </div>
+<script>document.title = "Nerdygadgets - <?php echo $StockItem["StockItemName"];?>";</script>
 
 <?php
 
