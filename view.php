@@ -4,6 +4,10 @@ include __DIR__ . "/header.php";
 $stockItemID = $_GET['id']; // ProductID van de huidige pagina
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
+
+//Random integer to send when adding product to cart
+$randInt = rand(1,100);
+
 ?>
 <div id="CenteredContent">
     <?php
@@ -93,7 +97,11 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
         ?>
             <div class="add-btn-wrp">
-                <button id="add-btn" class="add-btn btn-style">Toevoegen aan winkelmand</button>
+                <iframe name="SendingForm"></iframe>
+                <form method="post" id="openDialForm" target="SendingForm">
+                    <input type="hidden" name="hiddenField" id="hiddenField" value="<?php echo $randInt;?>">
+                    <input type="submit" id="add-btn" name="addToCartBTN" class="add-btn btn-style" value="Toevoegen aan winkelmand">
+                </form>
             </div>
         <?php
         }
@@ -144,12 +152,12 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
 <div class="overlay" id="overlay"></div>
 <div class="dialog" id="dialogbox">
-    <h4>Product toegevoegd aan winkelmand? Verder winkelen of afrekenen?</h4>
+    <h4>Product toegevoegd aan winkelmand. Verder winkelen of afrekenen?</h4>
     <div class="choice-wrapper">
         <button class="btn-style"><a href="categories.php">Verder winkelen</a></button>
         <div class="Add-button">
             <form action="" method="POST">
-                <input type="submit" name="addToCartBTN" class="btn-style lighter" value="Naar de winkelmand">
+                <input type="submit" class="btn-style lighter" name="goToCart" value="Naar de winkelmand">
             </form>
         </div>
     </div>
@@ -160,8 +168,13 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
 <?php
 
-if(isset($_POST["addToCartBTN"])) {
+//Adds product to cart
+if(isset($_POST["hiddenField"])) {
     addProductToCart($stockItemID);
+}
+
+//Redirects user to cart page
+if(isset($_POST["goToCart"])) {
     echo "<script> location.href='cart.php'; </script>";
 }
 

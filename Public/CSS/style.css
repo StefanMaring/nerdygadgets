@@ -783,6 +783,7 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 
 .add-btn {
     padding: 0.8rem;
+    width: 17%;
 }
 
 .dialog {
@@ -814,11 +815,6 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     margin-top: 25px;
 }
 
-.same-width {
-    width: 130px;
-    text-align: center;
-}
-
 button > a {
     color: var(--white);
     text-decoration: none;
@@ -847,4 +843,10 @@ button > a:hover {
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+iframe {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
 }
