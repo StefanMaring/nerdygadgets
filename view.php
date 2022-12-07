@@ -89,13 +89,9 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             </div>
         </div>
         <?php
+        //If stock is bigger than 0, display button
         if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
-            ?>
-            <!-- <div class="Add-button">
-                <form action="" method="POST">
-                    <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
-                </form>
-            </div> -->
+        ?>
             <div class="add-btn-wrp">
                 <button id="add-btn" class="add-btn btn-style">Toevoegen aan winkelmand</button>
             </div>
@@ -153,7 +149,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         <button class="btn-style"><a href="categories.php">Verder winkelen</a></button>
         <div class="Add-button">
             <form action="" method="POST">
-                <input type="submit" name="addToCartBTN" class="btn-style" value="Naar de winkelmand">
+                <input type="submit" name="addToCartBTN" class="btn-style lighter" value="Naar de winkelmand">
             </form>
         </div>
     </div>

@@ -713,7 +713,7 @@ button, input[type=submit] {
     transition: background-color .3s;
 }
 
-button, input[type=submit]:hover {
+button:hover, input[type=submit]:hover {
     background-color: var(--button-color-hover);
     transition: background-color .3s;
 }
@@ -810,7 +810,7 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 .choice-wrapper {
     display: flex;
     flex-flow: row nowrap;
-    gap: 20px;
+    gap: 10px;
     margin-top: 25px;
 }
 
