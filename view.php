@@ -90,14 +90,18 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         </div>
         <?php
         if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
-            print('<div class="Add-button">
-            <form action="" method="POST">
-                <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
-            </form>
-        </div>
-        ');
-        }
             ?>
+            <!-- <div class="Add-button">
+                <form action="" method="POST">
+                    <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
+                </form>
+            </div> -->
+            <div class="add-btn-wrp">
+                <button id="add-btn" class="add-btn btn-style">Toevoegen aan winkelmand</button>
+            </div>
+        <?php
+        }
+        ?>
 
         <div id="StockItemDescription">
             <h3>Artikel beschrijving</h3>
@@ -141,6 +145,21 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
 </div>
+
+<div class="overlay" id="overlay"></div>
+<div class="dialog" id="dialogbox">
+    <h4>Product toegevoegd aan winkelmand? Verder winkelen of afrekenen?</h4>
+    <div class="choice-wrapper">
+        <button class="btn-style"><a href="categories.php">Verder winkelen</a></button>
+        <div class="Add-button">
+            <form action="" method="POST">
+                <input type="submit" name="addToCartBTN" class="btn-style" value="Naar de winkelmand">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="Public/JS/app.jquery.js"></script>
 <script>document.title = "Nerdygadgets - <?php echo $StockItem["StockItemName"];?>";</script>
 
 <?php
