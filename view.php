@@ -169,7 +169,7 @@ $randInt = rand(1,100);
 <?php
 
 //Adds product to cart
-if(isset($_POST["hiddenField"])) {
+if(isset($_POST["addToCartBTN"])) {
     addProductToCart($stockItemID);
 }
 
