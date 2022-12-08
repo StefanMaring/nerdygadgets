@@ -5,9 +5,6 @@ $stockItemID = $_GET['id']; // ProductID van de huidige pagina
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
-//Random integer to send when adding product to cart
-$randInt = rand(1,100);
-
 ?>
 <div id="CenteredContent">
     <?php
@@ -97,9 +94,8 @@ $randInt = rand(1,100);
         if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
         ?>
             <div class="add-btn-wrp">
-                <iframe name="SendingForm"></iframe>
+                <iframe name="SendingForm" class="hiddenFrame"></iframe>
                 <form method="post" id="openDialForm" target="SendingForm">
-                    <input type="hidden" name="hiddenField" id="hiddenField" value="<?php echo $randInt;?>">
                     <input type="submit" id="add-btn" name="addToCartBTN" class="add-btn btn-style" value="Toevoegen aan winkelmand">
                 </form>
             </div>
@@ -152,12 +148,12 @@ $randInt = rand(1,100);
 
 <div class="overlay" id="overlay"></div>
 <div class="dialog" id="dialogbox">
-    <h4>Product toegevoegd aan winkelmand. Verder winkelen of afrekenen?</h4>
+    <h4><i class="fa-solid fa-circle-check m-right"></i>Product toegevoegd aan winkelmand. Verder winkelen of afrekenen?</h4>
     <div class="choice-wrapper">
-        <button class="btn-style"><a href="categories.php">Verder winkelen</a></button>
+        <button class="btn-style transparent"><a href="categories.php">Verder winkelen</a></button>
         <div class="Add-button">
             <form action="" method="POST">
-                <input type="submit" class="btn-style lighter" name="goToCart" value="Naar de winkelmand">
+                <input type="submit" class="btn-style" name="goToCart" value="Naar de winkelmand">
             </form>
         </div>
     </div>

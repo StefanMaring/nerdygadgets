@@ -783,7 +783,7 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 
 .add-btn {
     padding: 0.8rem;
-    width: 17%;
+    width: 27%;
 }
 
 .dialog {
@@ -797,8 +797,8 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     visibility: visible;
     opacity: 1;
     z-index: 2;
-    background-color: var(--white);
-    color: var(--black);
+    background-color: var(--sub-color);
+    color: var(--white);
     width: 35%;
     position: absolute;
     top: 25%;
@@ -837,7 +837,7 @@ button > a:hover {
     z-index: 1;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
     top: 0;
     bottom: 0;
@@ -845,8 +845,22 @@ button > a:hover {
     right: 0;
 }
 
-iframe {
+.hiddenFrame {
     display: none;
     visibility: hidden;
     opacity: 0;
+}
+
+.transparent {
+    border: 1px solid var(--button-color-sub);
+    background-color: transparent;
+}
+
+.transparent:hover {
+    background-color: var(--button-color-hover-lighter);
+}
+
+.m-right {
+    display: inline-block;
+    margin-right: 5px;
 }
