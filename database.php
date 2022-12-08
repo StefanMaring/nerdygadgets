@@ -128,8 +128,7 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
                 FROM customers;");
         mysqli_stmt_execute($statement);
         $Result = mysqli_stmt_get_result($statement);
-        $customerID = mysqli_fetch_array($Result, MYSQLI_ASSOC); //Fetch result from SQL query
-        $customerID = $customerID["CstId"]; //Retrieve customerID from fetched array
+        $customerID = mysqli_fetch_column($Result); //Fetch result from SQL query, save into customerID
 
         //customerID
         $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
@@ -223,7 +222,8 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
         return $customerID;
     } catch(mysqli_sql_exception $exception){
         mysqli_rollback($databaseConnection);
-        throw $exception;
+        die(var_dump($customerID));
+       // throw $exception;
     }
 
 }
@@ -240,8 +240,7 @@ function saveOrder($cart, $customerID, $databaseConnection){
                     FROM orders;");
         mysqli_stmt_execute($statement);
         $Result = mysqli_stmt_get_result($statement);
-        $orderID = mysqli_fetch_all($Result, MYSQLI_ASSOC); //Fetch result from SQL query
-        $orderID = $orderID[0]["OrderId"]; //Retrieve orderID from fetched array
+        $orderID = mysqli_fetch_column($Result); //Fetch result from SQL query, save into orderID
 
         //orderID
         $statement = mysqli_prepare($databaseConnection, "SET @OrderId = ?;");
@@ -291,8 +290,7 @@ function saveOrder($cart, $customerID, $databaseConnection){
                         FROM orderlines;");
             mysqli_stmt_execute($statement);
             $Result = mysqli_stmt_get_result($statement);
-            $orderLineID = mysqli_fetch_all($Result, MYSQLI_ASSOC); //Fetch result from SQL query
-            $orderLineID = $orderLineID[0]["OrderLineId"]; //Retrieve orderLineID from fetched array
+            $orderLineID = mysqli_fetch_column($Result); //Fetch result from SQL query, save into orderLineID
 
             //orderLineID
             $statement = mysqli_prepare($databaseConnection, "SET @OrderLineId = ?;");
