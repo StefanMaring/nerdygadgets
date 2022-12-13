@@ -19,4 +19,3 @@ $('#x').on("click", function() {
     $('#pop-upbox').removeClass("show-dialog");    
     $('#kortingscode-pop').removeClass("show-overlay");
 });
-
