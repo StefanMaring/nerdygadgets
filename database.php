@@ -1,5 +1,13 @@
 <?php
 
+function resultToArray($result) {
+    $rows = array();
+    while($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    return $rows;
+}
+
 function connectToDatabase() {
     $Connection = null;
 
@@ -374,8 +382,9 @@ function aanbevelingenItems ($productID, $databaseConnection) {
     ");
     mysqli_stmt_execute($recommendations);
     $recommendations = mysqli_stmt_get_result($recommendations);
-    $recommendations = mysqli_fetch_all($recommendations);
-    die(print_r($recommendations));
+    $recommendations = resultToArray($recommendations);
+
+    return $recommendations;
 
 }
 
