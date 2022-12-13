@@ -39,7 +39,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         /*print("<br><br>");
 
         print("ProductID: " . $StockItem['StockItemID']) . "<br>";
-        print("Naam: " . $StockItem['StockItemName'] . "<br>");
+            print("Naam: " . $StockItem['StockItemName'] . "<br>");
         print ("Prijs: " . sprintf("€ %.2f", $StockItem['SellPrice']));
 
         print("<br><br>");*/
@@ -102,43 +102,117 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
             }
         }
     }
-?>
-        <div class="totalPrice">
-            <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
-        </div>
-</div>
-
-
-<form method="post">
-    <div class="btn-wrapper">
-        <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter" value="Winkelmandje leegmaken">
-        <input type="submit" name="PayCartBTN" class="btn-style add-margin" value="Afrekenen">
+    ?>
+            <div class="totalPrice">
+                <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
+            </div>
     </div>
-</form>
-<script>document.title = "Nerdygadgets - Winkelmand";</script>
 
 
-<?php
+    <form method="post">
+        <div class="btn-wrapper">
+            <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter" value="Winkelmandje leegmaken">
+            <input type="submit" name="PayCartBTN" class="btn-style add-margin" value="Afrekenen">
+        </div>
+    </form>
+    <script>document.title = "Nerdygadgets - Winkelmand";</script>
 
-if(isset($_POST['clearCartBTN'])){
-    $cart = array();
-    saveCart($cart);
-    echo "<script> location.href='cart.php'; </script>";
-}
 
-if (isset($_POST['removeProductBTN'])) {
-    //print('<h1>' . $_POST["removeProductID"] . '</h1>');
-    unset($cart[$_POST['removeProductID']]);
-    saveCart($cart);
-    echo "<script> location.href='cart.php'; </script>";
-}
+    <?php
 
-if(isset($_POST['PayCartBTN'])){
+    if(isset($_POST['clearCartBTN'])){
+        $cart = array();
         saveCart($cart);
-        $_SESSION['totaalPrijs'] = $totaalPrijs;
-        echo "<script> location.href='afrekenen.php'; </script>";
-} //afreken knop
+        echo "<script> location.href='cart.php'; </script>";
+    }
 
+    if (isset($_POST['removeProductBTN'])) {
+        //print('<h1>' . $_POST["removeProductID"] . '</h1>');
+        unset($cart[$_POST['removeProductID']]);
+        saveCart($cart);
+        echo "<script> location.href='cart.php'; </script>";
+    }
+
+    if(isset($_POST['PayCartBTN'])){
+            saveCart($cart);
+            $_SESSION['totaalPrijs'] = $totaalPrijs;
+            echo "<script> location.href='afrekenen.php'; </script>";
+    } //afreken knop
+
+    //Start conversiemaatregel 5
+    aanbevelingenItems($StockItem['StockItemID'], $databaseConnection);
+
+    ?>
+    <h1>Wij bevelen ook aan:</h1>
+    <div class="aanbevelingen" id="centeredContent">
+        <div class="aanbeveling">
+            <img src="<?php print $productImage; ?>" class="product-image-aanbeveling">
+            <div class="aanbeveling-meta">
+                <?php
+                print("<h4>" . $StockItem['StockItemName'] . "</h4><br>");
+                print("Prijs: " . sprintf("€%.2f", $StockItem['SellPrice']) . "<br><br>");
+                print("Artikelnummer: " . ($StockItem['StockItemID']));
+                ?>
+            </div>
+            <div>
+                <input class="btn-style-aanbeveling" type="submit" name="addToCartBTN" value="Toevoegen">
+            </div>
+        </div>
+        <div class="aanbeveling">
+            <img src="<?php print $productImage; ?>" class="product-image-aanbeveling">
+            <div class="aanbeveling-meta">
+                <?php
+                print("<h4>" . $StockItem['StockItemName'] . "</h4><br>");
+                print("Prijs: " . sprintf("€%.2f", $StockItem['SellPrice']) . "<br><br>");
+                print("Artikelnummer: " . ($StockItem['StockItemID']));
+                ?>
+            </div>
+            <div>
+                <input class="btn-style-aanbeveling" type="submit" name="addToCartBTN" value="Toevoegen">
+            </div>
+        </div>
+        <div class="aanbeveling">
+            <img src="<?php print $productImage; ?>" class="product-image-aanbeveling">
+            <div class="aanbeveling-meta">
+                <?php
+                print("<h4>" . $StockItem['StockItemName'] . "</h4><br>");
+                print("Prijs: " . sprintf("€%.2f", $StockItem['SellPrice']) . "<br><br>");
+                print("Artikelnummer: " . ($StockItem['StockItemID']));
+                ?>
+            </div>
+            <div>
+                <input class="btn-style-aanbeveling" type="submit" name="addToCartBTN" value="Toevoegen">
+            </div>
+        </div>
+        <div class="aanbeveling">
+            <img src="<?php print $productImage; ?>" class="product-image-aanbeveling">
+            <div class="aanbeveling-meta">
+                <?php
+                print("<h4>" . $StockItem['StockItemName'] . "</h4><br>");
+                print("Prijs: " . sprintf("€%.2f", $StockItem['SellPrice']) . "<br><br>");
+                print("Artikelnummer: " . ($StockItem['StockItemID']));
+                ?>
+            </div>
+            <div>
+            <input class="btn-style-aanbeveling" type="submit" name="addToCartBTN" value="Toevoegen">
+            </div>
+        </div>
+        <div class="aanbeveling">
+            <img src="<?php print $productImage; ?>" class="product-image-aanbeveling">
+            <div class="aanbeveling-meta">
+                <?php
+                print("<h4>" . $StockItem['StockItemName'] . "</h4><br>");
+                print("Prijs: " . sprintf("€%.2f", $StockItem['SellPrice']) . "<br><br>");
+                print("Artikelnummer: " . ($StockItem['StockItemID']));
+                ?>
+            </div>
+            <div>
+                <input class="btn-style-aanbeveling" type="submit" name="addToCartBTN" value="Toevoegen">
+            </div>
+        </div>
+    </div>
+
+    <?php
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
 }

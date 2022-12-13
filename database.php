@@ -356,3 +356,26 @@ function saveOrder($cart, $customerID, $databaseConnection){
     }
 
 }
+
+function aanbevelingenItems ($productID, $databaseConnection) {
+    $groupID = mysqli_query($databaseConnection, "
+        SELECT StockGroupID
+        FROM stockitemstockgroups
+        WHERE StockItemID = $productID
+        LIMIT 1 ;
+");
+    $groupID = (int)mysqli_fetch_column($groupID);
+
+    $recommendations = mysqli_prepare($databaseConnection, "
+        SELECT StockItemID
+        FROM  stockitemstockgroups
+        WHERE StockGroupID = $groupID AND StockItemID != $productID
+        LIMIT 5 ;
+    ");
+    mysqli_stmt_execute($recommendations);
+    $recommendations = mysqli_stmt_get_result($recommendations);
+    $recommendations = mysqli_fetch_all($recommendations);
+    die(print_r($recommendations));
+
+}
+

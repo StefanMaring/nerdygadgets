@@ -779,3 +779,48 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     display: flex;
     flex-flow: row;
 }
+
+.aanbevelingen {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    gap: 18px;
+}
+
+.aanbeveling {
+    background-color: var(--sub-color);
+    width: 200px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.aanbeveling-meta {
+    width: 100%;
+    padding: 10px 0 0 10px;
+}
+
+.btn-style-aanbeveling {
+    font-size: 16px;
+    text-decoration: none;
+    background-color: var(--button-color);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    width: 90%;
+    margin-bottom: 10px;
+    margin-left: 5%;
+    margin-right: 5%    ;
+}
+
+.product-image-aanbeveling {
+    width: inherit;
+    height: inherit;
+    object-fit: contain;
+    border-radius: 5px;
+    background-color: var(--sub-color);
+    padding: 10px;
+}
+
+
+
