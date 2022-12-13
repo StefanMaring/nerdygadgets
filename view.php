@@ -4,6 +4,7 @@ include __DIR__ . "/header.php";
 $stockItemID = $_GET['id']; // ProductID van de huidige pagina
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
+
 ?>
 <div id="CenteredContent">
     <?php
@@ -89,15 +90,18 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             </div>
         </div>
         <?php
+        //If stock is bigger than 0, display button
         if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
-            print('<div class="Add-button">
-            <form action="" method="POST">
-                <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
-            </form>
-        </div>
-        ');
+        ?>
+            <div class="add-btn-wrp">
+                <iframe name="SendingForm" class="hiddenFrame"></iframe>
+                <form method="post" id="openDialForm" target="SendingForm">
+                    <input type="submit" id="add-btn" name="addToCartBTN" class="add-btn btn-style" value="Toevoegen aan winkelmand">
+                </form>
+            </div>
+        <?php
         }
-            ?>
+        ?>
 
         <div id="StockItemDescription">
             <h3>Artikel beschrijving</h3>
@@ -141,12 +145,32 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
 </div>
+
+<div class="overlay" id="overlay"></div>
+<div class="dialog" id="dialogbox">
+    <h4><i class="fa-solid fa-circle-check m-right"></i>Product toegevoegd aan winkelmand. Verder winkelen of afrekenen?</h4>
+    <div class="choice-wrapper">
+        <button class="btn-style transparent"><a href="categories.php">Verder winkelen</a></button>
+        <div class="Add-button">
+            <form action="" method="POST">
+                <input type="submit" class="btn-style" name="goToCart" value="Naar de winkelmand">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="Public/JS/app.jquery.js"></script>
 <script>document.title = "Nerdygadgets - <?php echo $StockItem["StockItemName"];?>";</script>
 
 <?php
 
+//Adds product to cart
 if(isset($_POST["addToCartBTN"])) {
     addProductToCart($stockItemID);
+}
+
+//Redirects user to cart page
+if(isset($_POST["goToCart"])) {
     echo "<script> location.href='cart.php'; </script>";
 }
 

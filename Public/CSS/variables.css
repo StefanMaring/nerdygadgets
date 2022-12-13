@@ -7,5 +7,7 @@
     --button-color-hover: rgb(63, 71, 223);
     --button-color-hover-lighter: rgb(89, 97, 255);
     --button-color-hover-delete: rgb(211, 57, 57);
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
   }
   

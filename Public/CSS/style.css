@@ -531,7 +531,7 @@ footer {
     margin: 0 !important;
 }
 
-.Add-button {
+.add-btn {
     float: right;
 }
 
@@ -543,6 +543,7 @@ footer {
     border: none;
     border-radius: 5px;
     color: white;
+    padding: 0.8rem;
 }
 
 .CartItem {
@@ -712,7 +713,7 @@ button, input[type=submit] {
     transition: background-color .3s;
 }
 
-button, input[type=submit]:hover {
+button:hover, input[type=submit]:hover {
     background-color: var(--button-color-hover);
     transition: background-color .3s;
 }
@@ -778,4 +779,88 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 .titel-gif {
     display: flex;
     flex-flow: row;
+}
+
+.add-btn {
+    padding: 0.8rem;
+    width: 220px;
+}
+
+.dialog {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.show-dialog {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    z-index: 2;
+    background-color: var(--sub-color);
+    color: var(--white);
+    width: 35%;
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    border-radius: 5px;
+    text-align: left;
+    padding: 1rem;
+}
+
+.choice-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+button > a {
+    color: var(--white);
+    text-decoration: none;
+}
+
+button > a:hover {
+    color: var(--white);
+}
+
+.overlay {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.show-overlay {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.hiddenFrame {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.transparent {
+    border: 1px solid var(--button-color-sub);
+    background-color: transparent;
+}
+
+.transparent:hover {
+    background-color: var(--button-color-hover-lighter);
+}
+
+.m-right {
+    display: inline-block;
+    margin-right: 5px;
 }
