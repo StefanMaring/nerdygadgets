@@ -822,5 +822,9 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     padding: 10px;
 }
 
+.wrapped-text {
+    
+}
+
 
 

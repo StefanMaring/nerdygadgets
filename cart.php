@@ -149,7 +149,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
             <img src="<?php print $productImage; ?>" class="product-image-aanbeveling">
             <div class="aanbeveling-meta">
                 <?php
-                print("<h4>" . $StockItem['StockItemName'] . "</h4><br>");
+                print("<h4 class='wrapped-text'>" . $StockItem['StockItemName'] . "</h4><br>");
                 print("Prijs: " . sprintf("€%.2f", $StockItem['SellPrice']) . "<br><br>");
                 print("Artikelnummer: " . ($StockItem['StockItemID']));
                 ?>
