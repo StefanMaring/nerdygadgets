@@ -111,10 +111,12 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <h3>Artikel specificaties</h3>
             <?php
             $CustomFields = json_decode($StockItem['CustomFields'], true);
+
             if (is_array($CustomFields)) { ?>
                 <table>
                 <?php
-                foreach ($CustomFields as $SpecName => $SpecText) { ?>
+                foreach ($CustomFields as $SpecName => $SpecText) {
+                    $SpecName = str_replace("CountryOfManufacture", "Land van herkomst", $SpecName);?>
                     <tr>
                         <td>
                             <?php print $SpecName; ?>
@@ -135,7 +137,9 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                 </table><?php
             } else { ?>
 
-                <p><?php print $StockItem['CustomFields']; ?>.</p>
+                <p><?php
+                    $CustomFields = str_replace("CountryOfManufacture", "Land van herkomst", $StockItem['CustomFields']);
+                    print $CustomFields; ?>.</p>
                 <?php
             }
             ?>
