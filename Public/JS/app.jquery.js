@@ -9,9 +9,13 @@ $('#add-btn').on("click", function() {
 });
 
 //als het document laad voert de pop-up uit
-$( document ).ready(function() {    
-    $('#pop-upbox').toggleClass("show-dialog");    
-    $('#kortingscode-pop').toggleClass("show-overlay");
+$( document ).ready(function() {
+    if (localStorage.getItem('Pop-upshow') != "TRUE" ){
+        $('#pop-upbox').toggleClass("show-dialog");
+        $('#kortingscode-pop').toggleClass("show-overlay");
+        localStorage.setItem('Pop-upshow', 'TRUE');
+    };
+
 });
 
 $('#x').on("click", function() {    
@@ -19,3 +23,4 @@ $('#x').on("click", function() {
     $('#pop-upbox').removeClass("show-dialog");    
     $('#kortingscode-pop').removeClass("show-overlay");
 });
+
