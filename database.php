@@ -378,6 +378,7 @@ function aanbevelingenItems ($productID, $databaseConnection) {
         SELECT StockItemID
         FROM  stockitemstockgroups
         WHERE StockGroupID = $groupID AND StockItemID != $productID
+        ORDER BY RAND()
         LIMIT 5 ;
     ");
     mysqli_stmt_execute($recommendations);

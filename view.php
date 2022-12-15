@@ -91,7 +91,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         <?php
         if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
             print('<div class="Add-button">
-            <form action="" method="POST">
+            <form method="POST">
                 <input type="submit" name="addToCartBTN" class="btn-style" value="Toevoegen aan winkelmand">
             </form>
         </div>

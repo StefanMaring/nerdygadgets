@@ -823,8 +823,18 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 }
 
 .wrapped-text {
-    
+    display: inline-block;
+    height: 50px;
+    /*max-height: 100px;*/
+    width: inherit;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
+.image-fix {
+    height: 200px;
+    width: 200px;
+}
 
 

@@ -39,7 +39,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         /*print("<br><br>");
 
         print("ProductID: " . $StockItem['StockItemID']) . "<br>";
-            print("Naam: " . $StockItem['StockItemName'] . "<br>");
+        print("Naam: " . $StockItem['StockItemName'] . "<br>");
         print ("Prijs: " . sprintf("€ %.2f", $StockItem['SellPrice']));
 
         print("<br><br>");*/
@@ -150,7 +150,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         foreach($recs as $recID => $recArray) {
         $StockItem = getStockItem($recArray['StockItemID'], $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
         $StockItemImage = getStockItemImage($recArray['StockItemID'], $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
-       // print_r($StockItemImage);
+//        print_r($StockItem);
 
         if(isset($StockItemImage[0])){ //Check of een product foto's heeft
             $productImage = "Public/StockItemIMG/" . $StockItemImage[0]['ImagePath']; //Sla de 1ste foto van een product op in productImage
@@ -159,19 +159,31 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         }
         ?>
         <div class="aanbeveling">
-            <img src="<?php print $productImage; ?>" class="product-image-aanbeveling">
+            <div class="image-fix">
+                <img src="<?php echo $productImage; ?>" class="product-image-aanbeveling">
+            </div>
             <div class="aanbeveling-meta">
+                <h4 class="wrapped-text"><a class="cart-link" href="view.php?id=<?php echo $StockItem["StockItemID"]?>"><?php print($StockItem['StockItemName'])?></a></h4>
                 <?php
-                print("<h4 class='wrapped-text'>" . $StockItem['StockItemName'] . "</h4><br>");
                 print("Prijs: " . sprintf("€%.2f", $StockItem['SellPrice']) . "<br><br>");
                 print("Artikelnummer: " . ($StockItem['StockItemID']));
+                $recArrayStockItemID = $StockItem["StockItemID"];
                 ?>
             </div>
             <div>
-                <input class="btn-style-aanbeveling" type="submit" name="addToCartBTN" value="Toevoegen">
+                <form method="POST">
+                <input class="btn-style-aanbeveling" type="submit" name="addToCartBTN-<?php echo $recArrayStockItemID?>" value="Toevoegen">
+                <input type="hidden" name="stockitemid" value="<?php echo $recArrayStockItemID?>">
+                </form>
             </div>
         </div>
         <?php } ?>
+        <?php
+        if(isset($_POST["stockitemid"])) {
+            addProductToCart($_POST["stockitemid"]);
+            echo "<script> location.href='cart.php'; </script>";
+        }
+        ?>
     </div>
 
     <?php
