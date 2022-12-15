@@ -11,7 +11,7 @@ $tel = cleanInput($_POST["tel"]);
 $adres = cleanInput($_POST["adres"]);
 $postcode = cleanInput($_POST["postcode"]);
 $woonplaats = cleanInput($_POST["woonplaats"]);
-$kortingscode = cleanInput($_POST)["kortingscode"];
+$kortingscode = cleanInput($_POST["kortingscode"]);
 echo $kortingscode;
 
 //Get cart
