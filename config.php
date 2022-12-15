@@ -13,4 +13,15 @@ function cleanInput($input) {
     return $input;
 }
 
+//Function that returns a random string with the length of 8, used to generate a discount codes
+function generateRandomString($length = 8) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
 ?>

@@ -80,10 +80,11 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
 
     }
 
+    //If a discount code has been entered, insert it into the database
     if(isset($kortingscode)) {
-        $kortingscodeinsert = "INSERT INTO discountcode (kortingscode_text)
-                            VALUES (?)";
-        $stmt = $databaseConnection->prepare($kortingscodeinsert);
+        $kortingscodeInsert = "INSERT INTO discountcode (kortingscode_text)
+                               VALUES (?)";
+        $stmt = $databaseConnection->prepare($kortingscodeInsert);
         $stmt->bind_param("s", $kortingscode);
         $stmt->execute();
     }
