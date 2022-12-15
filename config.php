@@ -24,4 +24,8 @@ function generateRandomString($length = 8) {
     return $randomString;
 }
 
+function validatePhonenumber($tel) {
+    return preg_match('^+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)', $tel);
+}
+
 ?>

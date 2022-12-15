@@ -12,7 +12,6 @@ $adres = cleanInput($_POST["adres"]);
 $postcode = cleanInput($_POST["postcode"]);
 $woonplaats = cleanInput($_POST["woonplaats"]);
 $kortingscode = cleanInput($_POST["kortingscode"]);
-echo $kortingscode;
 
 //Get cart
 $cart = getCart();
@@ -20,6 +19,7 @@ $OrderisSuccesfull = FALSE;
 
 //Check if all required fields are set
 if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
+
     //Sla persoonsgegevens op in een array
     $persoonsGegevens = array(
         //Check of een tussenvoegsel is ingevoegd, sla dan volledige naam op onder "naam"
@@ -76,8 +76,6 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
         } else {
             print("ERROR: Stockitem variable not set!");
         }
-
-
     }
 
     //If a discount code has been entered, insert it into the database
