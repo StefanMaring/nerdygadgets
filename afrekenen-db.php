@@ -78,14 +78,7 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
         }
     }
 
-    //If a discount code has been entered, insert it into the database
-    if(isset($kortingscode)) {
-        $kortingscodeInsert = "INSERT INTO discountcode (kortingscode_text, usedCode)
-                               VALUES (?, ?)";
-        $stmt = $databaseConnection->prepare($kortingscodeInsert);
-        $stmt->bind_param("si", $kortingscode, $usedcode);
-        $stmt->execute();
-    }
+
 
     //Link through to IDeal
     header("location: https://www.ideal.nl/demo/qr/?app=ideal");

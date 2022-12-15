@@ -2,6 +2,7 @@
 include __DIR__ . "/header.php";
 
 $kortingscode = generateRandomString();
+$usedcode = 0;
 
 ?>
 <div class="IndexStyle">
@@ -35,7 +36,18 @@ $kortingscode = generateRandomString();
 <script>document.title = "Nerdygadgets - Home";</script>
 <?php
 include __DIR__ . "/footer.php";
+
+//If a discount code has been entered, insert it into the database
+if(isset($kortingscode)) {
+    $kortingscodeInsert = "INSERT INTO discountcode (kortingscode_text, usedCode)
+                               VALUES (?, ?)";
+    $stmt = $databaseConnection->prepare($kortingscodeInsert);
+    $stmt->bind_param("si", $kortingscode, $usedcode);
+    $stmt->execute();
+}
 ?>
+
+
 
 
 

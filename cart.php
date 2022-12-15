@@ -4,6 +4,8 @@ include "header.php";
 <?php
 $cart = getCart(); //Haal het winkelmandje op
 $totaalPrijs = 0;
+$kortingscode = $_POST["kortingscode"];
+
 if(!empty($cart)){ //Check of het winkelmandje leeg is
     ?>
 
@@ -105,8 +107,16 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 ?>
         <div class="totalPrice">
             <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
+
         </div>
 </div>
+    <div>
+        <form method="post">
+            <h3 class="default-margin">Kortingscode</h3>
+            <input class="stand-input-korting" type="text" id="kortingscode" name="kortingscode" placeholder="Kortingscode"><br><br>
+            <input type="submit" value="x" name="korting_btn">
+        </form>
+    </div>
 
 
 <form method="post">
@@ -139,8 +149,35 @@ if(isset($_POST['PayCartBTN'])){
         echo "<script> location.href='afrekenen.php'; </script>";
 } //afreken knop
 
+if(isset($_POST["korting_btn"])) {
+    $kortingSelect = 'SELECT usedCode
+    FROM discountcode
+    WHERE kortingscode_text = ?';
+    $stmt = $databaseConnection->prepare($kortingSelect);
+    $stmt->bind_param("s", $kortingscode);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $couponUsed = $result->fetch_column();
+
+
+    if($couponUsed == 1){
+        print("code is al gebruikt.");
+        exit();
+    } elseif($couponUsed == 0) {
+        $usedcode= 1;
+        $kortingUpdate = 'UPDATE discountcode
+                      SET usedCode = ?
+                      WHERE kortingscode_text = ?';
+        $stmt = $databaseConnection->prepare($kortingUpdate);
+        $stmt->bind_param("is", $usedcode, $kortingscode);
+        $stmt->execute();
+    }
+
+}
+
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
 }
 include "footer.php";
+
 ?>
