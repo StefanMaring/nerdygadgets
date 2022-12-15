@@ -12,7 +12,7 @@ $adres = cleanInput($_POST["adres"]);
 $postcode = cleanInput($_POST["postcode"]);
 $woonplaats = cleanInput($_POST["woonplaats"]);
 $kortingscode = cleanInput($_POST["kortingscode"]);
-
+$usedcode = 1;
 //Get cart
 $cart = getCart();
 $OrderisSuccesfull = FALSE;
@@ -80,10 +80,10 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
 
     //If a discount code has been entered, insert it into the database
     if(isset($kortingscode)) {
-        $kortingscodeInsert = "INSERT INTO discountcode (kortingscode_text)
-                               VALUES (?)";
+        $kortingscodeInsert = "INSERT INTO discountcode (kortingscode_text, usedCode)
+                               VALUES (?, ?)";
         $stmt = $databaseConnection->prepare($kortingscodeInsert);
-        $stmt->bind_param("s", $kortingscode);
+        $stmt->bind_param("si", $kortingscode, $usedcode);
         $stmt->execute();
     }
 
