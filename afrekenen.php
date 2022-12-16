@@ -30,8 +30,8 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
                 $verzendkosten += 6.95;
             }
 
-            //Bereken de eindprijs
-            $eindPrijs = $verzendkosten + $totaalPrijs;
+            //Bereken de eindprijs met 2 getallen achter de komma
+            $eindPrijs = sprintf("%.2f", $verzendkosten + $totaalPrijs);
 
             //Print de losse prijzen
             print("<p>Prijs: €$totaalPrijs </p>" . "<p>Verzendkosten: €$verzendkosten</p>" . "<p>Totaalprijs: €$eindPrijs</p>")
