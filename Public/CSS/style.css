@@ -585,6 +585,7 @@ footer {
     display: flex;
     flex-flow: row nowrap;
     gap: 25px;
+    margin-bottom: 50px;
 }
 
 .lighter {
@@ -731,6 +732,10 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     border-radius: 5px;
 }
 
+input:disabled {
+    color: var(--white);
+}
+
 .cart-link {
     color: white;
     transition: color .3s;
@@ -864,6 +869,35 @@ button > a:hover {
     margin-right: 5px;
 }
 .stand-input-korting {
-    margin-left: 10px;
     width: 200px;
+}
+
+.smallBtnWrapper {
+    margin-top: -0.5rem;
+}
+
+.btnSmall {
+    height: 35px;
+    width: 35px;
+    margin-right: 5px;
+}
+
+.btnSmall:hover {
+    background-color: var(--button-color-hover);
+}
+
+.couponForm {
+    display: flex;
+    justify-content: right;
+    margin: 25px 0 25px 0;
+}
+
+.flex-form {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5px;
+}
+
+.addCodeBtn {
+    width: 100px;
 }

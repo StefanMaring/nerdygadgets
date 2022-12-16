@@ -20,7 +20,7 @@ $( document ).ready(function() {
 });
 
 //When a button is clicked the classes of show- are removed and the pop up closes
-$('#x').on("click", function() {       
+$('#closingBtn').on("click", function() {       
     $('#pop-upbox').removeClass("show-dialog");    
     $('#kortingscode-pop').removeClass("show-overlay");
 });

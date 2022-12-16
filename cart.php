@@ -4,21 +4,21 @@ include "header.php";
 <?php
 $cart = getCart(); //Haal het winkelmandje op
 $totaalPrijs = 0;
-$kortingscode = $_POST["kortingscode"];
 
 if(!empty($cart)){ //Check of het winkelmandje leeg is
-    ?>
+?>
 
-    <script>
-        function submit() {
-            let form = document.getElementById("aantal-form");
-            form.submit();
-        }
-    </script>
+<script>
+    //Submits form that ups or downs the amount of single product in the cart
+    function submit() {
+        let form = document.getElementById("aantal-form");
+        form.submit();
+    }
+</script>
 
 
 <section class="s-cart" id="CenteredContent">
-    <div class="cart-wrapper">
+    <div class="cart-header">
         <h1 class="s-heading">Winkelmandje</h1>
     </div>
     <div class="Cart">
@@ -105,65 +105,70 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
         }
     }
 ?>
-        <div class="totalPrice">
-            <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
 
-        </div>
+<div class="totalPrice">
+    <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
 </div>
-    <div>
-        <form method="post">
-            <h3 class="default-margin">Kortingscode</h3>
+
+</div>
+<div class="couponForm">
+    <form method="post">
+        <div class="flex-form">
             <input class="stand-input-korting" type="text" id="kortingscode" name="kortingscode" placeholder="Kortingscode"><br><br>
-            <input type="submit" value="x" name="korting_btn">
-        </form>
-    </div>
+            <input type="submit" value="Toevoegen" name="korting_btn" class="btn-style addCodeBtn">
+        </div>
+    </form>
+</div>
 
-
-<form method="post">
-    <div class="btn-wrapper">
-        <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter" value="Winkelmandje leegmaken">
-        <input type="submit" name="PayCartBTN" class="btn-style add-margin" value="Afrekenen">
-    </div>
-</form>
-<script>document.title = "Nerdygadgets - Winkelmand";</script>
-
+<div class="buttonForm">
+    <form method="post">
+        <div class="btn-wrapper">
+            <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter" value="Winkelmandje leegmaken">
+            <input type="submit" name="PayCartBTN" class="btn-style add-margin" value="Afrekenen">
+        </div>
+    </form>
+</div>
 
 <?php
-
+//Empties cart when button is clicked
 if(isset($_POST['clearCartBTN'])){
     $cart = array();
     saveCart($cart);
     echo "<script> location.href='cart.php'; </script>";
 }
 
+//Removes a single product when specific button is clicked
 if (isset($_POST['removeProductBTN'])) {
-    //print('<h1>' . $_POST["removeProductID"] . '</h1>');
     unset($cart[$_POST['removeProductID']]);
     saveCart($cart);
     echo "<script> location.href='cart.php'; </script>";
 }
 
+//Sends user to payment page
 if(isset($_POST['PayCartBTN'])){
         saveCart($cart);
         $_SESSION['totaalPrijs'] = $totaalPrijs;
         echo "<script> location.href='afrekenen.php'; </script>";
-} //afreken knop
+}
 
+//Select usedCode value where usedCode equals the input discount code
 if(isset($_POST["korting_btn"])) {
+    $kortingscode = cleanInput($_POST["kortingscode"]);
+
     $kortingSelect = 'SELECT usedCode
     FROM discountcode
     WHERE kortingscode_text = ?';
     $stmt = $databaseConnection->prepare($kortingSelect);
     $stmt->bind_param("s", $kortingscode);
     $stmt->execute();
-    $result = $stmt->get_result();
-    $couponUsed = $result->fetch_column();
+    $result = $stmt->get_result(); //Get the number of results
+    $couponUsed = $result->fetch_column(); //Fetch the specific column
 
-
+    //If couponUsed equals 1, a message displays that it's been used
     if($couponUsed == 1){
-        print("code is al gebruikt.");
+        print('<p class="couponMessage">Deze kortingscode is al gebruikt!</p>');
         exit();
-    } elseif($couponUsed == 0) {
+    } elseif($couponUsed == 0) { //If the coupon code hasn't been used, update the usedCode data to 1 so it can't be used again
         $usedcode= 1;
         $kortingUpdate = 'UPDATE discountcode
                       SET usedCode = ?
@@ -172,12 +177,16 @@ if(isset($_POST["korting_btn"])) {
         $stmt->bind_param("is", $usedcode, $kortingscode);
         $stmt->execute();
     }
-
 }
 
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
 }
-include "footer.php";
+?>
+</section>
 
+<script>document.title = "Nerdygadgets - Winkelmand";</script>
+
+<?php
+include "footer.php";
 ?>

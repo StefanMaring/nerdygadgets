@@ -24,11 +24,13 @@ $usedcode = 0;
 
 <div class="overlay" id="kortingscode-pop"></div>
 <div class="dialog" id="pop-upbox">
-    <h4>Claim hier uw kortingscode</h4>
+    <h4>Claim hier uw eenmalige kortingscode!</h4>
     <input type="text" disabled id="discountcode" value="<?php echo $kortingscode;?>">
     <p id="textbox"></p>
-    <button id="copybutton" onclick="copyText()"><i class="fa-solid fa-copy"></i></button>
-    <button id="x"><i class="fa-solid fa-circle-xmark"></i></button>
+    <div class="smallBtnWrapper">
+        <button id="copyButton" class="btnSmall btn-style" onclick="copyText()"><i class="fa-solid fa-copy"></i></button>
+        <button id="closingBtn" class="btnSmall btn-style"><i class="fa-solid fa-circle-xmark"></i></button>
+    </div>
 </div>
 
 <script src="Public/JS/app.jquery.js"></script>

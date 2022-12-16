@@ -25,3 +25,7 @@ $StockGroups = getStockGroups($databaseConnection);
     } ?>
 </div>
 <script>document.title = "Nerdygadgets - Categoriën";</script>
+
+<?php
+include __DIR__ . "/footer.php";
+?>
