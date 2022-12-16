@@ -11,8 +11,7 @@ $tel = cleanInput($_POST["tel"]);
 $adres = cleanInput($_POST["adres"]);
 $postcode = cleanInput($_POST["postcode"]);
 $woonplaats = cleanInput($_POST["woonplaats"]);
-$kortingscode = cleanInput($_POST["kortingscode"]);
-$usedcode = 1;
+
 //Get cart
 $cart = getCart();
 $OrderisSuccesfull = FALSE;
@@ -77,9 +76,6 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
             print("ERROR: Stockitem variable not set!");
         }
     }
-
-
-
     //Link through to IDeal
     header("location: https://www.ideal.nl/demo/qr/?app=ideal");
     exit();
