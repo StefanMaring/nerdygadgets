@@ -768,7 +768,7 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 }
 
 .search-input {
-    width: 170px;
+    width: 150px;
     background-color: transparent;
     border: none;
     outline: none;
