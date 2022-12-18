@@ -758,25 +758,24 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     transition: color .3s;
 }
 
+.search-bar {
+    background-color: var(--sub-color);
+    border-radius: 150px;
+    border: none;
+    outline: none;
+    padding: 12px;
+}
 
 .search-input {
     width: 170px;
-    background-color: var(--sub-color);
+    background-color: transparent;
     border: none;
-    outline: none;
-    border-radius: 150px;
-    color: white;
-    border-radius: 150px 0 0 150px;
 }
 
 .search-icon {
     position: static;
     top: 23px;
     right: 80px;
-    background-color: var(--sub-color);
-    height: 50px;
-    width: 30px;
-    border-radius: 0 150px 150px 0;
     padding: 14px 0 0 0;
 }
 
