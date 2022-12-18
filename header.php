@@ -54,6 +54,9 @@ $cart = getCart();
                     <input type="search" class="icon search-input" id="searchVal" name="search_string" placeholder="Zoeken...">
                     <div class="fas fa-magnifying-glass search-icon"></div>
                 </li>
+                <li class="user-btn">
+                    <a href="login.php" class="HrefDecoration"><i class="fa-solid fa-user"></i></a>
+                </li>
                 <li class="cart-btn">
                     <a href="cart.php" class="HrefDecoration"><i class="fa-solid fa-cart-shopping"></i></a>
                 </li>

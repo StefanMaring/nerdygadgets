@@ -24,25 +24,14 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
     foreach ($cart as $productID => $productAmount) {
         $StockItem = getStockItem($productID, $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
         $StockItemImage = getStockItemImage($productID, $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
-        //print_r($StockItem);
-        /*Foto's zijn opgeslagen in een 3D array, elke foto heeft een key beginnend bij 0, als value een array met key ImagePath en als value het pad naar de foto*/
-        /* foreach ($StockItem as $test1 => $test2) { //DEBUG, laat alle gegevens van een product zien
-             print("$test1 => $test2 <br>");
-         }*/
-        // print_r($StockItemImage);
 
+        /*Foto's zijn opgeslagen in een 3D array, elke foto heeft een key beginnend bij 0, als value een array met key ImagePath en als value het pad naar de foto*/
         if(isset($StockItemImage[0])){ //Check of een product foto's heeft
             $productImage = "Public/StockItemIMG/" . $StockItemImage[0]['ImagePath']; //Sla de 1ste foto van een product op in productImage
         } else{
             $productImage = "Public/StockGroupIMG/" . $StockItem['BackupImagePath']; //Gebruik een andere foto als placeholder
         }
-        /*print("<br><br>");
 
-        print("ProductID: " . $StockItem['StockItemID']) . "<br>";
-        print("Naam: " . $StockItem['StockItemName'] . "<br>");
-        print ("Prijs: " . sprintf("€ %.2f", $StockItem['SellPrice']));
-
-        print("<br><br>");*/
         $maxInWinkelmand = preg_replace("/[^0-9]/", "", $StockItem["QuantityOnHand"] ); //maximale voorraad
         ?>
             <br>

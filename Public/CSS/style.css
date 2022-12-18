@@ -83,7 +83,7 @@ ul#ul-class-navigation li {
     font-size: 20px;
     text-decoration: none;
     text-decoration-color: currentcolor;
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 .cart-btn {
@@ -93,6 +93,15 @@ ul#ul-class-navigation li {
     font-size: 15px !important;
     height: 41.6px !important;
     
+}
+
+.user-btn {
+    background-color: rgba(49, 59, 73, 0.8);
+    padding: 1.0rem;
+    border-radius: 50%;
+    font-size: 15px !important;
+    height: 41.6px !important;
+
 }
 
 #Header {
@@ -557,6 +566,13 @@ footer {
     gap: 100px;
 }
 
+.LoginWindow {
+    padding: 1.5rem;
+    border-radius: 5px;
+    background-color: var(--sub-color);
+    margin-bottom: 50px;
+}
+
 .meta-text {
     max-height: 198px;
 }
@@ -744,7 +760,7 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 
 
 .search-input {
-    width: 200px;
+    width: 170px;
     background-color: var(--sub-color);
     border: none;
     outline: none;
@@ -754,14 +770,14 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 }
 
 .search-icon {
-    position: absolute;
+    position: static;
     top: 23px;
     right: 80px;
     background-color: var(--sub-color);
     height: 50px;
     width: 30px;
     border-radius: 0 150px 150px 0;
-    padding: 13px 15px 0 0;
+    padding: 14px 0 0 0;
 }
 
 .iDeal-image {
