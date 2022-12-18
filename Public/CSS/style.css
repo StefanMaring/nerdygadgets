@@ -771,6 +771,7 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     width: 170px;
     background-color: transparent;
     border: none;
+    color: white;
 }
 
 .search-icon {
