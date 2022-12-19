@@ -115,7 +115,7 @@ function getStockQuantity($productID, $databaseConnection){
 }
 
 function saveCustomer($persoonsGegevens, $databaseConnection){
-        extract($persoonsGegevens, EXTR_OVERWRITE); //Splits inhoud array op in aparte variabelen
+        extract($persoonsGegevens); //Splits inhoud array op in aparte variabelen
         /*Bestaande variabelen:
         $naam $email $tel $adres $postcode $woonplaats*/
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
