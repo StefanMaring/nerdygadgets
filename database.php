@@ -125,7 +125,7 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
         //define customerID
         $statement = mysqli_prepare($databaseConnection, "
                 SELECT MAX(CustomerID) + 1 AS CstId -- Fetch highest known ID and increase by 1, save as CstId
-                FROM customers;");
+                FROM customers_new;");
         mysqli_stmt_execute($statement);
         $Result = mysqli_stmt_get_result($statement);
         $customerID = mysqli_fetch_column($Result); //Fetch result from SQL query, save into customerID
@@ -160,60 +160,34 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
         mysqli_stmt_execute($statement);
 
         mysqli_query($databaseConnection, "
-        INSERT INTO customers
+        INSERT INTO customers_new
                 (
-                CustomerID,
-                CustomerName,
-                BillToCustomerID,
-                CustomerCategoryID,
-                PrimaryContactPersonID,
-                DeliveryMethodID,
-                DeliveryCityID,
-                PostalCityID,
-                AccountOpenedDate,
-                StandardDiscountPercentage,
-                IsStatementSent,
-                IsOnCreditHold,
-                PaymentDays,
-                PhoneNumber,
-                FaxNumber,
-                WebsiteURL,
-                DeliveryAddressLine1,
-                DeliveryPostalCode,
-                DeliveryLocation,
-                PostalAddressLine1,
-                PostalPostalCode,
-                LastEditedBy,
-                ValidFrom,
-                ValidTo
+                 CustomerID,
+                 CustomerName,
+                 AccountOpenedDate,
+                 EmailAddress,
+                 IsPermittedToLogon,
+                 PhoneNumber,
+                 AddressLine,
+                 AddressPostalCode,
+                 AddressCity,
+                 ValidFrom,
+                 ValidTo
                 )
                 
                 VALUES
                 (
-                @CstId,
-                @name,
-                @CstId,
-                0,
-                1,
-                1,
-                1,
-                1,
-                CURRENT_TIMESTAMP,
-                0.000, 
-                0,
-                0,
-                7,
-                @tel,
-                @tel,
-                @email,
-                @adres,
-                @postcode,
-                @plaats,
-                @postcode,
-                @plaats,
-                1,
-                CURRENT_TIMESTAMP,
-                '9999-12-31 23:59:59'
+                 @CstId,
+                 @name,
+                 CURRENT_DATE,
+                 @email,
+                 0,
+                 @tel,
+                 @adres,
+                 @postcode,
+                 @plaats,
+                 CURRENT_TIMESTAMP,
+                 '9999-12-31 23:59:59'
                 );");
 
         mysqli_commit($databaseConnection);
@@ -222,8 +196,8 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
         return $customerID;
     } catch(mysqli_sql_exception $exception){
         mysqli_rollback($databaseConnection);
-        die(var_dump($customerID));
-       // throw $exception;
+        //die(var_dump($customerID));
+        throw $exception;
     }
 
 }

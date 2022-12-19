@@ -9,7 +9,14 @@ include "header.php"
     </div>
 </section>
 
+<?php
 
+
+print("Gebruiker ingelogd: $userLoggedIn \n");
+loginUser("test@test.com", $databaseConnection);
+
+
+?>
 
 
 <?php
