@@ -1,9 +1,16 @@
 <?php
 include "header.php";
+
+if($userLoggedIn == TRUE) {
+    header("location: afrekenen.php");
+    exit();
+}
+
 ?>
 
 <section class="s-register" id="CenteredContent">
     <div class="register-wrapper">
+    <h1 class="s-heading">Registreer hier!</h1>
         <form action="register-db.php" method="post">
             <input class="stand-input" type="text" required id="voornaam" name="voornaam" placeholder="*Voornaam">
             <input class="small-input" type="text"  id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel"><br><br>
@@ -16,8 +23,12 @@ include "header.php";
             <input class="small-input" type="text" required id="postcode" name="postcode" pattern=".{6,7}" placeholder="*Postcode"><br><br>
             <input class="stand-input" type="text" required id="woonplaats" name="woonplaats" placeholder="*Woonplaats"><br><br>
             <input type="hidden" name="faxnumber" id="faxnumber">
-            <input type="submit" value="Verzend" class="btn-style">
             <p class="notice">* is een vereist veld.</p>
+            <input type="submit" value="Verzend" class="btn-style">
         </form>
     </div>
 </section>
+
+<?php
+include "footer.php";
+?>

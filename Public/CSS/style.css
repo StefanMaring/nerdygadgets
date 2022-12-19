@@ -519,7 +519,6 @@ ul#ul-class-price li {
 }
 
 /* Footer styling */
-
 footer {
     display: grid !important;
     place-content: center;
@@ -527,6 +526,7 @@ footer {
     background-color: var(--main-color);
     width: 100%;
     border-top: 1px solid rgb(36, 41, 143);
+    margin-top: 50px;
 }
 
 .footer {
@@ -875,7 +875,7 @@ button > a:hover {
 }
 
 .transparent:hover {
-    background-color: var(--button-color-hover-lighter);
+    background-color: var(--button-color-hover-lighter) !important;
 }
 
 .m-right {
@@ -892,10 +892,6 @@ button > a:hover {
     visibility: hidden;
     opacity: 0;
     position: fixed;
-    /* top: 50%;
-    left: 50%;
-    margin-left: -250px;
-    margin-top: -100px; */
 }
 
 .clearBTN {

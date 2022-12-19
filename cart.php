@@ -102,21 +102,41 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
     <form method="post">
         <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter clearBTN" value="Winkelmandje leegmaken">
     </form>
-    <button name="OpenRegisterDialog" id="OpenRegisterDialog" class="btn-style add-margin full-width">Afrekenen</button>
+    <?php
+        //When a user is logged in, display this button that sends user directly to payment page
+        if($userLoggedIn == TRUE) {
+            echo '<form method="post" class="full-width">';
+            echo '<input type="submit" class="btn-style add-margin full-width" value="Afrekenen" name="PayCartBTN">';
+            echo '</form>';
+        }
+    ?>
+    <?php
+        //When a user is not logged in, display this button that opens the dialog beneath
+        if($userLoggedIn == FALSE) {
+            echo '<button name="OpenRegisterDialog" id="OpenRegisterDialog" class="btn-style add-margin full-width">Afrekenen</button>';
+        }
+    ?>
 </div>
 
-<div class="total-wrap">
-    <div class="overlay" id="overlay"></div>
-    <div class="register-dialog" id="register-dialog">
-        <h3>Registreren als klant of verder naar bestellen?</h3>
-        <div class="choice-wrapper">
-            <form method="post">
-                <input type="submit" class="btn-style lighter" value="Bestellen afronden" name="PayCartBTN">
-            </form>
-            <button class="btn-style full-width"><a href="registreren.php">Registreren als klant</a></button>
+<?php
+    //If a user is not logged in, display this dialog when above button is clicked
+    if($userLoggedIn == FALSE) {
+        echo '
+        <div class="total-wrap">
+            <div class="overlay" id="overlay"></div>
+            <div class="register-dialog" id="register-dialog">
+                <h4><i class="fa-solid fa-circle-check m-right"></i>Registreren als klant of verder naar bestellen?</h4>
+                <div class="choice-wrapper">
+                    <form method="post">
+                        <input type="submit" class="btn-style transparent" value="Bestellen afronden" name="PayCartBTN">
+                    </form>
+                    <button class="btn-style full-width"><a href="register.php">Registreren als klant</a></button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+        ';
+    }
+?>
 
 <script src="Public/JS/app.jquery.js"></script>
 <script>document.title = "Nerdygadgets - Winkelmand";</script>
