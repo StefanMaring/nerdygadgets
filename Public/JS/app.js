@@ -8,4 +8,3 @@ function copyText() {
         document.getElementById("textbox").innerHTML = "Kortingscode gekopieerd!";
     };
 }
-

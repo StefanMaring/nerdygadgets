@@ -98,12 +98,27 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 </div>
 
 
-<form method="post">
-    <div class="btn-wrapper">
-        <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter" value="Winkelmandje leegmaken">
-        <input type="submit" name="PayCartBTN" class="btn-style add-margin" value="Afrekenen">
+<div class="btn-wrapper">
+    <form method="post">
+        <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter clearBTN" value="Winkelmandje leegmaken">
+    </form>
+    <button name="OpenRegisterDialog" id="OpenRegisterDialog" class="btn-style add-margin full-width">Afrekenen</button>
+</div>
+
+<div class="total-wrap">
+    <div class="overlay" id="overlay"></div>
+    <div class="register-dialog" id="register-dialog">
+        <h3>Registreren als klant of verder naar bestellen?</h3>
+        <div class="choice-wrapper">
+            <form method="post">
+                <input type="submit" class="btn-style lighter" value="Bestellen afronden" name="PayCartBTN">
+            </form>
+            <button class="btn-style full-width"><a href="registreren.php">Registreren als klant</a></button>
+        </div>
     </div>
-</form>
+</div>
+
+<script src="Public/JS/app.jquery.js"></script>
 <script>document.title = "Nerdygadgets - Winkelmand";</script>
 
 

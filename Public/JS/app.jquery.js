@@ -19,3 +19,15 @@ $('#x').on("click", function() {
     $('#pop-upbox').removeClass("show-dialog");    
     $('#kortingscode-pop').removeClass("show-overlay");
 });
+
+//Opens the register dialog
+$('#OpenRegisterDialog').on("click", function() {
+    $('#register-dialog').toggleClass("show-dialog");
+});
+
+//Opens the overlay behind dialog
+$('#OpenRegisterDialog').on("click", function() {
+    $('#overlay').toggleClass("show-overlay");
+});
+
+

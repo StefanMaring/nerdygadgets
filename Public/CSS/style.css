@@ -811,9 +811,9 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
 }
 
 .show-dialog {
-    display: block;
-    visibility: visible;
-    opacity: 1;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     z-index: 2;
     background-color: var(--sub-color);
     color: var(--white);
@@ -881,4 +881,40 @@ button > a:hover {
 .m-right {
     display: inline-block;
     margin-right: 5px;
+}
+
+.total-wrap {
+    position: relative;
+}
+
+.register-dialog {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    /* top: 50%;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -100px; */
+}
+
+.clearBTN {
+    width: 20vw;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.register-form-wrapper {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.show-form {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    margin-top: 25px;
 }
