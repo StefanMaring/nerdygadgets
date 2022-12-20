@@ -567,10 +567,12 @@ footer {
 }
 
 .LoginWindow {
+    margin: 0 auto;
+    width: 70%;
     padding: 1.5rem;
     border-radius: 5px;
     background-color: var(--sub-color);
-    margin-bottom: 50px;
+    margin-top: 25px;
 }
 
 .meta-text {

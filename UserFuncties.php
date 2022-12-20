@@ -9,11 +9,17 @@ function getUser(){ //Haalt userID van ingelogde gebruiker op
     return $userID;
 }
 
-//TO-DO: Vervang die() met exit() - , $userPassword
-function loginUser($userEmail, $databaseConnection){
+function setUser($userID){
+    $_SESSION['userID'] = $userID;  //Stel userID in voor session: Gebruikt voor inloggen
+}
+
+
+/*TO-DO: Vervang die() met exit() -
+*/
+function loginUser($userEmail, $plaintext_password, $databaseConnection){
     $userID = getUser();
     if ($userID != null) { // Check of gebruiker al ingelogd is
-        die("Gebruiker al ingelogd");
+        die("Gebruiker al ingelogd"); //VERVANG MET REDIRECT
     } else {
         $Query = "
         SELECT CustomerID, IsPermittedToLogon, HashedPassword
@@ -26,13 +32,28 @@ function loginUser($userEmail, $databaseConnection){
         mysqli_stmt_execute($Statement);
         $ReturnableResult = mysqli_stmt_get_result($Statement);
         if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 0) {
-            die("Email bestaat niet");
+            die("Email bestaat niet <br>");
+
         } elseif ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
-            die("Email bestaat WEL");
+            print("Email bestaat WEL <br>");
+            $userData = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
+
+            if($userData["IsPermittedToLogon"] == 0) {
+                print("Gebruiker is bezoeker: Mag niet inloggen <br>");
+            } else{
+                if (!password_verify($plaintext_password, $userData["HashedPassword"])) {
+                    print("Wachtwoord onjuist");
+                } else {
+                    print("Wachtwoord juist!");
+
+                    setUser($userData["CustomerID"]);   //Logt gebruiker in met opgehaalde userID
+                }
+            }
         }
     }
 }
 
+//TO-DO: Check of gebruiker al bestaat (zowel als klant als bezoeker)
 function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
     extract($persoonsGegevens); //Splits inhoud array op in aparte variabelen
     /*Bestaande variabelen:
