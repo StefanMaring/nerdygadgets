@@ -1,6 +1,7 @@
 <?php
 include "header.php";
 
+//If a user is logged in, dont allow them to see the reigster page
 if($userLoggedIn == TRUE) {
     header("location: afrekenen.php");
     exit();

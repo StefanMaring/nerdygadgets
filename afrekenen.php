@@ -2,6 +2,13 @@
 include "header.php";
 $cart = getCart();
 $totaalPrijs = $_SESSION['totaalPrijs'];
+
+//If the cart is empty, redirect user back to categories
+if(empty($cart)) {
+    header("location: categories.php");
+    exit();
+}
+
 ?>
 
 
