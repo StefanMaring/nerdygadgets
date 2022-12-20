@@ -13,6 +13,9 @@ function setUser($userID){
     $_SESSION['userID'] = $userID;  //Stel userID in voor session: Gebruikt voor inloggen
 }
 
+function logoutUser(){
+    $_SESSION['userID'] = null;
+}
 
 /*TO-DO: Vervang die() met exit() -
 */
