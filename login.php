@@ -13,7 +13,7 @@ if(!$userID == null){
 <section class="s-login" id="CenteredContent">
     <div class="LoginWindow">
         <h1 class="s-heading">Inloggen</h1>
-        <form action="login-db" method="post">
+        <form action="login-db.php" method="post">
             <input class="stand-input login-input" type="email" required id="email" name="email" placeholder="Email"><br><br>
             <input class="stand-input login-input" type="password" required id="password" name="password" placeholder="Wachtwoord"><br><br>
             <input type="submit" class="btn-style full-width" value="Inloggen" name="LoginBTN">
@@ -33,7 +33,7 @@ if(!$userID == null){
 print("Gebruiker ingelogd: ");
 print($userLoggedIn ? "Ja, $userID" : "Nee");
 echo "<br>";
-loginUser("jan@pieter.nl", "test", $databaseConnection);
+//loginUser("jan@pieter.nl", "test", $databaseConnection);
 ?>
 
 

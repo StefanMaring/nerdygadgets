@@ -12,7 +12,7 @@ $plaintext_password = cleanInput($_POST["password"]);
 //Check if all required fields are set
 if(!empty($email) && !empty($plaintext_password)){
 
-    loginUser($email, $plaintext_password);
+    loginUser($email, $plaintext_password, $databaseConnection);
     header("Location: index.php");
     exit();
 }
