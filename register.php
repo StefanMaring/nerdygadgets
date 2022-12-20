@@ -16,7 +16,7 @@ if($userLoggedIn == TRUE) {
             <input class="small-input" type="text"  id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel"><br><br>
             <input class="stand-input" type="text" required id="achternaam" name="achternaam" placeholder="*Achternaam"><br><br>
             <input class="stand-input" type="email" required id="email" name="email" placeholder="*Email"><br><br>
-            <input class="stand-input" type="tel" required id="tel" name="tel" placeholder="*Telefoonnummer"><br><br>
+            <input class="stand-input" type="tel" required id="tel" name="tel" placeholder="*Telefoonnummer (0612345678)"><br><br>
             <input class="stand-input" type="password" required id="password" name="password" placeholder="*Wachtwoord"><br><br>
             <input class="stand-input" type="password" required id="repeat_password" name="repeat_password" placeholder="*Herhaal Wachtwoord"><br><br>
             <input class="stand-input" type="text" required id="adres" name="adres" placeholder="*Straat + huisnummer">

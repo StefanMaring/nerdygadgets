@@ -1,19 +1,19 @@
 <?php
 include "header.php";
-?>
-<?php
+
 $cart = getCart(); //Haal het winkelmandje op
 $totaalPrijs = 0;
+
 if(!empty($cart)){ //Check of het winkelmandje leeg is
-    ?>
+?>
 
-    <script>
-        function submit() {
-            let form = document.getElementById("aantal-form");
-            form.submit();
-        }
-    </script>
-
+<script>
+    //Script that submits form whenever the value of the input changes
+    function submit() {
+        let form = document.getElementById("aantal-form");
+        form.submit();
+    }
+</script>
 
 <section class="s-cart" id="CenteredContent">
     <div class="cart-wrapper">

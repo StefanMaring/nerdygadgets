@@ -13,11 +13,27 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
             <input class="small-input" type="text"  id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel"><br><br>
             <input class="stand-input" type="text" required id="achternaam" name="achternaam" placeholder="*Achternaam"><br><br>
             <input class="stand-input" type="email" required id="email" name="email" placeholder="*Email"><br><br>
-            <input class="stand-input" type="tel" required id="tel" name="tel" placeholder="*Telefoonnummer"><br><br>
+            <input class="stand-input" type="tel" required id="tel" name="tel" placeholder="*Telefoonnummer (0612345678)"><br><br>
             <input class="stand-input" type="text" required id="adres" name="adres" placeholder="*Straat + huisnummer">
             <input class="small-input" type="text" required id="postcode" name="postcode" pattern=".{6,7}" placeholder="*Postcode"><br><br>
             <input class="stand-input" type="text" required id="woonplaats" name="woonplaats" placeholder="*Woonplaats"><br><br>
             <p class="notice">* is een vereist veld.</p>
+            <p id="messageNotice">
+                <?php 
+                    //Check if the message array has been set
+                    if(isset($_SESSION["user_notice_message"])) {
+                        //Loop through all messages and print them
+                        foreach($_SESSION["user_notice_message"] as $message) {
+                            echo $message . "<br>";
+                        }
+                        //Empty messages array so a user doesn't see them again
+                        $_SESSION["user_notice_message"] = array();
+                    } else {
+                        //If no messages are set, set the array as empty
+                        $_SESSION["user_notice_message"] = array();
+                    }
+                ?>
+            </p>
     </div>
 
     <div class="achtergrond-wrapper">
@@ -42,7 +58,7 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
         <div class="achtergrond bestellen-hoogte">
             <div class="titel-gif">
                 <h2 class="default-margin">Betaalmethode</h2>
-                <div class="credcard    " class="p methods"><i class="fa-brands fa-ideal fa-flip credcard" style="--fa-animation-duration: 2s;" ></i>
+                <div class="credcard" class="p methods"><i class="fa-brands fa-ideal fa-flip credcard" style="--fa-animation-duration: 2s;" ></i>
                 </div>
             </div>
             <div class="btn-padding-wrp">

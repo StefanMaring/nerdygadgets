@@ -18,6 +18,17 @@ $OrderisSuccesfull = FALSE;
 
 //Check if all required fields are set
 if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
+
+    //If a string doesn't contain numbers, add message to array
+    if(!is_numeric($tel)) {
+        $_SESSION["user_notice_message"] = array("Dit veld mag alleen nummers bevatten!");
+        header("location: afrekenen.php");
+        exit();
+    } else {
+        $result = substr_replace($tel, "-", 2);
+        $tel = $result;
+    }
+
     //Sla persoonsgegevens op in een array
     $persoonsGegevens = array(
         //Check of een tussenvoegsel is ingevoegd, sla dan volledige naam op onder "naam"
@@ -70,9 +81,11 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
                 }
             } else {
                 print("ERROR: Stock is too low!");
+                exit();
             }
         } else {
             print("ERROR: Stockitem variable not set!");
+            exit();
         }
     }
     //Link through to IDeal
@@ -80,6 +93,7 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
     exit();
 } else {
     print("ERROR: Not all values set!");
+    exit();
 }
 
 ?>

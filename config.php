@@ -7,7 +7,7 @@ include "UserFuncties.php";
 
 $databaseConnection = connectToDatabase();
 
-$userID = 10; //Haal userID op
+$userID = getUser(); //Haal userID op
 
 if($userID != null){ //Check of gebruiker ingelogd is
     $userLoggedIn = TRUE;
