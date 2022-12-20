@@ -101,7 +101,7 @@ ul#ul-class-navigation li {
     border-radius: 50%;
     font-size: 15px !important;
     height: 41.6px !important;
-
+    cursor: pointer;
 }
 
 #Header {
@@ -943,4 +943,56 @@ button > a:hover {
 .login-links > a:hover {
     color: var(--link-hover);
     transition: color .3s;
+}
+
+/* Dropdown Styling */
+.dropdown {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    background-color: var(--sub-color);
+    color: var(--white);
+    position: absolute !important;
+    top: 94px;
+    right: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 2;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.dropdown > ul {
+    display: flex;
+    flex-flow: column nowrap;
+    line-height: 50px;
+    margin: 0;
+    padding: 0 10px 0 10px;
+}
+
+.dropdown > ul > li {
+    color: var(--white) !important;
+    margin-left: 0 !important;
+    display: unset !important;
+}
+
+.dropdown > ul > li > a {
+    color: var(--white) !important;
+    transition: color .3s;
+}
+
+.dropdown > ul > li > a:hover {
+    color: var(--link-hover) !important;
+    transition: color .3s;
+}
+
+.dropdown > ul > li > a > i {
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+}
+
+.show-dropdown {
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }

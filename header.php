@@ -54,8 +54,9 @@ $cart = getCart();
                     <input type="search" class="icon search-input" id="searchVal" name="search_string" placeholder="Zoeken...">
                     <div class="fas fa-magnifying-glass search-icon"></div>
                 </li>
-                <li class="user-btn">
-                    <a href="login.php" class="HrefDecoration"><i class="fa-solid fa-user"></i></a>
+                <li class="user-btn" onclick="openDropdown();">
+                    <i class="fa-solid fa-user HrefDecoration"></i>
+                    <!-- <a href="login.php" class="HrefDecoration"><i class="fa-solid fa-user"></i></a> -->
                 </li>
                 <li class="cart-btn">
                     <a href="cart.php" class="HrefDecoration"><i class="fa-solid fa-cart-shopping"></i></a>
@@ -63,6 +64,23 @@ $cart = getCart();
             </ul>
         </form>
         <span class="productCounter"><?php print(count($cart)); ?></span>
+
+        <div class="dropdown" id="dropdown">
+            <ul>
+                <li><a href="account.php"><i class="fa-solid fa-user"></i>Accountoverzicht</a></li>
+                <li><a href="orders.php"><i class="fa-solid fa-list"></i>Bestellingen</a></li>
+                <li><a href="orders.php"><i class="fa-solid fa-right-from-bracket"></i>Uitloggen</a></li>
+            </ul>
+        </div>
+
+        <script>
+            var dropdown = document.querySelector("#dropdown");
+            console.log(dropdown);
+
+            function openDropdown() {
+                dropdown.classList.toggle("show-dropdown");
+            }
+        </script>
 
     </div>
     <div class="row" id="Content">
