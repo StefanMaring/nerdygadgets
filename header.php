@@ -65,7 +65,7 @@ $cart = getCart();
                         <a href="login.php" class="HrefDecoration"><i class="fa-solid fa-user"></i></a>
                     </li>
                 <?php }?>
-                
+
                 <li class="cart-btn">
                     <a href="cart.php" class="HrefDecoration"><i class="fa-solid fa-cart-shopping"></i></a>
                 </li>
@@ -77,7 +77,7 @@ $cart = getCart();
                 <ul>
                     <li><a href="account.php"><i class="fa-solid fa-user"></i>Accountoverzicht</a></li>
                     <li><a href="orders.php"><i class="fa-solid fa-list"></i>Bestellingen</a></li>
-                    <li><a href="orders.php"><i class="fa-solid fa-right-from-bracket"></i>Uitloggen</a></li>
+                    <li><a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i>Uitloggen</a></li>
                 </ul>
             </div>
 
