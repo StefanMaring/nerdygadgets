@@ -1,4 +1,5 @@
 <?php
+include "config.php";
 //Make sure a logged in user doesn't have their session destroyed etc.
 if($userLoggedIn == FALSE) {
     header("location: index.php");
