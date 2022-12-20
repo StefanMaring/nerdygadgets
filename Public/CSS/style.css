@@ -568,11 +568,11 @@ footer {
 
 .LoginWindow {
     margin: 0 auto;
-    width: 70%;
+    width: 450px;
     padding: 1.5rem;
     border-radius: 5px;
     background-color: var(--sub-color);
-    margin-top: 25px;
+    margin-top: 100px;
 }
 
 .meta-text {
@@ -915,4 +915,32 @@ button > a:hover {
     visibility: visible;
     opacity: 1;
     margin-top: 25px;
+}
+
+.login-input {
+    width: 100%;
+}
+
+.windowTransparent {
+    background-color: transparent !important;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.login-links {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 5px;
+}
+
+.login-links > a {
+    display: inline;
+    width: 170px;
+    color: var(--white);
+    transition: color .3s;
+}
+
+.login-links > a:hover {
+    color: var(--link-hover);
+    transition: color .3s;
 }

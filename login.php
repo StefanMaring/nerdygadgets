@@ -11,14 +11,19 @@ if(!$userID == null){
 ?>
 
 <section class="s-login" id="CenteredContent">
-
     <div class="LoginWindow">
         <h1 class="s-heading">Inloggen</h1>
         <form action="login-db" method="post">
-            <input class="stand-input" type="email" required id="email" name="email" placeholder="*Email"><br><br>
-            <input class="stand-input" type="password" required id="password" name="password" placeholder="*Wachtwoord"><br><br>
+            <input class="stand-input login-input" type="email" required id="email" name="email" placeholder="Email"><br><br>
+            <input class="stand-input login-input" type="password" required id="password" name="password" placeholder="Wachtwoord"><br><br>
             <input type="submit" class="btn-style full-width" value="Inloggen" name="LoginBTN">
         </form>
+    </div>
+    <div class="LoginWindow windowTransparent">
+        <div class="login-links">
+            <a href="register.php">Registreer hier!</a>
+            <a href="change-password.php">Wachtwoord vergeten?</a>
+        </div>
     </div>
 </section>
 
