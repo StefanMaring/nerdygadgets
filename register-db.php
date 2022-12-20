@@ -2,16 +2,13 @@
 include "config.php";
 
 //HONEYPOT
-if(isset($_POST['faxnumber'])){
-    $kaas = 0;
-    while(TRUE){
-        $kaas++;
-    }; //Winterslaap
+if(isset($_POST['faxnumber']) && !empty($_POST['faxnumber'])){
     sleep(3600);
     exit();
 }
 
-if($POST_["wachtwoord"] != $POST_["repeat_wachtwoord"]){
+//Check of herhaalde wachtwoord gelijk is aan wachtwoord
+if($POST_["password"] != $POST_["repeat_password"]){
     exit("Wachtwoord is niet gelijk!");
 }
 
@@ -25,7 +22,7 @@ $adres = cleanInput($_POST["adres"]);
 $postcode = cleanInput($_POST["postcode"]);
 $woonplaats = cleanInput($_POST["woonplaats"]);
 
-$plaintext_password = cleanInput($_POST["wachtwoord"]);
+$plaintext_password = cleanInput($_POST["password"]);
 $password_hashed = password_hash($plaintext_password, PASSWORD_DEFAULT);
 
 //Check if all required fields are set
