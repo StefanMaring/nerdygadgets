@@ -164,7 +164,6 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
                 (
                  CustomerID,
                  CustomerName,
-                 AccountOpenedDate,
                  EmailAddress,
                  IsPermittedToLogon,
                  PhoneNumber,
@@ -179,7 +178,6 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
                 (
                  @CstId,
                  @name,
-                 CURRENT_DATE,
                  @email,
                  0,
                  @tel,
