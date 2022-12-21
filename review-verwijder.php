@@ -2,7 +2,7 @@
 include "config.php";
 //variabelen
 $_SESSION['klantNaam'] = FetchUserName($databaseConnection, $_SESSION["userID"]);
-$_SESSION['CustomerID'] = $_SESSION["userID"];
+$_SESSION['CustomerID'] = getUser();
 $productPagina=$_SESSION['productPagina'];
 if(isset($_POST["removeReviewBTN"])) {
     deleteReview($databaseConnection, $_SESSION['CustomerID'], $productPagina);

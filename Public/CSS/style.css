@@ -91,6 +91,11 @@
     text-align: left;
     margin-bottom: 10px;
 }
+
+textarea {
+    resize: none;
+}
+
 #sterren{
     color:#FFD700;
     float: left;
@@ -955,7 +960,7 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     color: var(--white);
     width: 35%;
     position: absolute;
-    top: 25%;
+    top: 10%;
     left: 35%;
     border-radius: 5px;
     text-align: left;
@@ -1230,5 +1235,9 @@ button > a:hover {
     width: 35px;
     height: 35px;
     padding: 5px;
+}
+
+.disable-scroll {
+    overflow: hidden;
 }
 

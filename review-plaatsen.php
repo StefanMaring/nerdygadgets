@@ -1,9 +1,9 @@
 <?php
 include "config.php";
 //variabelen
-$_SESSION['CustomerID'] = $_SESSION["userID"];
+$_SESSION['CustomerID'] = getUser();
 $_SESSION['feedback'] = "";
-$_SESSION['klantNaam'] = FetchUserName($databaseConnection, $_SESSION["userID"]);
+$_SESSION['klantNaam'] = FetchUserName($databaseConnection, getUser());
 $beschrijving = trim(cleanInput($_POST["beschrijving"]));
 $sterren = $_POST['star'];
 if ($sterren == "1") {
@@ -20,7 +20,7 @@ if ($sterren == "1") {
 $productPagina=$_SESSION['productPagina'];
 $geplaatsteReviews = checkReviews($databaseConnection, $_SESSION['CustomerID'], $productPagina);
 //review sturen naar database als de velden niet leeg zijn
-if($_SESSION['userID']!= NULL) {
+if(getUser() != NULL) {
     if (!empty($_SESSION['klantNaam']) && !empty($beschrijving) && !empty($aantalSterren) && !empty($productPagina)) {
         //checken of deze klant niet al een review bij een dit product heeft
         if (mysqli_num_rows($geplaatsteReviews) == 0) {
@@ -36,6 +36,8 @@ if($_SESSION['userID']!= NULL) {
     exit();
 } else {
     $_SESSION['feedback'] = "Log in om een review te plaatsen";
+    header("location: http://localhost/nerdygadgets/view.php?id=$productPagina");
+    exit();
 }
 
 
