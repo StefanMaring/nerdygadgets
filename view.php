@@ -5,6 +5,13 @@ $stockItemID = $_GET['id']; // ProductID van de huidige pagina
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
+//variabelen voor reviews
+$_SESSION['CustomerID'] = "123456789";
+$_SESSION['productPagina'] = "";
+$_SESSION['klantNaam'] = "Rob Drost";
+$totaalReviews=0;
+$totaalSterren=0;
+
 ?>
 <div id="CenteredContent">
     <?php
@@ -77,6 +84,19 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <h2 class="StockItemNameViewSize StockItemName">
                 <?php print $StockItem['StockItemName']; ?>
             </h2>
+            <h3>
+            <?php
+            $review = getReview($databaseConnection, $stockItemID);
+            if (mysqli_num_rows($review) > 0) {
+                while ($row = mysqli_fetch_assoc($review)) {
+                    $totaalReviews += 1;
+                    $totaalSterren += $row["AantalSterren"];
+                }
+                $gemiddeldeSterren=round($totaalSterren/$totaalReviews,1);
+                print("<h3 id='sterren'>&#9733;</3>"."$gemiddeldeSterren/5");
+            }
+            ?>
+            </h3>
             <div class="QuantityText"><?php print $StockItem['QuantityOnHand']; ?></div>
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
@@ -143,11 +163,12 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                 <?php
             }
             ?>
-        </div>
+
         <?php
     } else {
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
+
 </div>
 
 <div class="overlay" id="overlay"></div>
@@ -165,6 +186,75 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
 <script src="Public/JS/app.jquery.js"></script>
 <script>document.title = "Nerdygadgets - <?php echo $StockItem["StockItemName"];?>";</script>
+</div>
+<div id="reviews">
+    <div id="reviews-geplaatst">
+        <h2>Geplaatste reviews</h2>
+            <?php
+            $review = getReview($databaseConnection, $stockItemID);
+            if (mysqli_num_rows($review) > 0) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($review)) {
+                    print('<div id="enkele-review">');
+                    for($i=0; $i<$row["AantalSterren"]; $i++) {
+                        print("<h3 id='sterren'>&#9733;</3>");
+                        }
+                    $overigeSterren=(5-$row["AantalSterren"]);
+                    for($i=0; $i<$overigeSterren; $i++) {
+                        print("<h3 id='sterren-niet'>&#9734;</h3>");
+                    }
+                    print("<h3 id='klant'>");
+                    print($row["KlantNaam"]);
+                    print("</h3>");
+                    print("<h3 id='review-beschrijving'>");
+                    print("<br>");
+                    print($row["Beschrijving"]. "<br>");
+                    if($row["KlantNaam"]==$_SESSION['klantNaam']) {
+                        print('<form method="post" action="review-verwijder.php">
+        <input type="submit" name="removeReviewBTN" class="btn-style btn-review" value="Verwijder review">
+        </form>');
+                    }
+                    print("</h3>");
+                    print('</div>');
+
+                }
+            } else {
+                echo "Er zijn nog geen reviews voor dit product geplaatst";
+            }
+            ?>
+    </div>
+    <div id="reviews-schrijven">
+        <h2>Schrijf een review</h2>
+        <div class="txt-center">
+            <form action="review-plaatsen.php" method="post">
+                <div class="rating">
+                    <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
+                    <label for="star5">☆</label>
+                    <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
+                    <label for="star4">☆</label>
+                    <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
+                    <label for="star3">☆</label>
+                    <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
+                    <label for="star2">☆</label>
+                    <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
+                    <label for="star1">☆</label>
+                    <textarea id="beschrijving" name="beschrijving" rows="4" cols="40"> </textarea>
+                    <input type="submit" class="btn-style add-margin btn-small lighter" value="review plaatsen">
+                    <div class="clear"></div>
+                </div>
+            </form>
+        <div>
+            <?php
+            print($_SESSION['feedback']);
+
+            ?>
+        </div>
+        </div>
+        <?php
+        $_SESSION["productPagina"] = $stockItemID;
+        ?>
+    </div>
+</div>
 
 <?php
 

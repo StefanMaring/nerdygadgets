@@ -1,5 +1,4 @@
 <?php
-
 function connectToDatabase() {
     $Connection = null;
 
@@ -325,3 +324,45 @@ function saveOrder($cart, $customerID, $databaseConnection){
     }
 
 }
+function addReview($databaseConnection, $CustomerID, $klantNaam, $aantalSterren, $beschrijving, $productPagina) {
+    $Query = " 
+           INSERT INTO reviews (CustomerID, KlantNaam, AantalSterren, Beschrijving, Product)
+               VALUES ('$CustomerID','$klantNaam', '$aantalSterren', '$beschrijving', '$productPagina')
+           ";
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
+}
+function getReview($databaseConnection, $product) {
+    $Result = null;
+
+    $Query = " 
+           SELECT * FROM `reviews` WHERE Product = '$product'
+           ";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
+    $Result = mysqli_stmt_get_result($Statement);
+    return $Result;
+}
+
+function checkReviews($databaseConnection, $CustomerID, $product) {
+    $Result = null;
+
+    $Query = " 
+           SELECT * FROM `reviews` WHERE CustomerID = '$CustomerID' AND Product = '$product'
+           ";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
+    $Result = mysqli_stmt_get_result($Statement);
+    return $Result;
+}
+
+function deleteReview($databaseConnection, $CustomerID, $product) {
+    $Query = " 
+           DELETE FROM `reviews` WHERE CustomerID = '$CustomerID' AND Product = '$product'
+           ";
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
+}
+
