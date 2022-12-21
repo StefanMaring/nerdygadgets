@@ -6,9 +6,9 @@ $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
 //variabelen voor reviews
-$_SESSION['CustomerID'] = $_SESSION["userID"];
+$_SESSION['CustomerID'] = getUser();
 $_SESSION['productPagina'] = "";
-$_SESSION['klantNaam'] = FetchUserName($databaseConnection, $_SESSION["userID"]);
+$_SESSION['klantNaam'] = FetchUserName($databaseConnection, getUser());
 $_SESSION['Feedback']=" ";
 $totaalReviews=0;
 $totaalSterren=0;
@@ -192,36 +192,42 @@ $totaalSterren=0;
     <div id="reviews-geplaatst">
         <h2>Geplaatste reviews</h2>
             <?php
-            $review = getReview($databaseConnection, $stockItemID);
-            if (mysqli_num_rows($review) > 0) {
-                // output data of each row
-                while($row = mysqli_fetch_assoc($review)) {
-                    print('<div id="enkele-review">');
-                    for($i=0; $i<$row["AantalSterren"]; $i++) {
-                        print("<h3 id='sterren'>&#9733;</3>");
+            if(getUser() != NULL) {
+                $review = getReview($databaseConnection, $stockItemID);
+                if (mysqli_num_rows($review) > 0) {
+                    // output data of each row
+                    while ($row = mysqli_fetch_assoc($review)) {
+                        print('<div id="enkele-review">');
+                        for ($i = 0; $i < $row["AantalSterren"]; $i++) {
+                            print("<h3 id='sterren'>&#9733;</3>");
                         }
-                    $overigeSterren=(5-$row["AantalSterren"]);
-                    for($i=0; $i<$overigeSterren; $i++) {
-                        print("<h3 id='sterren-niet'>&#9734;</h3>");
-                    }
-                    print("<h3 id='klant'>");
-                    print($row["KlantNaam"]);
-                    print("</h3>");
-                    print("<h3 id='review-beschrijving'>");
-                    print("<br>");
-                    print($row["Beschrijving"]. "<br>");
-                    if($row["KlantNaam"]==$_SESSION['klantNaam']) {
-                        print('<form method="post" action="review-verwijder.php">
+                        $overigeSterren = (5 - $row["AantalSterren"]);
+                        for ($i = 0; $i < $overigeSterren; $i++) {
+                            print("<h3 id='sterren-niet'>&#9734;</h3>");
+                        }
+                        print("<h3 id='klant'>");
+                        print($row["KlantNaam"]);
+                        print("</h3>");
+                        print("<h3 id='review-beschrijving'>");
+                        print("<br>");
+                        print($row["Beschrijving"] . "<br>");
+                        if ($row["KlantNaam"] == $_SESSION['klantNaam']) {
+                            print('<form method="post" action="review-verwijder.php">
         <input type="submit" name="removeReviewBTN" class="btn-style btn-review" value="Verwijder review">
         </form>');
-                    }
-                    print("</h3>");
-                    print('</div>');
+                        }
+                        print("</h3>");
+                        print('</div>');
 
+                    }
+                } else {
+                    echo "Er zijn nog geen reviews voor dit product geplaatst";
                 }
-            } else {
-                echo "Er zijn nog geen reviews voor dit product geplaatst";
-            }
+                }
+                else {
+                    echo "log in om reviews te kunnen zien";
+                }
+            
             ?>
     </div>
     <div id="reviews-schrijven">

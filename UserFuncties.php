@@ -47,20 +47,22 @@ function fetchUserData($userEmail, $databaseConnection){
         }
 }
 function FetchUserName($databaseConnection, $userID) {
-    $query = "
+    if($userID != NULL) {
+        $query = "
     SELECT CustomerName
     FROM customers_new
     WHERE CustomerID = $userID";
-    $Statement = mysqli_prepare($databaseConnection, $query);
-    mysqli_stmt_execute($Statement);
-    $ReturnableResult = mysqli_stmt_get_result($Statement);
-    if (mysqli_num_rows($ReturnableResult) != 0) {
-        while($row = mysqli_fetch_assoc($ReturnableResult)){
-        $result = $row['CustomerName'];
-        return $result;
-    }
-    } else {
-        return ("Je bent niet ingelogd");
+        $Statement = mysqli_prepare($databaseConnection, $query);
+        mysqli_stmt_execute($Statement);
+        $ReturnableResult = mysqli_stmt_get_result($Statement);
+        if (mysqli_num_rows($ReturnableResult) != 0) {
+            while ($row = mysqli_fetch_assoc($ReturnableResult)) {
+                $result = $row['CustomerName'];
+                return $result;
+            }
+        } else {
+            return ("Je bent niet ingelogd");
+        }
     }
 }
 /*TO-DO: Vervang die() met exit() -
