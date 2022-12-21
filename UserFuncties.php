@@ -46,7 +46,18 @@ function fetchUserData($userEmail, $databaseConnection){
             return $userData;
         }
 }
-
+function FetchUserName($databaseConnection, $userID) {
+    $query = "
+    SELECT Customername
+    FROM customers_new
+    WHERE CustomerID = $userID";
+    $Statement = mysqli_prepare($databaseConnection, $query);
+    mysqli_stmt_execute($Statement);
+    $ReturnableResult = mysqli_stmt_get_result($Statement);
+    if (mysqli_num_rows($ReturnableResult) != 0) {
+        return $ReturnableResult;
+    }
+}
 /*TO-DO: Vervang die() met exit() -
 */
 function loginUser($userEmail, $plaintext_password, $databaseConnection){
