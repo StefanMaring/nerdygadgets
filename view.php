@@ -89,6 +89,7 @@ if(!isset($_SESSION['feedback'])) {
             </h2>
             <h3>
             <?php
+            //als er een review is gegeven; bereken gemiddelde en laat dit zien
             $review = getReview($databaseConnection, $stockItemID);
             if (mysqli_num_rows($review) > 0) {
                 while ($row = mysqli_fetch_assoc($review)) {
@@ -199,7 +200,7 @@ if(!isset($_SESSION['feedback'])) {
             <?php
                 $review = getReview($databaseConnection, $stockItemID);
                 if (mysqli_num_rows($review) > 0) {
-                    // output data of each row
+                    // output data van elke row
                     while ($row = mysqli_fetch_assoc($review)) {
                         print('<div id="enkele-review">');
                         for ($i = 0; $i < $row["AantalSterren"]; $i++) {
@@ -215,6 +216,7 @@ if(!isset($_SESSION['feedback'])) {
                         print("<h3 id='review-beschrijving'>");
                         print("<br>");
                         print($row["Beschrijving"] . "<br>");
+                        //als er ingelogd is en customerID komt overeen met de review; voeg een verwijder knop toe
                         if(getUser() != NULL) {
                         if ($row["KlantNaam"] == $_SESSION['klantNaam']) {
                             print('<form method="post" action="review-verwijder.php">
@@ -253,11 +255,13 @@ if(!isset($_SESSION['feedback'])) {
             </form>
         <div>
             <?php
+            //print feedback van het review formulier, bijv. "vul het formulier volledig in"
             print($_SESSION['feedback']);
             ?>
         </div>
         </div>
         <?php
+        //sla de huidige product pagina op, om hier later naar terug te keren
         $_SESSION["productPagina"] = $stockItemID;
         ?>
     </div>
