@@ -9,9 +9,11 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 $_SESSION['CustomerID'] = getUser();
 $_SESSION['productPagina'] = "";
 $_SESSION['klantNaam'] = FetchUserName($databaseConnection, getUser());
-$_SESSION['Feedback']=" ";
 $totaalReviews=0;
 $totaalSterren=0;
+if($_SESSION['feedback'] == NULL) {
+    $_SESSION['feedback']=" ";
+}
 
 ?>
 <div id="CenteredContent">
