@@ -6,6 +6,55 @@ $cart = getCart(); //Haal het winkelmandje op
 $totaalPrijs = 0;
 
 if(!empty($cart)){ //Check of het winkelmandje leeg is
+
+    //Select usedCode value where usedCode equals the input discount code
+    if(isset($_POST["korting_btn"])) {
+        $kortingscode = cleanInput($_POST["kortingscode"]);
+
+        $kortingSelect = 'SELECT usedCode
+    FROM discountcode
+    WHERE kortingscode_text = ?';
+        $stmt = $databaseConnection->prepare($kortingSelect);
+        $stmt->bind_param("s", $kortingscode);
+        $stmt->execute();
+        $result = $stmt->get_result(); //Get the number of results
+        $couponUsed = $result->fetch_column(); //Fetch the specific column
+
+/*        $kortingcodetextselect = 'SELECT kortingscode_text
+    FROM discountcode
+    WHERE kortingscode_text = ?';
+        $stmt = $databaseConnection->prepare($kortingcodetextselect);
+        $stmt->bind_param("s", $kortingscode);
+        $stmt->execute();
+        $result = $stmt->get_result(); //Get the number of results
+        $couponUsed = $result->fetch_column(); //Fetch the specific column*/
+
+
+
+if(empty($couponUsed)){
+            $couponUsed = 1;
+            $_SESSION["korting"] = 10;
+            if ($result == 0 ){
+                print "Code klopt";
+        }
+
+
+        }else ("Code klopt niet");
+
+        //If couponUsed equals 1, a message displays that it's been used
+
+        if($couponUsed == 0) { //If the coupon code hasn't been used, update the usedCode data to 1 so it can't be used again
+            $usedcode= 1;
+            $kortingUpdate = 'UPDATE discountcode
+                      SET usedCode = ?
+                      WHERE kortingscode_text = ?';
+            $stmt = $databaseConnection->prepare($kortingUpdate);
+            $stmt->bind_param("is", $usedcode, $kortingscode);
+            $stmt->execute();
+        }
+    }
+
+
 ?>
 
 <script>
@@ -23,6 +72,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
     </div>
     <div class="Cart">
     <?php
+
     foreach ($cart as $productID => $productAmount) {
         $StockItem = getStockItem($productID, $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
         $StockItemImage = getStockItemImage($productID, $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
@@ -107,15 +157,23 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 ?>
 
 <div class="totalPrice">
-    <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
+
+    <h2><?php if(isset($_POST["korting_btn"]) && $_SESSION["korting"] >= 1){
+                print("Totaal prijs: " . sprintf("€%.2f", $totaalPrijs*0.9));
+    }else print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs));
+        ?></h2>
+
+
 </div>
 
 </div>
 <div class="couponForm">
     <form method="post">
         <div class="flex-form">
+
             <input class="stand-input-korting" type="text" id="kortingscode" name="kortingscode" placeholder="Kortingscode"><br><br>
             <input type="submit" value="Toevoegen" name="korting_btn" class="btn-style addCodeBtn">
+
         </div>
     </form>
 </div>
@@ -151,33 +209,7 @@ if(isset($_POST['PayCartBTN'])){
         echo "<script> location.href='afrekenen.php'; </script>";
 }
 
-//Select usedCode value where usedCode equals the input discount code
-if(isset($_POST["korting_btn"])) {
-    $kortingscode = cleanInput($_POST["kortingscode"]);
 
-    $kortingSelect = 'SELECT usedCode
-    FROM discountcode
-    WHERE kortingscode_text = ?';
-    $stmt = $databaseConnection->prepare($kortingSelect);
-    $stmt->bind_param("s", $kortingscode);
-    $stmt->execute();
-    $result = $stmt->get_result(); //Get the number of results
-    $couponUsed = $result->fetch_column(); //Fetch the specific column
-
-    //If couponUsed equals 1, a message displays that it's been used
-    if($couponUsed == 1){
-        print('<p class="couponMessage">Deze kortingscode is al gebruikt!</p>');
-        exit();
-    } elseif($couponUsed == 0) { //If the coupon code hasn't been used, update the usedCode data to 1 so it can't be used again
-        $usedcode= 1;
-        $kortingUpdate = 'UPDATE discountcode
-                      SET usedCode = ?
-                      WHERE kortingscode_text = ?';
-        $stmt = $databaseConnection->prepare($kortingUpdate);
-        $stmt->bind_param("is", $usedcode, $kortingscode);
-        $stmt->execute();
-    }
-}
 
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
