@@ -99,66 +99,7 @@ function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
 
     //Check of gebruiker al bestaat in database
     $userData = fetchUserData($email, $databaseConnection);
-    die($userData);
-    if($userData["IsPermittedToLogon"] == 1){ //CHECK: Gebruiker bestaat al als klant
-        die("Gebruiker bestaat al!"); //VERVANG MET REDIRECT
-    } elseif($userData["IsPermittedToLogon"] == 0){ //CHECK: Gebruiker bestaat als bezoeker
-        //Zet de bestaande bezoeker om in een klantaccount
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
-        mysqli_begin_transaction($databaseConnection);
-
-        try{
-            //define customerID
-            $statement = mysqli_prepare($databaseConnection, "
-                SELECT CustomerID AS CstId
-                FROM customers_new;
-                WHERE CustomerID");
-            mysqli_stmt_execute($statement);
-            $Result = mysqli_stmt_get_result($statement);
-            $customerID = mysqli_fetch_column($Result); //Fetch result from SQL query, save into customerID
-
-            //customerID
-            $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
-            mysqli_stmt_bind_param($statement, 'i', $customerID);
-            mysqli_stmt_execute($statement);
-            //naam
-            $statement = mysqli_prepare($databaseConnection, "SET @name = ?;");
-            mysqli_stmt_bind_param($statement, 's', $naam);
-            mysqli_stmt_execute($statement);
-            //email
-            $statement = mysqli_prepare($databaseConnection, "SET @email = ?;");
-            mysqli_stmt_bind_param($statement, 's', $email);
-            mysqli_stmt_execute($statement);
-            //tel
-            $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
-            mysqli_stmt_bind_param($statement, 's', $tel);
-            mysqli_stmt_execute($statement);
-            //adres
-            $statement = mysqli_prepare($databaseConnection, "SET @adres = ?;");
-            mysqli_stmt_bind_param($statement, 's', $adres);
-            mysqli_stmt_execute($statement);
-            //postcode
-            $statement = mysqli_prepare($databaseConnection, "SET @postcode = ?;");
-            mysqli_stmt_bind_param($statement, 's', $postcode);
-            mysqli_stmt_execute($statement);
-            //woonplaats
-            $statement = mysqli_prepare($databaseConnection, "SET @plaats = ?;");
-            mysqli_stmt_bind_param($statement, 's', $woonplaats);
-            mysqli_stmt_execute($statement);
-            //password
-            $statement = mysqli_prepare($databaseConnection, "SET @password = ?;");
-            mysqli_stmt_bind_param($statement, 's', $password_hashed);
-            mysqli_stmt_execute($statement);
-
-            //UPDATE QUERY HIER
-
-
-        } catch(mysqli_sql_exception $exception){
-            mysqli_rollback($databaseConnection);
-            throw $exception;
-        }
-
-    } elseif(!$userData){ //CHECK: Gebruiker bestaat niet
+    if(!$userData){ //CHECK: Gebruiker bestaat niet
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
         mysqli_begin_transaction($databaseConnection);
 
@@ -166,9 +107,7 @@ function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
             //define customerID
             $statement = mysqli_prepare($databaseConnection, "
                 SELECT MAX(CustomerID) + 1 AS CstId -- Fetch highest known ID and increase by 1, save as CstId
-                FROM customers_new
-                WHERE CustomerID = ?;");
-            mysqli_stmt_bind_param($statement, "i", $userData["CustomerID"]);
+                FROM customers_new;");
             mysqli_stmt_execute($statement);
             $Result = mysqli_stmt_get_result($statement);
             $customerID = mysqli_fetch_column($Result); //Fetch result from SQL query, save into customerID
@@ -207,6 +146,98 @@ function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
             mysqli_stmt_execute($statement);
 
             mysqli_query($databaseConnection, "
+        INSERT INTO customers_new
+                (
+                 CustomerID,
+                 CustomerName,
+                 AccountOpenedDate,
+                 EmailAddress,
+                 IsPermittedToLogon,
+                 HashedPassword,
+                 PhoneNumber,
+                 AddressLine,
+                 AddressPostalCode,
+                 AddressCity,
+                 ValidFrom,
+                 ValidTo
+                )
+                
+                VALUES
+                (
+                 @CstId,
+                 @name,
+                 CURRENT_DATE,
+                 @email,
+                 1,
+                 @password,
+                 @tel,
+                 @adres,
+                 @postcode,
+                 @plaats,
+                 CURRENT_TIMESTAMP,
+                 '9999-12-31 23:59:59'
+                );");
+
+            mysqli_commit($databaseConnection);
+            mysqli_free_result($Result);
+
+            return $customerID;
+        } catch(mysqli_sql_exception $exception){
+            mysqli_rollback($databaseConnection);
+            //die(var_dump($customerID));
+            throw $exception;
+        }
+    } elseif($userData["IsPermittedToLogon"] == 0){ //CHECK: Gebruiker bestaat als bezoeker
+        //Zet de bestaande bezoeker om in een klantaccount
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
+        mysqli_begin_transaction($databaseConnection);
+
+        try{
+            //define customerID
+            $statement = mysqli_prepare($databaseConnection, "
+                SELECT CustomerID AS CstId
+                FROM customers_new
+                WHERE EmailAddress = ?;");
+            mysqli_stmt_bind_param($statement, "s", $email);
+            mysqli_stmt_execute($statement);
+            $Result = mysqli_stmt_get_result($statement);
+            $customerID = mysqli_fetch_column($Result); //Fetch result from SQL query, save into customerID
+
+            //customerID
+            $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $customerID);
+            mysqli_stmt_execute($statement);
+            //naam
+            $statement = mysqli_prepare($databaseConnection, "SET @name = ?;");
+            mysqli_stmt_bind_param($statement, 's', $naam);
+            mysqli_stmt_execute($statement);
+            //email
+            $statement = mysqli_prepare($databaseConnection, "SET @email = ?;");
+            mysqli_stmt_bind_param($statement, 's', $email);
+            mysqli_stmt_execute($statement);
+            //tel
+            $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
+            mysqli_stmt_bind_param($statement, 's', $tel);
+            mysqli_stmt_execute($statement);
+            //adres
+            $statement = mysqli_prepare($databaseConnection, "SET @adres = ?;");
+            mysqli_stmt_bind_param($statement, 's', $adres);
+            mysqli_stmt_execute($statement);
+            //postcode
+            $statement = mysqli_prepare($databaseConnection, "SET @postcode = ?;");
+            mysqli_stmt_bind_param($statement, 's', $postcode);
+            mysqli_stmt_execute($statement);
+            //woonplaats
+            $statement = mysqli_prepare($databaseConnection, "SET @plaats = ?;");
+            mysqli_stmt_bind_param($statement, 's', $woonplaats);
+            mysqli_stmt_execute($statement);
+            //password
+            $statement = mysqli_prepare($databaseConnection, "SET @password = ?;");
+            mysqli_stmt_bind_param($statement, 's', $password_hashed);
+            mysqli_stmt_execute($statement);
+
+            //UPDATE QUERY HIER
+            mysqli_query($databaseConnection, "
         UPDATE customers_new
         SET
                 (
@@ -237,14 +268,12 @@ function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
                 )
             WHERE CustomerID = @CstID;");
 
-            mysqli_commit($databaseConnection);
-            mysqli_free_result($Result);
-
-            return $customerID;
         } catch(mysqli_sql_exception $exception){
             mysqli_rollback($databaseConnection);
-            //die(var_dump($customerID));
             throw $exception;
         }
+
+    } elseif($userData["IsPermittedToLogon"] == 1){ //CHECK: Gebruiker bestaat al als klant
+        die("Gebruiker bestaat al!"); //VERVANG MET REDIRECT
     }
 }
