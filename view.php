@@ -11,7 +11,7 @@ $_SESSION['productPagina'] = "";
 $_SESSION['klantNaam'] = FetchUserName($databaseConnection, getUser());
 $totaalReviews=0;
 $totaalSterren=0;
-if($_SESSION['feedback'] == NULL) {
+if(!isset($_SESSION['feedback'])) {
     $_SESSION['feedback']=" ";
 }
 
@@ -246,7 +246,7 @@ if($_SESSION['feedback'] == NULL) {
                     <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
                     <label for="star1">☆</label>
                     <textarea id="beschrijving" name="beschrijving" rows="4" cols="40"> </textarea>
-                    <input type="submit" class="btn-style add-margin btn-small lighter" value="review plaatsen">
+                    <input type="submit" class="btn-style add-margin btn-small lighter" value="Review Plaatsen">
                     <div class="clear"></div>
                 </div>
             </form>
