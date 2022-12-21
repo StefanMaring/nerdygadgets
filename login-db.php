@@ -13,7 +13,7 @@ $plaintext_password = cleanInput($_POST["password"]);
 if(!empty($email) && !empty($plaintext_password)){
 
     loginUser($email, $plaintext_password, $databaseConnection);
-    $_SESSION["feedback"] = "";
+    $_SESSION["feedback"] = ""; //Reset feedback bij reviews
     header("Location: index.php");
     exit();
 }

@@ -192,6 +192,7 @@ if(!isset($_SESSION['feedback'])) {
 <script src="Public/JS/app.jquery.js"></script>
 <script>document.title = "Nerdygadgets - <?php echo $StockItem["StockItemName"];?>";</script>
 </div>
+<?php if($StockItem != null){ ?>
 <div id="reviews">
     <div id="reviews-geplaatst">
         <h2>Geplaatste reviews</h2>
@@ -261,6 +262,7 @@ if(!isset($_SESSION['feedback'])) {
         ?>
     </div>
 </div>
+<?php } ?>
 
 <?php
 
