@@ -1,9 +1,9 @@
 <?php
 include "config.php";
 //variabelen
-$_SESSION['CustomerID'] = "123456789";
+$_SESSION['CustomerID'] = $_SESSION["userID"];
 $_SESSION['feedback'] = "";
-$_SESSION['klantNaam'] = "Rob Drost";
+$_SESSION['klantNaam'] = "Test";
 $beschrijving = trim(cleanInput($_POST["beschrijving"]));
 $sterren = $_POST['star'];
 if ($sterren == "1") {
@@ -20,19 +20,23 @@ if ($sterren == "1") {
 $productPagina=$_SESSION['productPagina'];
 $geplaatsteReviews = checkReviews($databaseConnection, $_SESSION['CustomerID'], $productPagina);
 //review sturen naar database als de velden niet leeg zijn
+if($_SESSION['userID']!= NULL) {
     if (!empty($_SESSION['klantNaam']) && !empty($beschrijving) && !empty($aantalSterren) && !empty($productPagina)) {
         //checken of deze klant niet al een review bij een dit product heeft
         if (mysqli_num_rows($geplaatsteReviews) == 0) {
             addReview($databaseConnection, $_SESSION['CustomerID'], $_SESSION['klantNaam'], $aantalSterren, $beschrijving, $productPagina);
-            $_SESSION['feedback']="";
-        }
-        else{
-            $_SESSION['feedback']=("Iedere klant kan per product maar één review achterlaten");
+            $_SESSION['feedback'] = "";
+        } else {
+            $_SESSION['feedback'] = ("Iedere klant kan per product maar één review achterlaten");
         }
     } else {
-        $_SESSION['feedback']=("Vul het review formulier volledig in");
+        $_SESSION['feedback'] = ("Vul het review formulier volledig in");
     }
-header("location: http://localhost/nerdygadgets/view.php?id=$productPagina");
-exit();
+    header("location: http://localhost/nerdygadgets/view.php?id=$productPagina");
+    exit();
+} else {
+    $_SESSION['feedback'] = "Log in om een review te plaatsen";
+}
+
 
 
