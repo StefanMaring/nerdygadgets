@@ -996,3 +996,47 @@ button > a:hover {
     visibility: visible;
     opacity: 1;
 }
+
+.accountWindow {
+    margin: 0 auto;
+    width: 600px;
+}
+
+.account-info {
+    margin-top: 50px;
+}
+
+.account-item {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 10px;
+}
+
+.user-meta-name {
+    width: 100px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.user-meta-info {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: var(--sub-color);
+    color: var(--white);
+    font-size: 16px;
+    border-radius: 5px;
+    width: 400px;
+    height: 35px;
+    padding-left: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-square {
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+}
