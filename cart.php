@@ -5,53 +5,55 @@ include "header.php";
 $cart = getCart(); //Haal het winkelmandje op
 $totaalPrijs = 0;
 
-if(!empty($cart)){ //Check of het winkelmandje leeg is
+if(!empty($cart)) { //Check of het winkelmandje leeg is
 
     //Select usedCode value where usedCode equals the input discount code
-    if(isset($_POST["korting_btn"])) {
+    if (isset($_POST["korting_btn"])) {
         $kortingscode = cleanInput($_POST["kortingscode"]);
 
         $kortingSelect = 'SELECT usedCode
-    FROM discountcode
-    WHERE kortingscode_text = ?';
-        $stmt = $databaseConnection->prepare($kortingSelect);
-        $stmt->bind_param("s", $kortingscode);
-        $stmt->execute();
-        $result = $stmt->get_result(); //Get the number of results
-        $couponUsed = $result->fetch_column(); //Fetch the specific column
-
-/*        $kortingcodetextselect = 'SELECT kortingscode_text
-    FROM discountcode
-    WHERE kortingscode_text = ?';
-        $stmt = $databaseConnection->prepare($kortingcodetextselect);
-        $stmt->bind_param("s", $kortingscode);
-        $stmt->execute();
-        $result = $stmt->get_result(); //Get the number of results
-        $couponUsed = $result->fetch_column(); //Fetch the specific column*/
-
-
-
-if(empty($couponUsed)){
-            $couponUsed = 1;
-            $_SESSION["korting"] = 10;
-            if ($result == 0 ){
-                print "Code klopt";
+        FROM discountcode
+        WHERE kortingscode_text = ?';
+        $stmt = mysqli_prepare($databaseConnection, $kortingSelect);
+        mysqli_stmt_bind_param($stmt, "s", $kortingscode);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if ($result && mysqli_num_rows($result) == 1) { //Check if coupon exists
+            $couponUsed = mysqli_fetch_column($result);  //Fetch the specific column
+            $couponExists = TRUE;
+        } else {
+            $couponExists = FALSE;
+            print("Code bestaat niet");
         }
 
+        /*        $kortingcodetextselect = 'SELECT kortingscode_text
+            FROM discountcode
+            WHERE kortingscode_text = ?';
+                $stmt = $databaseConnection->prepare($kortingcodetextselect);
+                $stmt->bind_param("s", $kortingscode);
+                $stmt->execute();
+                $result = $stmt->get_result(); //Get the number of results
+                $couponUsed = $result->fetch_column(); //Fetch the specific column*/
 
-        }else ("Code klopt niet");
 
-        //If couponUsed equals 1, a message displays that it's been used
-
-        if($couponUsed == 0) { //If the coupon code hasn't been used, update the usedCode data to 1 so it can't be used again
-            $usedcode= 1;
-            $kortingUpdate = 'UPDATE discountcode
+        if ($couponExists) {    //Check of couponcode bestaat
+            if ($couponUsed == 1){   //Check of couponcode al gebruikt is
+                print "Code is al gebruikt";
+            } else {    //Stel ingevoerde couponcode in op "gebruikt"
+                print("Code is geupdate");
+                $_SESSION["korting"] = 10;
+                $usedcode = 1;
+                $kortingUpdate = 'UPDATE discountcode
                       SET usedCode = ?
                       WHERE kortingscode_text = ?';
-            $stmt = $databaseConnection->prepare($kortingUpdate);
-            $stmt->bind_param("is", $usedcode, $kortingscode);
-            $stmt->execute();
-        }
+                $stmt = $databaseConnection->prepare($kortingUpdate);
+                $stmt->bind_param("is", $usedcode, $kortingscode);
+                $stmt->execute();
+            }
+
+
+        } else ("Code bestaat niet");
+
     }
 
 
@@ -158,8 +160,8 @@ if(empty($couponUsed)){
 
 <div class="totalPrice">
 
-    <h2><?php if(isset($_POST["korting_btn"]) && $_SESSION["korting"] >= 1){
-                print("Totaal prijs: " . sprintf("€%.2f", $totaalPrijs*0.9));
+    <h2><?php if(isset($_SESSION["korting"]) && $_SESSION["korting"] >= 1){
+                print("Totaal prijs met korting: " . sprintf("€%.2f", $totaalPrijs*0.9));
     }else print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs));
         ?></h2>
 
