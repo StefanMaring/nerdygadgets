@@ -46,6 +46,37 @@ function fetchUserData($userEmail, $databaseConnection){
             return $userData;
         }
 }
+
+function fetchUserDataByID($userID, $databaseConnection){
+    $Query = "
+        SELECT CustomerID,
+               CustomerName,
+               AccountOpenedDate,
+               EmailAddress,
+               IsPermittedToLogon,
+               PhoneNumber,
+               AddressLine,
+               AddressPostalCode,
+               AddressCity
+        FROM customers_new
+        WHERE CustomerID = ?
+        ";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $userID);
+    mysqli_stmt_execute($Statement);
+    $ReturnableResult = mysqli_stmt_get_result($Statement);
+    if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 0) {
+        return FALSE;
+        die("Gebruiker bestaat niet"); //VERVANG DIT
+    } elseif ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
+        //print("Email bestaat WEL <br>");
+        $userData = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
+        return $userData;
+    }
+}
+
+
 function FetchUserName($databaseConnection, $userID) {
     if($userID != NULL) {
         $query = "
