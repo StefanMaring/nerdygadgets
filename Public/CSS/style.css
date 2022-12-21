@@ -61,7 +61,7 @@
 #reviews-geplaatst {
     background-color: var(--sub-color);
     width: 49%;
-    hight: 100%;
+    height: 100%;
     float: left;
     padding: 10px;
     font-family: pt-sans, sans-serif;
@@ -82,7 +82,7 @@
 #enkele-review {
     background-color: rgba(224, 224, 224, 0.1);
     width: 100%;
-    hight: 100%;
+    height: 100%;
     float: left;
     padding: 10px;
     font-family: pt-sans, sans-serif;
@@ -109,7 +109,7 @@
     font-family: pt-sans, sans-serif;
     font-size: 20px;
     display: inline;
-    flex-display: row;;
+    flex-flow: row;
 }
 #review-beschrijving{
     color:white;
