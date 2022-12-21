@@ -115,6 +115,7 @@ if($_SESSION['feedback'] == NULL) {
         <?php
         //If stock is bigger than 0, display button
         if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
+
         ?>
             <div class="add-btn-wrp">
                 <iframe name="SendingForm" class="hiddenFrame"></iframe>
@@ -123,6 +124,7 @@ if($_SESSION['feedback'] == NULL) {
                 </form>
             </div>
         <?php
+
         }
         ?>
 

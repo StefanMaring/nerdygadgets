@@ -91,6 +91,7 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
             }
         }
     }
+
 ?>
         <div class="totalPrice">
             <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
@@ -141,27 +142,82 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 <script src="Public/JS/app.jquery.js"></script>
 <script>document.title = "Nerdygadgets - Winkelmand";</script>
 
+    </div>
+</section>
 
-<?php
+    <script>document.title = "Nerdygadgets - Winkelmand";</script>
 
-if(isset($_POST['clearCartBTN'])){
-    $cart = array();
-    saveCart($cart);
-    echo "<script> location.href='cart.php'; </script>";
-}
 
-if (isset($_POST['removeProductBTN'])) {
-    //print('<h1>' . $_POST["removeProductID"] . '</h1>');
-    unset($cart[$_POST['removeProductID']]);
-    saveCart($cart);
-    echo "<script> location.href='cart.php'; </script>";
-}
+    <?php
 
-if(isset($_POST['PayCartBTN'])){
+    if(isset($_POST['clearCartBTN'])){
+        $cart = array();
         saveCart($cart);
-        $_SESSION['totaalPrijs'] = $totaalPrijs;
-        echo "<script> location.href='afrekenen.php'; </script>";
-} //afreken knop
+        echo "<script> location.href='cart.php'; </script>";
+    }
+
+    if (isset($_POST['removeProductBTN'])) {
+        //print('<h1>' . $_POST["removeProductID"] . '</h1>');
+        unset($cart[$_POST['removeProductID']]);
+        saveCart($cart);
+        echo "<script> location.href='cart.php'; </script>";
+    }
+
+    if(isset($_POST['PayCartBTN'])){
+            saveCart($cart);
+            $_SESSION['totaalPrijs'] = $totaalPrijs;
+            echo "<script> location.href='afrekenen.php'; </script>";
+    } //afreken knop
+
+    //Start conversiemaatregel 5
+    $recs = aanbevelingenItems($StockItem['StockItemID'], $databaseConnection);
+
+    ?>
+    <h1 id="CenteredContent">Wij bevelen ook aan:</h1>
+
+    <div class="aanbevelingen" id="CenteredContent">
+        <?php
+        foreach($recs as $recID => $recArray) {
+        $StockItem = getStockItem($recArray['StockItemID'], $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
+        $StockItemImage = getStockItemImage($recArray['StockItemID'], $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
+//        print_r($StockItem);
+
+        if(isset($StockItemImage[0])){ //Check of een product foto's heeft
+            $productImage = "Public/StockItemIMG/" . $StockItemImage[0]['ImagePath']; //Sla de 1ste foto van een product op in productImage
+        } else{
+            $productImage = "Public/StockGroupIMG/" . $StockItem['BackupImagePath']; //Gebruik een andere foto als placeholder
+        }
+        ?>
+        <div class="aanbeveling">
+            <div class="image-fix">
+                <img src="<?php echo $productImage; ?>" class="product-image-aanbeveling">
+            </div>
+            <div class="aanbeveling-meta">
+                <h4 class="wrapped-text"><a class="cart-link" href="view.php?id=<?php echo $StockItem["StockItemID"]?>"><?php print($StockItem['StockItemName'])?></a></h4>
+                <?php
+                print("Prijs: " . sprintf("€%.2f", $StockItem['SellPrice']) . "<br><br>");
+                print("Artikelnummer: " . ($StockItem['StockItemID']));
+                $recArrayStockItemID = $StockItem["StockItemID"];
+                ?>
+            </div>
+            <div>
+                <form method="POST">
+                <input class="btn-style-aanbeveling" type="submit" name="addToCartBTN-<?php echo $recArrayStockItemID?>" value="Toevoegen">
+                <input type="hidden" name="stockitemid" value="<?php echo $recArrayStockItemID?>">
+                </form>
+            </div>
+        </div>
+        <?php } ?>
+        <?php
+        if(isset($_POST["stockitemid"])) {
+            addProductToCart($_POST["stockitemid"]);
+            echo "<script> location.href='cart.php'; </script>";
+        }
+        ?>
+    </div>
+
+    <?php
+
 
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
