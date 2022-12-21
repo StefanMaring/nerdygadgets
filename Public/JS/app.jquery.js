@@ -1,6 +1,7 @@
 //Opens the dialogbox
 $('#add-btn').on("click", function() {
     $('#dialogbox').toggleClass("show-dialog");
+    $('body').toggleClass("disable-scroll");
 });
 
 //Opens the overlay behind dialog
