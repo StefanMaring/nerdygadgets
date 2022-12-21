@@ -9,7 +9,7 @@ if($userLoggedIn == FALSE) {
     session_unset(); //Free all session variables
     session_destroy(); //Destroy data in a session
     $_SESSION = array(); //Set the session to an empty array
-    header("location: index.php");
+    echo "<script> location.href='index.php'; </script>"; //Redirect back to homepage
     exit();
 }
 ?>

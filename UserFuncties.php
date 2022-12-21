@@ -83,17 +83,16 @@ function loginUser($userEmail, $plaintext_password, $databaseConnection){
         mysqli_stmt_execute($Statement);
         $ReturnableResult = mysqli_stmt_get_result($Statement);
         if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 0) {
-            die("Email bestaat niet <br>");
+            $_SESSION["user_notice_message"] = array("De ingevoerde gegevens kloppen niet"); //Emailadres bestaat niet
 
         } elseif ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
-            print("Email bestaat WEL <br>");
             $userData = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
 
             if($userData["IsPermittedToLogon"] == 0) {
-                print("Gebruiker is bezoeker: Mag niet inloggen <br>");
+                $_SESSION["user_notice_message"] = array("De ingevoerde gegevens kloppen niet"); //Emailadres bestaat, maar als bezoeker (geen account)
             } else{
                 if (!password_verify($plaintext_password, $userData["HashedPassword"])) {
-                    print("Wachtwoord onjuist");
+                    $_SESSION["user_notice_message"] = array("De ingevoerde gegevens kloppen niet"); //Fout wachtwoord ingevuld
                 } else {
                     print("Wachtwoord juist!");
 

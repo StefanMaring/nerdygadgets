@@ -14,6 +14,6 @@ if(!empty($email) && !empty($plaintext_password)){
 
     loginUser($email, $plaintext_password, $databaseConnection);
     $_SESSION["feedback"] = ""; //Reset feedback bij reviews
-    header("Location: index.php");
+    header("Location: login.php");
     exit();
 }
