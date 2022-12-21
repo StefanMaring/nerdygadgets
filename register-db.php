@@ -8,7 +8,7 @@ if(isset($_POST['faxnumber']) && !empty($_POST['faxnumber'])){
 }
 
 //Check of herhaalde wachtwoord gelijk is aan wachtwoord
-if($POST_["password"] != $POST_["repeat_password"]){
+if($_POST["password"] != $_POST["repeat_password"]){
     exit("Wachtwoord is niet gelijk!");
 }
 

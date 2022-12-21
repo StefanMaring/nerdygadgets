@@ -99,6 +99,7 @@ function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
 
     //Check of gebruiker al bestaat in database
     $userData = fetchUserData($email, $databaseConnection);
+    die($userData);
     if($userData["IsPermittedToLogon"] == 1){ //CHECK: Gebruiker bestaat al als klant
         die("Gebruiker bestaat al!"); //VERVANG MET REDIRECT
     } elseif($userData["IsPermittedToLogon"] == 0){ //CHECK: Gebruiker bestaat als bezoeker
@@ -109,7 +110,7 @@ function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
         try{
             //define customerID
             $statement = mysqli_prepare($databaseConnection, "
-                SELECT CustomerID AS CstId -- Fetch highest known ID and increase by 1, save as CstId
+                SELECT CustomerID AS CstId
                 FROM customers_new;
                 WHERE CustomerID");
             mysqli_stmt_execute($statement);
