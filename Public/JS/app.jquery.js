@@ -2,6 +2,7 @@
 $('#add-btn').on("click", function() {
     $('#dialogbox').toggleClass("show-dialog");
     $('body').toggleClass("disable-scroll");
+    window.scrollTo(0, 0);
 });
 
 //Opens the overlay behind dialog
