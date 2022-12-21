@@ -258,34 +258,22 @@ function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
             mysqli_query($databaseConnection, "
         UPDATE customers_new
         SET
-                (
-                 CustomerID,
-                 CustomerName,
-                 AccountOpenedDate,
-                 EmailAddress,
-                 IsPermittedToLogon,
-                 HashedPassword,
-                 PhoneNumber,
-                 AddressLine,
-                 AddressPostalCode,
-                 AddressCity,
-                )
-                
-                VALUES
-                (
-                 @CstId,
-                 @name,
-                 CURRENT_DATE,
-                 @email,
-                 1,
-                 @password,
-                 @tel,
-                 @adres,
-                 @postcode,
-                 @plaats,
-                )
+                 CustomerName = @name,
+                 AccountOpenedDate = CURRENT_DATE,
+                 EmailAddress = @email,
+                 IsPermittedToLogon = 1,
+                 HashedPassword = @password,
+                 PhoneNumber = @tel,
+                 AddressLine = @adres,
+                 AddressPostalCode = @postcode,
+                 AddressCity = @plaats
+        
             WHERE CustomerID = @CstID;");
 
+            mysqli_commit($databaseConnection);
+            mysqli_free_result($Result);
+
+            return $customerID;
         } catch(mysqli_sql_exception $exception){
             mysqli_rollback($databaseConnection);
             throw $exception;
