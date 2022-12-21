@@ -192,7 +192,6 @@ $totaalSterren=0;
     <div id="reviews-geplaatst">
         <h2>Geplaatste reviews</h2>
             <?php
-            if(getUser() != NULL) {
                 $review = getReview($databaseConnection, $stockItemID);
                 if (mysqli_num_rows($review) > 0) {
                     // output data of each row
@@ -211,10 +210,12 @@ $totaalSterren=0;
                         print("<h3 id='review-beschrijving'>");
                         print("<br>");
                         print($row["Beschrijving"] . "<br>");
+                        if(getUser() != NULL) {
                         if ($row["KlantNaam"] == $_SESSION['klantNaam']) {
                             print('<form method="post" action="review-verwijder.php">
         <input type="submit" name="removeReviewBTN" class="btn-style btn-review" value="Verwijder review">
         </form>');
+                        }
                         }
                         print("</h3>");
                         print('</div>');
@@ -223,11 +224,6 @@ $totaalSterren=0;
                 } else {
                     echo "Er zijn nog geen reviews voor dit product geplaatst";
                 }
-                }
-                else {
-                    echo "log in om reviews te kunnen zien";
-                }
-            
             ?>
     </div>
     <div id="reviews-schrijven">
