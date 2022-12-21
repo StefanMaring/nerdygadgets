@@ -8,7 +8,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 //variabelen voor reviews
 $_SESSION['CustomerID'] = $_SESSION["userID"];
 $_SESSION['productPagina'] = "";
-$_SESSION['klantNaam'] = FetchUserName();
+$_SESSION['klantNaam'] = FetchUserName($databaseConnection, $_SESSION["userID"]);
 $_SESSION['Feedback']=" ";
 $totaalReviews=0;
 $totaalSterren=0;

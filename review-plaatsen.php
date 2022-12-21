@@ -3,7 +3,7 @@ include "config.php";
 //variabelen
 $_SESSION['CustomerID'] = $_SESSION["userID"];
 $_SESSION['feedback'] = "";
-$_SESSION['klantNaam'] = "Test";
+$_SESSION['klantNaam'] = FetchUserName($databaseConnection, $_SESSION["userID"]);
 $beschrijving = trim(cleanInput($_POST["beschrijving"]));
 $sterren = $_POST['star'];
 if ($sterren == "1") {
