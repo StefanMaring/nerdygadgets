@@ -1,5 +1,124 @@
 @import "variables.css";
+.txt-center {
+    text-align: center;
+}
+.hide {
+    display: none;
+}
 
+.clear {
+    float: none;
+    clear: both;
+}
+
+.rating {
+    width: 100%;
+    unicode-bidi: bidi-override;
+    direction: ltr;
+    text-align: left;
+    position: relative;
+
+}
+
+.rating > label {
+    float: right;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 1.1em;
+    cursor: pointer;
+    color: #FFFFFF;
+    left: -78%;
+}
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+    color: transparent;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    color: #FFD700;
+}
+
+#reviews {
+    display: flex;
+    justify-content: center;
+    vertical-align: top;
+    flex-direction: row;
+    width: 70%;
+    margin-left: 15%;
+    margin-bottom: 100px;
+}
+
+#reviews-geplaatst {
+    background-color: var(--sub-color);
+    width: 49%;
+    hight: 100%;
+    float: left;
+    padding: 10px;
+    font-family: pt-sans, sans-serif;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+#reviews-schrijven {
+    background-color: var(--sub-color);
+    width: 50%;
+    float: left;
+    padding: 10px;
+    margin-left: 1%;
+    font-family: pt-sans, sans-serif;
+    font-size: 20px;
+    border-radius: 5px;
+}
+#enkele-review {
+    background-color: rgba(224, 224, 224, 0.1);
+    width: 100%;
+    hight: 100%;
+    float: left;
+    padding: 10px;
+    font-family: pt-sans, sans-serif;
+    font-size: 20px;
+    border-radius: 5px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+#sterren{
+    color:#FFD700;
+    float: left;
+    font-family: pt-sans, sans-serif;
+    font-size: 20px;
+}
+#sterren-niet{
+    color:gray;
+    float: left;
+    font-family: pt-sans, sans-serif;
+    font-size: 20px;
+}
+#klant{
+    color:lightgray;
+    float: right;
+    font-family: pt-sans, sans-serif;
+    font-size: 20px;
+    display: inline;
+    flex-display: row;;
+}
+#review-beschrijving{
+    color:white;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    font-family: pt-sans, sans-serif;
+    font-size: 30px;
+}
 html {
     background-color: rgb(35, 35, 47) !important;
 }
@@ -14,6 +133,7 @@ body {
     font-family: MmrText;
     src: url(/Public/fonts/mmrtext.ttf);
 }
+
 select {
     margin: 50px;
     width: 100%;
@@ -598,6 +718,20 @@ footer {
 .btn-delete {
     background-color: var(--button-color-delete);
     height: 100%;
+
+}
+
+.btn-review {
+    background-color: rgba(98, 98, 98, 0);
+    color: lightgray;
+    height: 100%;
+    width: 27%;
+    float: right;
+
+}
+.btn-review:hover {
+    background-color: rgba(98, 98, 98, 0) !important;
+    color: red;
 }
 
 .art-tekst {
