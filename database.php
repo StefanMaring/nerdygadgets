@@ -1,4 +1,13 @@
 <?php
+
+function resultToArray($result) {
+    $rows = array();
+    while($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    return $rows;
+}
+
 function connectToDatabase() {
     $Connection = null;
 
@@ -59,7 +68,8 @@ function getStockItem($id, $databaseConnection) {
             CONCAT('Voorraad: ',QuantityOnHand)AS QuantityOnHand,
             SearchDetails, 
             (CASE WHEN (RecommendedRetailPrice*(1+(TaxRate/100))) > 50 THEN 0 ELSE 6.95 END) AS SendCosts, MarketingComments, CustomFields, SI.Video,
-            (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath   
+            (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath,
+            StockGroupID
             FROM stockitems SI 
             JOIN stockitemholdings SIH USING(stockitemid)
             JOIN stockitemstockgroups ON SI.StockItemID = stockitemstockgroups.StockItemID
@@ -324,6 +334,7 @@ function saveOrder($cart, $customerID, $databaseConnection){
     }
 
 }
+
 function addReview($databaseConnection, $CustomerID, $klantNaam, $aantalSterren, $beschrijving, $productPagina) {
     $Query = " 
            INSERT INTO reviews (CustomerID, KlantNaam, AantalSterren, Beschrijving, Product)
@@ -358,11 +369,36 @@ function checkReviews($databaseConnection, $CustomerID, $product) {
     return $Result;
 }
 
-function deleteReview($databaseConnection, $CustomerID, $product) {
+function deleteReview($databaseConnection, $CustomerID, $product)
+{
     $Query = " 
            DELETE FROM `reviews` WHERE CustomerID = '$CustomerID' AND Product = '$product'
            ";
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_execute($Statement);
+}
+
+function aanbevelingenItems ($productID, $databaseConnection) {
+    $groupID = mysqli_query($databaseConnection, "
+        SELECT StockGroupID
+        FROM stockitemstockgroups
+        WHERE StockItemID = $productID
+        LIMIT 1 ;
+");
+    $groupID = (int)mysqli_fetch_column($groupID);
+
+    $recommendations = mysqli_prepare($databaseConnection, "
+        SELECT StockItemID
+        FROM  stockitemstockgroups
+        WHERE StockGroupID = $groupID AND StockItemID != $productID
+        ORDER BY RAND()
+        LIMIT 5 ;
+    ");
+    mysqli_stmt_execute($recommendations);
+    $recommendations = mysqli_stmt_get_result($recommendations);
+    $recommendations = resultToArray($recommendations);
+
+    return $recommendations;
+
 }
 

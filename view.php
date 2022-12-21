@@ -112,6 +112,7 @@ $totaalSterren=0;
         <?php
         //If stock is bigger than 0, display button
         if($StockItem['QuantityOnHand'] != "Voorraad: 0") {
+
         ?>
             <div class="add-btn-wrp">
                 <iframe name="SendingForm" class="hiddenFrame"></iframe>
@@ -120,6 +121,7 @@ $totaalSterren=0;
                 </form>
             </div>
         <?php
+
         }
         ?>
 
