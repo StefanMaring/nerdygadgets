@@ -9,8 +9,11 @@ if(empty($cart)) {
 
 $cart = getCart();
 $totaalPrijs = $_SESSION['totaalPrijs'];
+if (isset($_SESSION["korting"]) && $_SESSION["korting"] >= 1) { // Pas korting toe
+    $totaalPrijs = round($totaalPrijs * 0.9, 2);
+}
 
-if($userLoggedIn){
+if($userLoggedIn) {
     $userData = fetchUserDataByID($userID, $databaseConnection);
 
     /*Ik haat wat ik hier doe
@@ -20,6 +23,7 @@ if($userLoggedIn){
     $voornaam = array_shift($naam);
     $achternaam = array_pop($naam);
     $tussenvoegsels = implode(" ", $naam);
+
 }
 ?>
 
@@ -28,6 +32,7 @@ if($userLoggedIn){
     <div class="achtergrond bezorgadres-breedte">
         <h1 class="default-margin">Bezorgadres</h1>
         <form action="afrekenen-db.php" method="post" class="default-margin">
+
             <input class="stand-input" type="text" required id="voornaam" name="voornaam" placeholder="*Voornaam" value="<?php echo $userLoggedIn ? $voornaam : '' ?>">
             <input class="small-input" type="text"  id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel" value="<?php echo $userLoggedIn ? $tussenvoegsels : '' ?>"><br><br>
             <input class="stand-input" type="text" required id="achternaam" name="achternaam" placeholder="*Achternaam" value="<?php echo $userLoggedIn ? $achternaam : '' ?>"><br><br>
@@ -36,6 +41,7 @@ if($userLoggedIn){
             <input class="stand-input" type="text" required id="adres" name="adres" placeholder="*Straat + huisnummer" value="<?php echo $userLoggedIn ? $userData['AddressLine'] : '' ?>">
             <input class="small-input" type="text" required id="postcode" name="postcode" pattern=".{6,7}" placeholder="*Postcode" value="<?php echo $userLoggedIn ? $userData['AddressPostalCode'] : '' ?>"><br><br>
             <input class="stand-input" type="text" required id="woonplaats" name="woonplaats" placeholder="*Woonplaats" value="<?php echo $userLoggedIn ? $userData['AddressCity'] : '' ?>"><br><br>
+
             <p class="notice">* is een vereist veld.</p>
             <p id="messageNotice">
                 <?php 

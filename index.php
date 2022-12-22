@@ -1,5 +1,9 @@
 <?php
 include __DIR__ . "/header.php";
+
+$kortingscode = generateRandomString();
+$usedcode = 0;
+
 ?>
 <div class="IndexStyle">
     <div class="col-11">
@@ -16,8 +20,39 @@ include __DIR__ . "/header.php";
         <div class="HomePageStockItemPicture"></div>
     </div>
 </div>
+
+
+<div class="overlay" id="kortingscode-pop"></div>
+<div class="dialog" id="pop-upbox">
+    <h4>Claim hier uw eenmalige kortingscode!</h4>
+    <input type="text" disabled id="discountcode" value="<?php echo $kortingscode;?>">
+    <p id="textbox"></p>
+    <div class="smallBtnWrapper">
+        <button id="copyButton" class="btnSmall btn-style" onclick="copyText()"><i class="fa-solid fa-copy"></i></button>
+        <button id="closingBtn" class="btnSmall btn-style"><i class="fa-solid fa-circle-xmark"></i></button>
+    </div>
+</div>
+
+<script src="Public/JS/app.jquery.js"></script>
+<script src="Public/JS/app.js"></script>
 <script>document.title = "Nerdygadgets - Home";</script>
 <?php
 include __DIR__ . "/footer.php";
+
+//If a discount code has been entered, insert it into the database
+if(isset($kortingscode)) {
+    $kortingscodeInsert = "INSERT INTO discountcode (kortingscode_text, usedCode)
+                               VALUES (?, ?)";
+    $stmt = $databaseConnection->prepare($kortingscodeInsert);
+    $stmt->bind_param("si", $kortingscode, $usedcode);
+    $stmt->execute();
+}
 ?>
+
+
+
+
+
+
+
 
