@@ -21,7 +21,7 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
 
     //If a string doesn't contain numbers, add message to array
     if(!is_numeric($tel)) {
-        $_SESSION["user_notice_message"] = array("Dit veld mag alleen nummers bevatten!");
+        $_SESSION["user_notice_message"] = array("Telefoonnummer mag alleen nummers bevatten!");
         header("location: afrekenen.php");
         exit();
     } else {
