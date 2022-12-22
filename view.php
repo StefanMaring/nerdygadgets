@@ -129,10 +129,33 @@ if(!isset($_SESSION['feedback'])) {
         }
         ?>
 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                setInterval(function () {
+                    $("#temp").load(window.location.href + " #temp" );
+                }, 3000);
+            });
+        </script>
+
         <div id="StockItemDescription">
             <h3>Artikel beschrijving</h3>
-            <p><?php print $StockItem['SearchDetails']; ?></p>
+            <p><?php print $StockItem['SearchDetails'];?></p>
+            <div id="temp">
+                <p><?php
+
+                    $temp=mysqli_prepare($databaseConnection, "SELECT Temperature FROM coldroomtemperatures WHERE ColdRoomSensorNumber=5");
+                    mysqli_stmt_execute($temp);
+                    $temp = mysqli_stmt_get_result($temp);
+                    $temp = mysqli_fetch_all($temp, MYSQLI_ASSOC);
+
+                    if ($StockItem['IsChillerStock']){
+                        $temperatuur = $temp[0]['Temperature'];
+
+                    print ('Temperatuur: ' . $temperatuur . '°C');
+                }?></p>
+            </div>
         </div>
+
         <div id="StockItemSpecifications">
             <h3>Artikel specificaties</h3>
             <?php

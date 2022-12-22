@@ -7,6 +7,7 @@ function copyText() {
     if(navigator.clipboard.writeText(copyText)) {
         document.getElementById("textbox").innerHTML = "Kortingscode gekopieerd!";
     };
+
 }
 
 //Makes all fields editable when user clicks edit btn
