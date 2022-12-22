@@ -10,6 +10,8 @@ include "header.php";
     </div>
 </section>
 
+<script>document.title = "Nerdygadgets - Bestellingen";</script>
+
 <?php
 include "footer.php";
 ?>

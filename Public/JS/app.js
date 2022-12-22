@@ -8,3 +8,15 @@ function copyText() {
         document.getElementById("textbox").innerHTML = "Kortingscode gekopieerd!";
     };
 }
+
+//Makes all fields editable when user clicks edit btn
+function makeFieldEditable() {
+    var editableFields = document.querySelectorAll("#editableField");
+    var editBTN = document.getElementById("editSubmitBTN");
+    
+    editableFields.forEach((fieldItem) => {
+        fieldItem.toggleAttribute("disabled");
+    });
+
+    editBTN.classList.toggle("show-btn");
+}

@@ -1208,6 +1208,10 @@ button > a:hover {
     gap: 10px;
 }
 
+.account-item > p {
+    margin: 0;
+}
+
 .user-meta-name {
     width: 100px;
     display: flex;
@@ -1229,12 +1233,56 @@ button > a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin: 5px 0 5px 0;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid var(--white);
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.user-meta-info:disabled {
+    border-bottom: 2px solid var(--sub-color);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.flex-btns {
+    display: flex;
+    flex-flow: row-reverse nowrap;
+    justify-content: left;
+    gap: 5px;
+}
+
+.edit-btn {
+    margin-top: 10px;
 }
 
 .btn-square {
     width: 35px;
     height: 35px;
     padding: 5px;
+}
+
+.editSubmitBTN {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.show-btn {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    width: 15%;
+    margin: 10px 0 10px 0;
+    padding: 0;
+    height: 35px;
+}
+
+.updateNotice {
+    display: inline-block;
+    margin: 10px 0 10px 0;
 }
 
 .disable-scroll {

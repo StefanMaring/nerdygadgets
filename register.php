@@ -30,6 +30,8 @@ if($userLoggedIn == TRUE) {
     </div>
 </section>
 
+<script>document.title = "Nerdygadgets - Registreer hier!";</script>
+
 <?php
 include "footer.php";
 ?>

@@ -140,13 +140,9 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 ?>
 
 <script src="Public/JS/app.jquery.js"></script>
-<script>document.title = "Nerdygadgets - Winkelmand";</script>
 
     </div>
 </section>
-
-    <script>document.title = "Nerdygadgets - Winkelmand";</script>
-
 
     <?php
 
@@ -224,3 +220,5 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 }
 include "footer.php";
 ?>
+
+<script>document.title = "Nerdygadgets - Winkelmandje";</script>

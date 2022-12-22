@@ -27,6 +27,8 @@ if(!$userID == null){
     </div>
 </section>
 
+<script>document.title = "Nerdygadgets - Login";</script>
+
 <?php
 
 //DEBUG

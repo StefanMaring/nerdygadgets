@@ -83,7 +83,6 @@ $cart = getCart();
 
             <script>
                 var dropdown = document.querySelector("#dropdown");
-                console.log(dropdown);
 
                 function openDropdown() {
                     dropdown.classList.toggle("show-dropdown");
