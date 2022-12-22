@@ -23,7 +23,7 @@ if(!empty($cart)) { //Check of het winkelmandje leeg is
             $couponExists = TRUE;
         } else {
             $couponExists = FALSE;
-            print("Code bestaat niet");
+            $_SESSION ["user_notice_message"] = array("Code bestaat niet");
         }
 
         /*        $kortingcodetextselect = 'SELECT kortingscode_text
@@ -38,9 +38,9 @@ if(!empty($cart)) { //Check of het winkelmandje leeg is
 
         if ($couponExists) {    //Check of couponcode bestaat
             if ($couponUsed == 1){   //Check of couponcode al gebruikt is
-                print "Code is al gebruikt";
+                $_SESSION ["user_notice_message"] = array("Code is al gebruikt");
             } else {    //Stel ingevoerde couponcode in op "gebruikt"
-                print("Code is geupdate");
+                $_SESSION ["user_notice_message"] = array("Code klopt");
                 $_SESSION["korting"] = 10;
                 $usedcode = 1;
                 $kortingUpdate = 'UPDATE discountcode
@@ -52,7 +52,7 @@ if(!empty($cart)) { //Check of het winkelmandje leeg is
             }
 
 
-        } else ("Code bestaat niet");
+        }
 
     }
 
@@ -159,24 +159,42 @@ if(!empty($cart)) { //Check of het winkelmandje leeg is
 ?>
 
 <div class="totalPrice">
-
+    <h2><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs));?></h2>
     <h2><?php if(isset($_SESSION["korting"]) && $_SESSION["korting"] >= 1){
                 print("Totaal prijs met korting: " . sprintf("€%.2f", $totaalPrijs*0.9));
-    }else print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs));
+    }
         ?></h2>
 
 
 </div>
 
+
 </div>
 <div class="couponForm">
     <form method="post">
         <div class="flex-form">
-
+            <p id="messageNotice">
+                <?php
+               // $_SESSION ["user_notice_message"] = array("Gelukt");
+                //Check if the message array has been set
+                if(isset($_SESSION["user_notice_message"])) {
+                    //Loop through all messages and print them
+                    foreach($_SESSION["user_notice_message"] as $message) {
+                        echo $message . "<br>";
+                    }
+                    //Empty messages array so a user doesn't see them again
+                    $_SESSION["user_notice_message"] = array();
+                } else {
+                    //If no messages are set, set the array as empty
+                    $_SESSION["user_notice_message"] = array();
+                }
+                ?>
+            </p>
             <input class="stand-input-korting" type="text" id="kortingscode" name="kortingscode" placeholder="Kortingscode"><br><br>
             <input type="submit" value="Toevoegen" name="korting_btn" class="btn-style addCodeBtn">
 
         </div>
+
     </form>
 </div>
 

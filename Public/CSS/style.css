@@ -625,7 +625,7 @@ p {
 }
 
 .totalPrice {
-    display: flex;
+    text-align: right;
     justify-content: right;
     padding: 40px 0 10px 0;
 }
@@ -896,6 +896,12 @@ button > a:hover {
     display: flex;
     flex-flow: row nowrap;
     gap: 5px;
+    align-items: center;
+}
+
+.flex-form > p{
+    margin: 0;
+    margin-right: 5px;
 }
 
 .addCodeBtn {

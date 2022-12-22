@@ -2,6 +2,9 @@
 include "header.php";
 $cart = getCart();
 $totaalPrijs = $_SESSION['totaalPrijs'];
+if(isset($_SESSION["korting"]) && $_SESSION["korting"] >= 1){
+    $totaalPrijs = round($totaalPrijs * 0.9, 2);
+}
 ?>
 
 
