@@ -1,48 +1,90 @@
 <?php
 include "header.php";
-?>
-<?php
+
 $cart = getCart(); //Haal het winkelmandje op
 $totaalPrijs = 0;
-if(!empty($cart)){ //Check of het winkelmandje leeg is
-    ?>
 
-    <script>
-        function submit() {
-            let form = document.getElementById("aantal-form");
-            form.submit();
+
+if(!empty($cart)) { //Check of het winkelmandje leeg is
+
+    //Select usedCode value where usedCode equals the input discount code
+    if (isset($_POST["korting_btn"])) {
+        $kortingscode = cleanInput($_POST["kortingscode"]);
+
+        $kortingSelect = 'SELECT usedCode
+        FROM discountcode
+        WHERE kortingscode_text = ?';
+        $stmt = mysqli_prepare($databaseConnection, $kortingSelect);
+        mysqli_stmt_bind_param($stmt, "s", $kortingscode);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if ($result && mysqli_num_rows($result) == 1) { //Check if coupon exists
+            $couponUsed = mysqli_fetch_column($result);  //Fetch the specific column
+            $couponExists = TRUE;
+        } else {
+            $couponExists = FALSE;
+            $_SESSION ["user_notice_message"] = array("Code bestaat niet");
         }
-    </script>
 
+        /*        $kortingcodetextselect = 'SELECT kortingscode_text
+            FROM discountcode
+            WHERE kortingscode_text = ?';
+                $stmt = $databaseConnection->prepare($kortingcodetextselect);
+                $stmt->bind_param("s", $kortingscode);
+                $stmt->execute();
+                $result = $stmt->get_result(); //Get the number of results
+                $couponUsed = $result->fetch_column(); //Fetch the specific column*/
+
+
+        if ($couponExists) {    //Check of couponcode bestaat
+            if ($couponUsed == 1){   //Check of couponcode al gebruikt is
+                $_SESSION ["user_notice_message"] = array("Code is al gebruikt");
+            } else {    //Stel ingevoerde couponcode in op "gebruikt"
+                $_SESSION ["user_notice_message"] = array("Code klopt");
+                $_SESSION["korting"] = 10;
+                $usedcode = 1;
+                $kortingUpdate = 'UPDATE discountcode
+                      SET usedCode = ?
+                      WHERE kortingscode_text = ?';
+                $stmt = $databaseConnection->prepare($kortingUpdate);
+                $stmt->bind_param("is", $usedcode, $kortingscode);
+                $stmt->execute();
+            }
+
+
+        }
+
+    }
+
+
+?>
+
+<script>
+    //Script that submits form whenever the value of the input changes
+    function submit() {
+        let form = document.getElementById("aantal-form");
+        form.submit();
+    }
+</script>
 
 <section class="s-cart" id="CenteredContent">
-    <div class="cart-wrapper">
+    <div class="cart-header">
         <h1 class="s-heading">Winkelmandje</h1>
     </div>
     <div class="Cart">
     <?php
+
     foreach ($cart as $productID => $productAmount) {
         $StockItem = getStockItem($productID, $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
         $StockItemImage = getStockItemImage($productID, $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
-        //print_r($StockItem);
-        /*Foto's zijn opgeslagen in een 3D array, elke foto heeft een key beginnend bij 0, als value een array met key ImagePath en als value het pad naar de foto*/
-        /* foreach ($StockItem as $test1 => $test2) { //DEBUG, laat alle gegevens van een product zien
-             print("$test1 => $test2 <br>");
-         }*/
-        // print_r($StockItemImage);
 
+        /*Foto's zijn opgeslagen in een 3D array, elke foto heeft een key beginnend bij 0, als value een array met key ImagePath en als value het pad naar de foto*/
         if(isset($StockItemImage[0])){ //Check of een product foto's heeft
             $productImage = "Public/StockItemIMG/" . $StockItemImage[0]['ImagePath']; //Sla de 1ste foto van een product op in productImage
         } else{
             $productImage = "Public/StockGroupIMG/" . $StockItem['BackupImagePath']; //Gebruik een andere foto als placeholder
         }
-        /*print("<br><br>");
 
-        print("ProductID: " . $StockItem['StockItemID']) . "<br>";
-        print("Naam: " . $StockItem['StockItemName'] . "<br>");
-        print ("Prijs: " . sprintf("€ %.2f", $StockItem['SellPrice']));
-
-        print("<br><br>");*/
         $maxInWinkelmand = preg_replace("/[^0-9]/", "", $StockItem["QuantityOnHand"] ); //maximale voorraad
         ?>
             <br>
@@ -102,45 +144,173 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
             }
         }
     }
+
 ?>
-        <div class="totalPrice">
-            <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
+
+<div class="totalPrice">
+    <h2><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs));?></h2>
+    <h2><?php if(isset($_SESSION["korting"]) && $_SESSION["korting"] >= 1){
+                print("Totaal prijs met korting: " . sprintf("€%.2f", $totaalPrijs*0.9));
+    }
+        ?></h2>
+
+
+</div>
+
+<div class="couponForm">
+    <form method="post">
+        <div class="flex-form">
+            <p id="messageNotice">
+                <?php
+               // $_SESSION ["user_notice_message"] = array("Gelukt");
+                //Check if the message array has been set
+                if(isset($_SESSION["user_notice_message"])) {
+                    //Loop through all messages and print them
+                    foreach($_SESSION["user_notice_message"] as $message) {
+                        echo $message . "<br>";
+                    }
+                    //Empty messages array so a user doesn't see them again
+                    $_SESSION["user_notice_message"] = array();
+                } else {
+                    //If no messages are set, set the array as empty
+                    $_SESSION["user_notice_message"] = array();
+                }
+                ?>
+            </p>
+            <input class="stand-input-korting" type="text" id="kortingscode" name="kortingscode" placeholder="Kortingscode"><br><br>
+            <input type="submit" value="Toevoegen" name="korting_btn" class="btn-style addCodeBtn">
+
         </div>
+
+    </form>
 </div>
 
 
-<form method="post">
-    <div class="btn-wrapper">
-        <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter" value="Winkelmandje leegmaken">
-        <input type="submit" name="PayCartBTN" class="btn-style add-margin" value="Afrekenen">
-    </div>
-</form>
-<script>document.title = "Nerdygadgets - Winkelmand";</script>
-
+<div class="btn-wrapper">
+    <form method="post">
+        <input type="submit" name="clearCartBTN" class="btn-style add-margin btn-small lighter clearBTN" value="Winkelmandje leegmaken">
+    </form>
+    <?php
+        //When a user is logged in, display this button that sends user directly to payment page
+        if($userLoggedIn == TRUE) {
+            echo '<form method="post" class="full-width">';
+            echo '<input type="submit" class="btn-style add-margin full-width" value="Afrekenen" name="PayCartBTN">';
+            echo '</form>';
+        }
+    ?>
+    <?php
+        //When a user is not logged in, display this button that opens the dialog beneath
+        if($userLoggedIn == FALSE) {
+            echo '<button name="OpenRegisterDialog" id="OpenRegisterDialog" class="btn-style add-margin full-width">Afrekenen</button>';
+        }
+    ?>
+</div>
 
 <?php
+    //If a user is not logged in, display this dialog when above button is clicked
+    if($userLoggedIn == FALSE) {
+        echo '
+        <div class="total-wrap">
+            <div class="overlay" id="overlay"></div>
+            <div class="register-dialog" id="register-dialog">
+                <h4><i class="fa-solid fa-circle-check m-right"></i>Registreren als klant of verder naar bestellen?</h4>
+                <div class="choice-wrapper">
+                    <form method="post">
+                        <input type="submit" class="btn-style transparent" value="Bestellen afronden" name="PayCartBTN">
+                    </form>
+                    <button class="btn-style full-width"><a href="register.php">Registreren als klant</a></button>
+                </div>
+            </div>
+        </div>
+        ';
+    }
+?>
 
-if(isset($_POST['clearCartBTN'])){
-    $cart = array();
-    saveCart($cart);
-    echo "<script> location.href='cart.php'; </script>";
-}
+<script src="Public/JS/app.jquery.js"></script>
 
-if (isset($_POST['removeProductBTN'])) {
-    //print('<h1>' . $_POST["removeProductID"] . '</h1>');
-    unset($cart[$_POST['removeProductID']]);
-    saveCart($cart);
-    echo "<script> location.href='cart.php'; </script>";
-}
+    </div>
+</section>
 
-if(isset($_POST['PayCartBTN'])){
+    <?php
+
+    if(isset($_POST['clearCartBTN'])){
+        $cart = array();
         saveCart($cart);
-        $_SESSION['totaalPrijs'] = $totaalPrijs;
-        echo "<script> location.href='afrekenen.php'; </script>";
-} //afreken knop
+        echo "<script> location.href='cart.php'; </script>";
+    }
+
+    if (isset($_POST['removeProductBTN'])) {
+        //print('<h1>' . $_POST["removeProductID"] . '</h1>');
+        unset($cart[$_POST['removeProductID']]);
+        saveCart($cart);
+        echo "<script> location.href='cart.php'; </script>";
+    }
+
+    if(isset($_POST['PayCartBTN'])){
+            saveCart($cart);
+            $_SESSION['totaalPrijs'] = $totaalPrijs;
+            echo "<script> location.href='afrekenen.php'; </script>";
+    } //afreken knop
+
+    //Start conversiemaatregel 5
+    $recs = aanbevelingenItems($StockItem['StockItemID'], $databaseConnection);
+
+    ?>
+    <h1 id="CenteredContent">Wij bevelen ook aan:</h1>
+
+    <div class="aanbevelingen" id="CenteredContent">
+        <?php
+        foreach($recs as $recID => $recArray) {
+        $StockItem = getStockItem($recArray['StockItemID'], $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
+        $StockItemImage = getStockItemImage($recArray['StockItemID'], $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
+//        print_r($StockItem);
+
+        if(isset($StockItemImage[0])){ //Check of een product foto's heeft
+            $productImage = "Public/StockItemIMG/" . $StockItemImage[0]['ImagePath']; //Sla de 1ste foto van een product op in productImage
+        } else{
+            $productImage = "Public/StockGroupIMG/" . $StockItem['BackupImagePath']; //Gebruik een andere foto als placeholder
+        }
+        ?>
+        <div class="aanbeveling">
+            <div class="image-fix">
+                <img src="<?php echo $productImage; ?>" class="product-image-aanbeveling">
+            </div>
+            <div class="aanbeveling-meta">
+                <h4 class="wrapped-text"><a class="cart-link" href="view.php?id=<?php echo $StockItem["StockItemID"]?>"><?php print($StockItem['StockItemName'])?></a></h4>
+                <?php
+                print("Prijs: " . sprintf("€%.2f", $StockItem['SellPrice']) . "<br><br>");
+                print("Artikelnummer: " . ($StockItem['StockItemID']));
+                $recArrayStockItemID = $StockItem["StockItemID"];
+                ?>
+            </div>
+            <div>
+                <form method="POST">
+                <input class="btn-style-aanbeveling" type="submit" name="addToCartBTN-<?php echo $recArrayStockItemID?>" value="Toevoegen">
+                <input type="hidden" name="stockitemid" value="<?php echo $recArrayStockItemID?>">
+                </form>
+            </div>
+        </div>
+        <?php } ?>
+        <?php
+        if(isset($_POST["stockitemid"])) {
+            addProductToCart($_POST["stockitemid"]);
+            echo "<script> location.href='cart.php'; </script>";
+        }
+        ?>
+    </div>
+
+    <?php
 
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
 }
+?>
+</section>
+
+<script>document.title = "Nerdygadgets - Winkelmand";</script>
+
+<?php
 include "footer.php";
 ?>
+
+<script>document.title = "Nerdygadgets - Winkelmandje";</script>

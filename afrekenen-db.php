@@ -18,6 +18,17 @@ $OrderisSuccesfull = FALSE;
 
 //Check if all required fields are set
 if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) && !empty($adres) && !empty($postcode) && !empty($woonplaats)) {
+
+    //If a string doesn't contain numbers, add message to array
+    if(!is_numeric($tel)) {
+        $_SESSION["user_notice_message"] = array("Dit veld mag alleen nummers bevatten!");
+        header("location: afrekenen.php");
+        exit();
+    } else {
+        $result = substr_replace($tel, "-", 2);
+        $tel = $result;
+    }
+
     //Sla persoonsgegevens op in een array
     $persoonsGegevens = array(
         //Check of een tussenvoegsel is ingevoegd, sla dan volledige naam op onder "naam"
@@ -29,10 +40,15 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
         "woonplaats" => $woonplaats
     );
 
-    //Saves customer into database, returns assigned ID
-    $customerID = saveCustomer($persoonsGegevens, $databaseConnection);
+
+    if($userLoggedIn){ //Check if user is already logged in
+        $customerID = fetchUserData($email, $databaseConnection)["CustomerID"];   //Get CustomerID from logged in user
+    } else {
+        $customerID = saveCustomer($persoonsGegevens, $databaseConnection); //Saves customer into database, returns assigned ID
+    }
+
     //Saves order + orderlines in database linked to customerID
-    saveOrder($cart, $customerID, $databaseConnection);
+    saveOrder($cart, $customerID, $persoonsGegevens, $databaseConnection);
 
     //Get data from cart
     foreach($cart as $productID => $productAmount) {
@@ -70,9 +86,11 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
                 }
             } else {
                 print("ERROR: Stock is too low!");
+                exit();
             }
         } else {
             print("ERROR: Stockitem variable not set!");
+            exit();
         }
     }
     //Link through to IDeal
@@ -80,6 +98,7 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
     exit();
 } else {
     print("ERROR: Not all values set!");
+    exit();
 }
 
 ?>
