@@ -23,7 +23,6 @@ $cart = getCart();
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<div id="snow"></div>
 <div class="Background">
     <div class="row" id="Header">
         <div class="col-2"><a href="./" id="LogoA">
