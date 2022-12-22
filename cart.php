@@ -4,7 +4,59 @@ include "header.php";
 $cart = getCart(); //Haal het winkelmandje op
 $totaalPrijs = 0;
 
-if(!empty($cart)){ //Check of het winkelmandje leeg is
+
+if(!empty($cart)) { //Check of het winkelmandje leeg is
+
+    //Select usedCode value where usedCode equals the input discount code
+    if (isset($_POST["korting_btn"])) {
+        $kortingscode = cleanInput($_POST["kortingscode"]);
+
+        $kortingSelect = 'SELECT usedCode
+        FROM discountcode
+        WHERE kortingscode_text = ?';
+        $stmt = mysqli_prepare($databaseConnection, $kortingSelect);
+        mysqli_stmt_bind_param($stmt, "s", $kortingscode);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if ($result && mysqli_num_rows($result) == 1) { //Check if coupon exists
+            $couponUsed = mysqli_fetch_column($result);  //Fetch the specific column
+            $couponExists = TRUE;
+        } else {
+            $couponExists = FALSE;
+            $_SESSION ["user_notice_message"] = array("Code bestaat niet");
+        }
+
+        /*        $kortingcodetextselect = 'SELECT kortingscode_text
+            FROM discountcode
+            WHERE kortingscode_text = ?';
+                $stmt = $databaseConnection->prepare($kortingcodetextselect);
+                $stmt->bind_param("s", $kortingscode);
+                $stmt->execute();
+                $result = $stmt->get_result(); //Get the number of results
+                $couponUsed = $result->fetch_column(); //Fetch the specific column*/
+
+
+        if ($couponExists) {    //Check of couponcode bestaat
+            if ($couponUsed == 1){   //Check of couponcode al gebruikt is
+                $_SESSION ["user_notice_message"] = array("Code is al gebruikt");
+            } else {    //Stel ingevoerde couponcode in op "gebruikt"
+                $_SESSION ["user_notice_message"] = array("Code klopt");
+                $_SESSION["korting"] = 10;
+                $usedcode = 1;
+                $kortingUpdate = 'UPDATE discountcode
+                      SET usedCode = ?
+                      WHERE kortingscode_text = ?';
+                $stmt = $databaseConnection->prepare($kortingUpdate);
+                $stmt->bind_param("is", $usedcode, $kortingscode);
+                $stmt->execute();
+            }
+
+
+        }
+
+    }
+
+
 ?>
 
 <script>
@@ -16,11 +68,12 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 </script>
 
 <section class="s-cart" id="CenteredContent">
-    <div class="cart-wrapper">
+    <div class="cart-header">
         <h1 class="s-heading">Winkelmandje</h1>
     </div>
     <div class="Cart">
     <?php
+
     foreach ($cart as $productID => $productAmount) {
         $StockItem = getStockItem($productID, $databaseConnection); //Haal de gegevens op van huidige productID en sla op in een array
         $StockItemImage = getStockItemImage($productID, $databaseConnection); //Haal foto(s) op van huidige productID en sla op in array
@@ -93,9 +146,43 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
     }
 
 ?>
-        <div class="totalPrice">
-            <h1><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs)); ?></h1>
+
+<div class="totalPrice">
+    <h2><?php print("Totaal prijs: ".sprintf("€%.2f", $totaalPrijs));?></h2>
+    <h2><?php if(isset($_SESSION["korting"]) && $_SESSION["korting"] >= 1){
+                print("Totaal prijs met korting: " . sprintf("€%.2f", $totaalPrijs*0.9));
+    }
+        ?></h2>
+
+
+</div>
+
+<div class="couponForm">
+    <form method="post">
+        <div class="flex-form">
+            <p id="messageNotice">
+                <?php
+               // $_SESSION ["user_notice_message"] = array("Gelukt");
+                //Check if the message array has been set
+                if(isset($_SESSION["user_notice_message"])) {
+                    //Loop through all messages and print them
+                    foreach($_SESSION["user_notice_message"] as $message) {
+                        echo $message . "<br>";
+                    }
+                    //Empty messages array so a user doesn't see them again
+                    $_SESSION["user_notice_message"] = array();
+                } else {
+                    //If no messages are set, set the array as empty
+                    $_SESSION["user_notice_message"] = array();
+                }
+                ?>
+            </p>
+            <input class="stand-input-korting" type="text" id="kortingscode" name="kortingscode" placeholder="Kortingscode"><br><br>
+            <input type="submit" value="Toevoegen" name="korting_btn" class="btn-style addCodeBtn">
+
         </div>
+
+    </form>
 </div>
 
 
@@ -218,9 +305,14 @@ if(!empty($cart)){ //Check of het winkelmandje leeg is
 
     <?php
 
-
 } else{
     print('<h2 id="ProductNotFound">Oeps, je winkelmandje is leeg!</h2>');
 }
+?>
+</section>
+
+<script>document.title = "Nerdygadgets - Winkelmand";</script>
+
+<?php
 include "footer.php";
 ?>

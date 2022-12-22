@@ -729,6 +729,7 @@ footer {
     display: flex;
     flex-flow: row nowrap;
     gap: 25px;
+    margin-bottom: 50px;
 }
 
 .lighter {
@@ -738,6 +739,7 @@ footer {
 .btn-small {
     width: 50%;
 }
+
 
 .btn-delete {
     background-color: var(--button-color-delete);
@@ -782,7 +784,7 @@ p {
 }
 
 .totalPrice {
-    display: flex;
+    text-align: right;
     justify-content: right;
     padding: 40px 0 10px 0;
 }
@@ -887,6 +889,10 @@ input[type=number], input[type=text], input[type=password], input[type=tel], inp
     outline: none;
     border: none;
     border-radius: 5px;
+}
+
+input:disabled {
+    color: var(--white);
 }
 
 .cart-link {
@@ -1033,6 +1039,7 @@ button > a:hover {
     visibility: hidden;
     opacity: 0;
     position: fixed;
+    top: 25%;
 }
 
 .clearBTN {
@@ -1241,3 +1248,49 @@ button > a:hover {
     overflow: hidden;
 }
 
+.stand-input-korting {
+    width: 200px;
+}
+
+.smallBtnWrapper {
+    margin-top: -0.5rem;
+}
+
+.smallBtnWrapper > #copyButton {
+    padding: 0rem;
+}
+.smallBtnWrapper > #closingBtn {
+    padding: 0rem;
+}
+
+.btnSmall {
+    height: 35px;
+    width: 35px;
+    margin-right: 5px;
+}
+
+.btnSmall:hover {
+    background-color: var(--button-color-hover);
+}
+
+.couponForm {
+    display: flex;
+    justify-content: right;
+    margin: 25px 0 25px 0;
+}
+
+.flex-form {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5px;
+    align-items: center;
+}
+
+.flex-form > p{
+    margin: 0;
+    margin-right: 5px;
+}
+
+.addCodeBtn {
+    width: 100px;
+}
