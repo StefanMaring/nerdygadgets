@@ -44,7 +44,7 @@ $result = $stmt->get_result();
                                 echo '</div>';
                                 echo '<div class="account-item">';
                                         echo '<p class="user-meta-name">Postcode:</p>';
-                                        echo '<input disabled required id="editableField" name="postcode" class="user-meta-info" value="'.$record["AddressPostalCode"].'">';
+                                        echo '<input disabled required id="editableField" name="postcode" class="user-meta-info" pattern=".{6,7}" value="'.$record["AddressPostalCode"].'">';
                                 echo '</div>';
                                 echo '<div class="account-item">';
                                         echo '<p class="user-meta-name">Woonplaats:</p>';
