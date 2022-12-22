@@ -5,6 +5,8 @@ $_SESSION['CustomerID'] = getUser();
 $_SESSION['feedback'] = "";
 $_SESSION['klantNaam'] = FetchUserName($databaseConnection, getUser());
 $beschrijving = trim(cleanInput($_POST["beschrijving"]));
+$beschrijving = str_replace('\\', "", $beschrijving); //Fix backslash zorgt voor SQL exception
+
 $sterren = $_POST['star'];
 if ($sterren == "1") {
     $aantalSterren = 1;
