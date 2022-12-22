@@ -42,7 +42,8 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
 
     //Link through to IDeal
     //VERVANG DIT
-    header("location: https://www.ideal.nl/demo/qr/?app=ideal");
+    setUser($customerID);
+    header("location: index.php");
     exit();
 } else {
     print("ERROR: Not all values set!");
