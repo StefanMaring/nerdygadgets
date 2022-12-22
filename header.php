@@ -16,7 +16,7 @@ $cart = getCart();
     <script src="Public/JS/resizer.js"></script>
 
     <!-- Style sheets-->
-    <link rel="stylesheet" href="Public/CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="Public/CSS/style.min.css" type="text/css">
     <link rel="stylesheet" href="Public/CSS/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="Public/CSS/typekit.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" 
