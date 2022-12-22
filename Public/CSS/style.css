@@ -864,21 +864,3 @@ button > a:hover {
     display: inline-block;
     margin-right: 5px;
 }
-
-#snow {
-    background-image: url("../Img/snow.gif");
-    background-repeat: repeat;
-    z-index: 3;
-    display: block;
-    visibility: visible;
-    opacity: 1;
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    pointer-events: none;
-}
-
