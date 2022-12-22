@@ -41,6 +41,7 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
     $customerID = registerUser($persoonsGegevens, $password_hashed, $databaseConnection);
 
     //Link through to IDeal
+    //VERVANG DIT
     header("location: https://www.ideal.nl/demo/qr/?app=ideal");
     exit();
 } else {

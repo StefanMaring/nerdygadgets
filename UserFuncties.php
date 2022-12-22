@@ -46,6 +46,37 @@ function fetchUserData($userEmail, $databaseConnection){
             return $userData;
         }
 }
+
+function fetchUserDataByID($userID, $databaseConnection){
+    $Query = "
+        SELECT CustomerID,
+               CustomerName,
+               AccountOpenedDate,
+               EmailAddress,
+               IsPermittedToLogon,
+               PhoneNumber,
+               AddressLine,
+               AddressPostalCode,
+               AddressCity
+        FROM customers_new
+        WHERE CustomerID = ?
+        ";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $userID);
+    mysqli_stmt_execute($Statement);
+    $ReturnableResult = mysqli_stmt_get_result($Statement);
+    if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 0) {
+        return FALSE;
+        die("Gebruiker bestaat niet"); //VERVANG DIT
+    } elseif ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
+        //print("Email bestaat WEL <br>");
+        $userData = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
+        return $userData;
+    }
+}
+
+
 function FetchUserName($databaseConnection, $userID) {
     if($userID != NULL) {
         $query = "
@@ -83,17 +114,16 @@ function loginUser($userEmail, $plaintext_password, $databaseConnection){
         mysqli_stmt_execute($Statement);
         $ReturnableResult = mysqli_stmt_get_result($Statement);
         if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 0) {
-            die("Email bestaat niet <br>");
+            $_SESSION["user_notice_message"] = array("De ingevoerde gegevens kloppen niet"); //Emailadres bestaat niet
 
         } elseif ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
-            print("Email bestaat WEL <br>");
             $userData = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
 
             if($userData["IsPermittedToLogon"] == 0) {
-                print("Gebruiker is bezoeker: Mag niet inloggen <br>");
+                $_SESSION["user_notice_message"] = array("De ingevoerde gegevens kloppen niet"); //Emailadres bestaat, maar als bezoeker (geen account)
             } else{
                 if (!password_verify($plaintext_password, $userData["HashedPassword"])) {
-                    print("Wachtwoord onjuist");
+                    $_SESSION["user_notice_message"] = array("De ingevoerde gegevens kloppen niet"); //Fout wachtwoord ingevuld
                 } else {
                     print("Wachtwoord juist!");
 
@@ -258,34 +288,22 @@ function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
             mysqli_query($databaseConnection, "
         UPDATE customers_new
         SET
-                (
-                 CustomerID,
-                 CustomerName,
-                 AccountOpenedDate,
-                 EmailAddress,
-                 IsPermittedToLogon,
-                 HashedPassword,
-                 PhoneNumber,
-                 AddressLine,
-                 AddressPostalCode,
-                 AddressCity,
-                )
-                
-                VALUES
-                (
-                 @CstId,
-                 @name,
-                 CURRENT_DATE,
-                 @email,
-                 1,
-                 @password,
-                 @tel,
-                 @adres,
-                 @postcode,
-                 @plaats,
-                )
+                 CustomerName = @name,
+                 AccountOpenedDate = CURRENT_DATE,
+                 EmailAddress = @email,
+                 IsPermittedToLogon = 1,
+                 HashedPassword = @password,
+                 PhoneNumber = @tel,
+                 AddressLine = @adres,
+                 AddressPostalCode = @postcode,
+                 AddressCity = @plaats
+        
             WHERE CustomerID = @CstID;");
 
+            mysqli_commit($databaseConnection);
+            mysqli_free_result($Result);
+
+            return $customerID;
         } catch(mysqli_sql_exception $exception){
             mysqli_rollback($databaseConnection);
             throw $exception;

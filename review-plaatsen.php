@@ -19,7 +19,7 @@ if ($sterren == "1") {
 }
 $productPagina=$_SESSION['productPagina'];
 $geplaatsteReviews = checkReviews($databaseConnection, $_SESSION['CustomerID'], $productPagina);
-//review sturen naar database als de velden niet leeg zijn
+//review sturen naar database als de velden niet leeg zijn en als er ingelogd is
 if(getUser() != NULL) {
     if (!empty($_SESSION['klantNaam']) && !empty($beschrijving) && !empty($aantalSterren) && !empty($productPagina)) {
         //checken of deze klant niet al een review bij een dit product heeft
@@ -32,10 +32,12 @@ if(getUser() != NULL) {
     } else {
         $_SESSION['feedback'] = ("Vul het review formulier volledig in");
     }
+    //ga terug naar productpagina
     header("location: http://localhost/nerdygadgets/view.php?id=$productPagina");
     exit();
 } else {
     $_SESSION['feedback'] = "Log in om een review te plaatsen";
+    //ga terug naar productpagina
     header("location: http://localhost/nerdygadgets/view.php?id=$productPagina");
     exit();
 }

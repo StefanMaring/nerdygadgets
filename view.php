@@ -11,7 +11,7 @@ $_SESSION['productPagina'] = "";
 $_SESSION['klantNaam'] = FetchUserName($databaseConnection, getUser());
 $totaalReviews=0;
 $totaalSterren=0;
-if($_SESSION['feedback'] == NULL) {
+if(!isset($_SESSION['feedback'])) {
     $_SESSION['feedback']=" ";
 }
 
@@ -89,6 +89,7 @@ if($_SESSION['feedback'] == NULL) {
             </h2>
             <h3>
             <?php
+            //als er een review is gegeven; bereken gemiddelde en laat dit zien
             $review = getReview($databaseConnection, $stockItemID);
             if (mysqli_num_rows($review) > 0) {
                 while ($row = mysqli_fetch_assoc($review)) {
@@ -192,13 +193,14 @@ if($_SESSION['feedback'] == NULL) {
 <script src="Public/JS/app.jquery.js"></script>
 <script>document.title = "Nerdygadgets - <?php echo $StockItem["StockItemName"];?>";</script>
 </div>
+<?php if($StockItem != null){ ?>
 <div id="reviews">
     <div id="reviews-geplaatst">
         <h2>Geplaatste reviews</h2>
             <?php
                 $review = getReview($databaseConnection, $stockItemID);
                 if (mysqli_num_rows($review) > 0) {
-                    // output data of each row
+                    // output data van elke row
                     while ($row = mysqli_fetch_assoc($review)) {
                         print('<div id="enkele-review">');
                         for ($i = 0; $i < $row["AantalSterren"]; $i++) {
@@ -214,6 +216,7 @@ if($_SESSION['feedback'] == NULL) {
                         print("<h3 id='review-beschrijving'>");
                         print("<br>");
                         print($row["Beschrijving"] . "<br>");
+                        //als er ingelogd is en customerID komt overeen met de review; voeg een verwijder knop toe
                         if(getUser() != NULL) {
                         if ($row["KlantNaam"] == $_SESSION['klantNaam']) {
                             print('<form method="post" action="review-verwijder.php">
@@ -246,21 +249,24 @@ if($_SESSION['feedback'] == NULL) {
                     <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
                     <label for="star1">☆</label>
                     <textarea id="beschrijving" name="beschrijving" rows="4" cols="40"> </textarea>
-                    <input type="submit" class="btn-style add-margin btn-small lighter" value="review plaatsen">
+                    <input type="submit" class="btn-style add-margin btn-small lighter" value="Review Plaatsen">
                     <div class="clear"></div>
                 </div>
             </form>
         <div>
             <?php
+            //print feedback van het review formulier, bijv. "vul het formulier volledig in"
             print($_SESSION['feedback']);
             ?>
         </div>
         </div>
         <?php
+        //sla de huidige product pagina op, om hier later naar terug te keren
         $_SESSION["productPagina"] = $stockItemID;
         ?>
     </div>
 </div>
+<?php } ?>
 
 <?php
 

@@ -10,6 +10,17 @@ if(empty($cart)) {
 $cart = getCart();
 $totaalPrijs = $_SESSION['totaalPrijs'];
 
+if($userLoggedIn){
+    $userData = fetchUserDataByID($userID, $databaseConnection);
+
+    /*Ik haat wat ik hier doe
+    maar het is nodig omdat we het tussenvoegsel niet op zichzelf opslaan ~Wietse
+    */
+    $naam = explode(" ", $userData["CustomerName"]);
+    $voornaam = array_shift($naam);
+    $achternaam = array_pop($naam);
+    $tussenvoegsels = implode(" ", $naam);
+}
 ?>
 
 
@@ -17,14 +28,14 @@ $totaalPrijs = $_SESSION['totaalPrijs'];
     <div class="achtergrond bezorgadres-breedte">
         <h1 class="default-margin">Bezorgadres</h1>
         <form action="afrekenen-db.php" method="post" class="default-margin">
-            <input class="stand-input" type="text" required id="voornaam" name="voornaam" placeholder="*Voornaam">
-            <input class="small-input" type="text"  id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel"><br><br>
-            <input class="stand-input" type="text" required id="achternaam" name="achternaam" placeholder="*Achternaam"><br><br>
-            <input class="stand-input" type="email" required id="email" name="email" placeholder="*Email"><br><br>
-            <input class="stand-input" type="tel" required id="tel" name="tel" placeholder="*Telefoonnummer (0612345678)"><br><br>
-            <input class="stand-input" type="text" required id="adres" name="adres" placeholder="*Straat + huisnummer">
-            <input class="small-input" type="text" required id="postcode" name="postcode" pattern=".{6,7}" placeholder="*Postcode"><br><br>
-            <input class="stand-input" type="text" required id="woonplaats" name="woonplaats" placeholder="*Woonplaats"><br><br>
+            <input class="stand-input" type="text" required id="voornaam" name="voornaam" placeholder="*Voornaam" value="<?php echo $userLoggedIn ? $voornaam : '' ?>">
+            <input class="small-input" type="text"  id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel" value="<?php echo $userLoggedIn ? $tussenvoegsels : '' ?>"><br><br>
+            <input class="stand-input" type="text" required id="achternaam" name="achternaam" placeholder="*Achternaam" value="<?php echo $userLoggedIn ? $achternaam : '' ?>"><br><br>
+            <input class="stand-input" type="email" required id="email" name="email" placeholder="*Email" value="<?php echo $userLoggedIn ? $userData['EmailAddress'] : '' ?>"><br><br>
+            <input class="stand-input" type="tel" required id="tel" name="tel" placeholder="*Telefoonnummer (0612345678)" value="<?php echo $userLoggedIn ? $userData['PhoneNumber'] : '' ?>"><br><br>
+            <input class="stand-input" type="text" required id="adres" name="adres" placeholder="*Straat + huisnummer" value="<?php echo $userLoggedIn ? $userData['AddressLine'] : '' ?>">
+            <input class="small-input" type="text" required id="postcode" name="postcode" pattern=".{6,7}" placeholder="*Postcode" value="<?php echo $userLoggedIn ? $userData['AddressPostalCode'] : '' ?>"><br><br>
+            <input class="stand-input" type="text" required id="woonplaats" name="woonplaats" placeholder="*Woonplaats" value="<?php echo $userLoggedIn ? $userData['AddressCity'] : '' ?>"><br><br>
             <p class="notice">* is een vereist veld.</p>
             <p id="messageNotice">
                 <?php 

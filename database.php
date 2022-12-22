@@ -124,13 +124,16 @@ function getStockQuantity($productID, $databaseConnection){
 }
 
 function saveCustomer($persoonsGegevens, $databaseConnection){
-        extract($persoonsGegevens); //Splits inhoud array op in aparte variabelen
-        /*Bestaande variabelen:
-        $naam $email $tel $adres $postcode $woonplaats*/
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
-        mysqli_begin_transaction($databaseConnection);
+    extract($persoonsGegevens); //Splits inhoud array op in aparte variabelen
+    /*Bestaande variabelen:
+    $naam $email $tel $adres $postcode $woonplaats*/
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
+    mysqli_begin_transaction($databaseConnection);
 
-    try {
+    $userData = fetchUserData($email, $databaseConnection);
+
+    if(!$userData){
+        try {
         //define customerID
         $statement = mysqli_prepare($databaseConnection, "
                 SELECT MAX(CustomerID) + 1 AS CstId -- Fetch highest known ID and increase by 1, save as CstId
@@ -206,10 +209,84 @@ function saveCustomer($persoonsGegevens, $databaseConnection){
         //die(var_dump($customerID));
         throw $exception;
     }
+    } elseif($userData["IsPermittedToLogon"] == 0){
+        try{
+            //define customerID
+            $statement = mysqli_prepare($databaseConnection, "
+                SELECT CustomerID AS CstId
+                FROM customers_new
+                WHERE EmailAddress = ?;");
+            mysqli_stmt_bind_param($statement, "s", $email);
+            mysqli_stmt_execute($statement);
+            $Result = mysqli_stmt_get_result($statement);
+            $customerID = mysqli_fetch_column($Result); //Fetch result from SQL query, save into customerID
 
+            //customerID
+            $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
+            mysqli_stmt_bind_param($statement, 'i', $customerID);
+            mysqli_stmt_execute($statement);
+            //naam
+            $statement = mysqli_prepare($databaseConnection, "SET @name = ?;");
+            mysqli_stmt_bind_param($statement, 's', $naam);
+            mysqli_stmt_execute($statement);
+            //email
+            $statement = mysqli_prepare($databaseConnection, "SET @email = ?;");
+            mysqli_stmt_bind_param($statement, 's', $email);
+            mysqli_stmt_execute($statement);
+            //tel
+            $statement = mysqli_prepare($databaseConnection, "SET @tel = ?;");
+            mysqli_stmt_bind_param($statement, 's', $tel);
+            mysqli_stmt_execute($statement);
+            //adres
+            $statement = mysqli_prepare($databaseConnection, "SET @adres = ?;");
+            mysqli_stmt_bind_param($statement, 's', $adres);
+            mysqli_stmt_execute($statement);
+            //postcode
+            $statement = mysqli_prepare($databaseConnection, "SET @postcode = ?;");
+            mysqli_stmt_bind_param($statement, 's', $postcode);
+            mysqli_stmt_execute($statement);
+            //woonplaats
+            $statement = mysqli_prepare($databaseConnection, "SET @plaats = ?;");
+            mysqli_stmt_bind_param($statement, 's', $woonplaats);
+            mysqli_stmt_execute($statement);
+            //password
+            $statement = mysqli_prepare($databaseConnection, "SET @password = ?;");
+            mysqli_stmt_bind_param($statement, 's', $password_hashed);
+            mysqli_stmt_execute($statement);
+
+            //UPDATE QUERY HIER
+            mysqli_query($databaseConnection, "
+        UPDATE customers_new
+        SET
+                 CustomerName = @name,
+                 EmailAddress = @email,
+                 IsPermittedToLogon = 0,
+                 PhoneNumber = @tel,
+                 AddressLine = @adres,
+                 AddressPostalCode = @postcode,
+                 AddressCity = @plaats
+        
+            WHERE CustomerID = @CstID;");
+
+            mysqli_commit($databaseConnection);
+            mysqli_free_result($Result);
+
+            return $customerID;
+        } catch(mysqli_sql_exception $exception){
+            mysqli_rollback($databaseConnection);
+            throw $exception;
+        }
+    } else{
+        //VERVANG
+        print("Er bestaat al een account met dit emailadres!");
+        exit();
+    }
 }
 
-function saveOrder($cart, $customerID, $databaseConnection){
+function saveOrder($cart, $customerID, $persoonsGegevens, $databaseConnection){
+    extract($persoonsGegevens); //Splits inhoud array op in aparte variabelen
+    /*Bestaande variabelen:
+    $naam $email $tel $adres $postcode $woonplaats*/
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); //Exception reporter
     mysqli_begin_transaction($databaseConnection);
 
@@ -231,6 +308,18 @@ function saveOrder($cart, $customerID, $databaseConnection){
         $statement = mysqli_prepare($databaseConnection, "SET @CstId = ?;");
         mysqli_stmt_bind_param($statement, 'i', $customerID);
         mysqli_stmt_execute($statement);
+        //adres
+        $statement = mysqli_prepare($databaseConnection, "SET @adres = ?;");
+        mysqli_stmt_bind_param($statement, 's', $adres);
+        mysqli_stmt_execute($statement);
+        //postcode
+        $statement = mysqli_prepare($databaseConnection, "SET @postcode = ?;");
+        mysqli_stmt_bind_param($statement, 's', $postcode);
+        mysqli_stmt_execute($statement);
+        //woonplaats
+        $statement = mysqli_prepare($databaseConnection, "SET @plaats = ?;");
+        mysqli_stmt_bind_param($statement, 's', $woonplaats);
+        mysqli_stmt_execute($statement);
 
         mysqli_query($databaseConnection, "
             INSERT INTO orders
@@ -245,7 +334,10 @@ function saveOrder($cart, $customerID, $databaseConnection){
             ExpectedDeliveryDate,
             IsUndersupplyBackordered,
             LastEditedBy,
-            LastEditedWhen
+            LastEditedWhen,
+            AddressLine,
+            AddressPostalCode,
+            AddressCity
             )
             VALUES
             (
@@ -259,7 +351,10 @@ function saveOrder($cart, $customerID, $databaseConnection){
             DATE_ADD(CURRENT_DATE, INTERVAL 1 DAY),
             1,
             1,
-            CURRENT_TIMESTAMP
+            CURRENT_TIMESTAMP,
+            @adres,
+            @postcode,
+            @plaats
             )
         ");
 
