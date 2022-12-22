@@ -40,8 +40,13 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
         "woonplaats" => $woonplaats
     );
 
-    //Saves customer into database, returns assigned ID
-    $customerID = saveCustomer($persoonsGegevens, $databaseConnection);
+
+    if($userLoggedIn){ //Check if user is already logged in
+        $customerID = fetchUserData($email, $databaseConnection);   //Get CustomerID from logged in user
+    } else {
+        $customerID = saveCustomer($persoonsGegevens, $databaseConnection); //Saves customer into database, returns assigned ID
+    }
+    
     //Saves order + orderlines in database linked to customerID
     saveOrder($cart, $customerID, $persoonsGegevens, $databaseConnection);
 
