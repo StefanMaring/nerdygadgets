@@ -254,10 +254,20 @@ if(!isset($_SESSION['feedback'])) {
                 </div>
             </form>
         <div>
+
             <?php
-            //print feedback van het review formulier, bijv. "vul het formulier volledig in"
-            print($_SESSION['feedback']);
-            ?>
+                //Check if the message array has been set
+                if(isset($_SESSION["feedback"])) {
+                    //Loop through all messages and print them
+                        print($_SESSION["feedback"]);
+                    //Empty messages array so a user doesn't see them again
+                    $_SESSION["feedback"] = "";
+                } else {
+                    //If no messages are set, set the array as empty
+                    $_SESSION["feedback"] = ""();
+                }
+                ?>
+
         </div>
         </div>
         <?php
