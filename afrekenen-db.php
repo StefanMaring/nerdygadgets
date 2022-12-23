@@ -24,9 +24,6 @@ if(!empty($voornaam) && !empty($achternaam) && !empty($email) && !empty($tel) &&
         $_SESSION["user_notice_message"] = array("Telefoonnummer mag alleen nummers bevatten!");
         header("location: afrekenen.php");
         exit();
-    } else {
-        $result = substr_replace($tel, "-", 2);
-        $tel = $result;
     }
 
     //Sla persoonsgegevens op in een array
