@@ -429,6 +429,7 @@ function saveOrder($cart, $customerID, $persoonsGegevens, $databaseConnection){
         throw $exception;
     }
 
+    $_SESSION["korting"] = 0; // Haal korting weg
 }
 
 function addReview($databaseConnection, $CustomerID, $klantNaam, $aantalSterren, $beschrijving, $productPagina) {
