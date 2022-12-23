@@ -13,6 +13,7 @@ if (isset($_SESSION["korting"]) && $_SESSION["korting"] >= 1) { // Pas korting t
     $totaalPrijs = round($totaalPrijs * 0.9, 2);
 }
 
+
 if($userLoggedIn) {
     $userData = fetchUserDataByID($userID, $databaseConnection);
 
@@ -67,7 +68,9 @@ if($userLoggedIn) {
             <?php
             //Verzendkosten worden niet opgeteld boven de 50 euro
             $verzendkosten = 0;
-            if($totaalPrijs < 50) {
+            if ($totaalPrijs < 50 && isset($_SESSION["korting"]) && $_SESSION["korting"] >= 1) {
+                $verzendkosten = 0;
+            }  elseif($totaalPrijs < 50) {
                 $verzendkosten += 6.95;
             }
 
