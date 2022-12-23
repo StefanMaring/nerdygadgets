@@ -107,8 +107,10 @@ if(!isset($_SESSION['feedback'])) {
                     <div class="CenterPriceLeftChild">
                         <p class="StockItemPriceText"><b><?php if($StockItem['QuantityOnHand'] == "Voorraad: 0") {
                                     print("niet beschikbaar"); }
-                                else {print sprintf("€%.2f", $StockItem['SellPrice']);} //prijs laten zien ?></b></p>
-                        <h6> Inclusief BTW </h6>
+                                else {
+                                    print (sprintf("€%.2f", $StockItem['SellPrice']) . "</b></p> <h6> Inclusief BTW </h6>");
+                                } //prijs laten zien?>
+
                     </div>
                 </div>
             </div>
