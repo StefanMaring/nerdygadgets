@@ -26,6 +26,22 @@ if($userLoggedIn == TRUE) {
             <input type="hidden" name="faxnumber" id="faxnumber">
             <p class="notice">* is een vereist veld.</p>
             <input type="submit" value="Verzend" class="btn-style">
+            <p id="messageNotice">
+                <?php
+                //Check if the message array has been set
+                if(isset($_SESSION["user_notice_message"])) {
+                    //Loop through all messages and print them
+                    foreach($_SESSION["user_notice_message"] as $message) {
+                        echo $message . "<br>";
+                    }
+                    //Empty messages array so a user doesn't see them again
+                    $_SESSION["user_notice_message"] = array();
+                } else {
+                    //If no messages are set, set the array as empty
+                    $_SESSION["user_notice_message"] = array();
+                }
+                ?>
+            </p>
         </form>
     </div>
 </section>
