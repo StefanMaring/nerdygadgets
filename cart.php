@@ -86,6 +86,7 @@ if(!empty($cart)) { //Check of het winkelmandje leeg is
         }
 
         $maxInWinkelmand = preg_replace("/[^0-9]/", "", $StockItem["QuantityOnHand"] ); //maximale voorraad
+
         ?>
             <br>
 
@@ -116,6 +117,13 @@ if(!empty($cart)) { //Check of het winkelmandje leeg is
 
 
         <?php
+        //extra fix als je de winkelmand laad en het aantal is hoger dan de voorraad wordt hij aangepast
+        if ($cart[$productID] > $maxInWinkelmand) { //Check of ingevoerd aantal hoger is dan de voorraad
+                $cart[$productID] = $maxInWinkelmand; //Stel het aantal in op het aantal in voorraad
+                saveCart($cart); //Sla winkelmandje op
+                unset($_POST['artikelCounter-' . $productID]); //"Aantal"knop loslaten
+                echo "<script> location.href='cart.php'; </script>"; //Reload de pagina
+            }
         if(isset($_POST['artikelCounter-' . $productID])) { //Check of aantalknop horend bij huidige productID is aangepast
             /*Onderstaande lijn convert de invoer naar een integer voordat het getal verder wordt behandeld
             Dit doet 2 dingen:
