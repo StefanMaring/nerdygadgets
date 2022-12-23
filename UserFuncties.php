@@ -19,32 +19,31 @@ function logoutUser(){
 
 //Haal alle gegevens (behalve HashedPassword) op van een gebruiker
 function fetchUserData($userEmail, $databaseConnection){
-        $Query = "
-        SELECT CustomerID,
-               CustomerName,
-               AccountOpenedDate,
-               EmailAddress,
-               IsPermittedToLogon,
-               PhoneNumber,
-               AddressLine,
-               AddressPostalCode,
-               AddressCity
-        FROM customers_new
-        WHERE EmailAddress = ?
-        ";
+    $Query = "
+    SELECT CustomerID,
+            CustomerName,
+            AccountOpenedDate,
+            EmailAddress,
+            IsPermittedToLogon,
+            PhoneNumber,
+            AddressLine,
+            AddressPostalCode,
+            AddressCity
+    FROM customers_new
+    WHERE EmailAddress = ?
+    ";
 
-        $Statement = mysqli_prepare($databaseConnection, $Query);
-        mysqli_stmt_bind_param($Statement, "s", $userEmail);
-        mysqli_stmt_execute($Statement);
-        $ReturnableResult = mysqli_stmt_get_result($Statement);
-        if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 0) {
-            return FALSE;
-            die("Gebruiker bestaat niet"); //VERVANG DIT
-        } elseif ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
-            //print("Email bestaat WEL <br>");
-            $userData = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
-            return $userData;
-        }
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "s", $userEmail);
+    mysqli_stmt_execute($Statement);
+    $ReturnableResult = mysqli_stmt_get_result($Statement);
+    if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 0) {
+        return FALSE;
+        die("Gebruiker bestaat niet");
+    } elseif ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
+        $userData = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
+        return $userData;
+    }
 }
 
 function fetchUserDataByID($userID, $databaseConnection){
@@ -68,9 +67,8 @@ function fetchUserDataByID($userID, $databaseConnection){
     $ReturnableResult = mysqli_stmt_get_result($Statement);
     if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 0) {
         return FALSE;
-        die("Gebruiker bestaat niet"); //VERVANG DIT
+        die("Gebruiker bestaat niet");
     } elseif ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
-        //print("Email bestaat WEL <br>");
         $userData = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
         return $userData;
     }
@@ -96,12 +94,12 @@ function FetchUserName($databaseConnection, $userID) {
         }
     }
 }
-/*TO-DO: Vervang die() met exit() -
-*/
+
+
 function loginUser($userEmail, $plaintext_password, $databaseConnection){
     $userID = getUser();
     if ($userID != null) { // Check of gebruiker al ingelogd is
-        die("Gebruiker al ingelogd"); //VERVANG MET REDIRECT
+        die("Gebruiker al ingelogd");
     } else {
         $Query = "
         SELECT CustomerID, IsPermittedToLogon, HashedPassword
@@ -139,7 +137,7 @@ function loginUser($userEmail, $plaintext_password, $databaseConnection){
 function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
     $userID = getUser();
     if ($userID != null) { // Check of gebruiker al ingelogd is
-        die("Gebruiker al ingelogd"); //VERVANG MET REDIRECT
+        die("Gebruiker al ingelogd");
     }
 
     extract($persoonsGegevens); //Splits inhoud array op in aparte variabelen
