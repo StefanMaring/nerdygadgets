@@ -26,10 +26,10 @@ if(!empty($username) && !empty($email) && !empty($phone) && !empty($address) && 
         exit();
     }
 
-    //Check of email niet bij iemand anders hoort
+    //Check if email already exists in database
     $userData = fetchUserDataByID($userID, $databaseConnection);
     if($userData['EmailAddress'] == $email){
-        //Ja sorry hier hoeft letterlijk niets
+        //Empty
     } else {
         $Query = "
         SELECT EmailAddress
@@ -46,7 +46,6 @@ if(!empty($username) && !empty($email) && !empty($phone) && !empty($address) && 
             exit();
         }
     }
-
 
     //Validate if phone is correct
     if(!is_numeric($phone)) {
