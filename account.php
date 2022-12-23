@@ -49,6 +49,7 @@ $result = $stmt->get_result();
                                 echo '<div class="account-item">';
                                         echo '<p class="user-meta-name">Woonplaats:</p>';
                                         echo '<input disabled required id="editableField" name="city" class="user-meta-info" value="'.$record["AddressCity"].'">';
+                                        echo '<input type="hidden" name="faxnumber">';
                                 echo '</div>';
                                 echo '<div class="flex-btns">';
                                 echo '<input type="submit" class="btn-style editSubmitBTN" id="editSubmitBTN" value="Bevestig">';
