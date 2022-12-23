@@ -241,7 +241,7 @@ if(!isset($_SESSION['feedback'])) {
                         print($row["Beschrijving"] . "<br>");
                         //als er ingelogd is en customerID komt overeen met de review; voeg een verwijder knop toe
                         if(getUser() != NULL) {
-                        if ($row["KlantNaam"] == $_SESSION['klantNaam']) {
+                        if ($row["CustomerID"] == getUser()) {
                             print('<form method="post" action="review-verwijder.php">
         <input type="submit" name="removeReviewBTN" class="btn-style btn-review" value="Verwijder review">
         </form>');
