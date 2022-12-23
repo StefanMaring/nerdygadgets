@@ -27,7 +27,7 @@ if(!empty($username) && !empty($email) && !empty($phone) && !empty($address) && 
     }
 
     //Validate if phone is correct
-    if(!is_numeric($tel)) {
+    if(!is_numeric($phone)) {
         $_SESSION["user_notice_message"] = array("Telefoonnummer mag alleen nummers bevatten!");
         header("location: account.php");
         exit();
