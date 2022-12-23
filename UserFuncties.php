@@ -127,6 +127,7 @@ function loginUser($userEmail, $plaintext_password, $databaseConnection){
                 } else {
                     print("Wachtwoord juist!");
 
+                    $_SESSION["user_notice_message"] = array("");   //Clear alle error messages
                     setUser($userData["CustomerID"]);   //Logt gebruiker in met opgehaalde userID
                 }
             }

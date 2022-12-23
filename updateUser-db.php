@@ -26,6 +26,28 @@ if(!empty($username) && !empty($email) && !empty($phone) && !empty($address) && 
         exit();
     }
 
+    //Check of email niet bij iemand anders hoort
+    $userData = fetchUserDataByID($userID, $databaseConnection);
+    if($userData['EmailAddress'] == $email){
+        //Ja sorry hier hoeft letterlijk niets
+    } else {
+        $Query = "
+        SELECT EmailAddress
+        FROM customers_new
+        WHERE EmailAddress = ?";
+
+        $Statement = mysqli_prepare($databaseConnection, $Query);
+        mysqli_stmt_bind_param($Statement, "s", $email);
+        mysqli_stmt_execute($Statement);
+        $Result = mysqli_stmt_get_result($Statement);
+        if ($Result && mysqli_num_rows($Result) == 1) {
+            $_SESSION["user_notice_message"] = array("Email is al in gebruik");
+            header("location: account.php");
+            exit();
+        }
+    }
+
+
     //Validate if phone is correct
     if(!is_numeric($phone)) {
         $_SESSION["user_notice_message"] = array("Telefoonnummer mag alleen nummers bevatten!");
