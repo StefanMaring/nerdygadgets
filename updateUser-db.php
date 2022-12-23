@@ -47,6 +47,7 @@ if(!empty($username) && !empty($email) && !empty($phone) && !empty($address) && 
         }
     }
 
+    $phone = str_replace(" ", "", $phone);
     //Validate if phone is correct
     if(!is_numeric($phone)) {
         $_SESSION["user_notice_message"] = array("Telefoonnummer mag alleen nummers bevatten!");
