@@ -26,6 +26,13 @@ if(!empty($username) && !empty($email) && !empty($phone) && !empty($address) && 
         exit();
     }
 
+    //Validate if phone is correct
+    if(!is_numeric($tel)) {
+        $_SESSION["user_notice_message"] = array("Telefoonnummer mag alleen nummers bevatten!");
+        header("location: account.php");
+        exit();
+    }
+
     //Update customer data
     $updateQuery = 'UPDATE customers_new
                     SET CustomerName = ?, EmailAddress = ?, PhoneNumber = ?, AddressLine = ?, AddressPostalCode = ?, AddressCity = ?
