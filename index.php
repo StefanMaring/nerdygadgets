@@ -24,7 +24,7 @@ $usedcode = 0;
 
 <div class="overlay" id="kortingscode-pop"></div>
 <div class="dialog" id="pop-upbox">
-    <h4>Claim hier uw eenmalige kortingscode!</h4>
+    <h4>Claim hier uw eenmalige kortingscode ter waarde van 10%!</h4>
     <input type="text" disabled id="discountcode" value="<?php echo $kortingscode;?>">
     <p id="textbox"></p>
     <div class="smallBtnWrapper">
