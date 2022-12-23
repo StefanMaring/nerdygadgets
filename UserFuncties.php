@@ -310,6 +310,8 @@ function registerUser($persoonsGegevens, $password_hashed, $databaseConnection){
         }
 
     } elseif($userData["IsPermittedToLogon"] == 1){ //CHECK: Gebruiker bestaat al als klant
-        die("Gebruiker bestaat al!"); //VERVANG MET REDIRECT
+        $_SESSION["user_notice_message"] = array("Email is al in gebruik");
+        header("location: register.php");
+        exit();
     }
 }
