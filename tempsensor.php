@@ -1,5 +1,7 @@
 <?php
 
+
+// connectie met database
 function connectToDatabase() {
     $Connection = null;
 
@@ -20,6 +22,8 @@ function connectToDatabase() {
 
 $database = connectToDatabase();
 
+
+//stuurt random getal met gemeten tijd naar database
 while(TRUE){
     $Tijd = date("Y-m-d H:i:s");
     $Temperatuur = rand(100, 400)/100;
