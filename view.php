@@ -129,8 +129,8 @@ if(!isset($_SESSION['feedback'])) {
         <?php
 
         }
-        ?>
         //refresht temperatuur op de site elke 3 seconden
+        ?>
         <script type="text/javascript">
             $(document).ready(function () {
                 setInterval(function () {
@@ -141,8 +141,8 @@ if(!isset($_SESSION['feedback'])) {
 
         <div id="StockItemDescription">
             <h3>Artikel beschrijving</h3>
-            <p><?php print $StockItem['SearchDetails'];?></p>
-            // print de variabele temperatuur in de productbeschrijving
+            <p><?php print $StockItem['SearchDetails']; // print de variabele temperatuur in de productbeschrijving?></p>
+
             <div id="temp">
                 <p><?php
 
